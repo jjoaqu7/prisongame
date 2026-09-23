@@ -23,13 +23,23 @@ Verified baseline: `PrisonGame/` exists, its Editor version is 6000.3.24f1, and 
 | TRACK-01 | Establish progress tracking | Done | Accepted workflow | This tracker is linked from README; AGENTS.md specifies update and handoff responsibilities. |
 | SETUP-01 | Open Unity project | Done | Editor installation | User screenshot showed PrisonGame/SampleScene in Unity 6.3 LTS; `ProjectSettings/ProjectVersion.txt` confirms 6000.3.24f1. |
 | SETUP-02 | Verify CLI and MCP scene reads | Done | SETUP-01 | Both CLI `get_scene_hierarchy` and MCP `mcp__unity__get_scene_hierarchy` returned Main Camera, Directional Light, and Global Volume in this conversation. This verifies reads, not edits. |
-| SETUP-03 | Establish recoverable version control checkpoint | In progress | Check repository boundary | Initialized a separate local repository at `game/`; added Unity cache exclusions and text normalization. Confirmed Visible Meta Files and text serialization. Initial commit and recovery verification are next. |
-| SETUP-04 | Verify a reversible MCP scene edit | To do | SETUP-03 | Create a temporary object, confirm it, remove it, and confirm scene restoration. |
+| SETUP-03 | Establish recoverable version control checkpoint | Done | Check repository boundary | Separate `game/` repository; baseline commit `bae004a` contains 75 files. Six essential files recovered from its archive and compared successfully after line-ending normalization; generated caches excluded; `git fsck --full` passed. Visible Meta Files and text serialization confirmed. |
+| SETUP-04 | Verify a reversible MCP scene edit | Done | SETUP-03 | MCP created `__MCP_Verification_Temporary`, a scene read confirmed it, MCP deleted it, and a final read confirmed the original three objects and a saved scene. Saving updated template serialization to the installed Unity version; those reviewed changes are retained. |
 | ROOM-01 | Build rough cell, corridor, and small common area | To do | SETUP-04 | Separate prototype scene has connected spaces and collisions; temporary dimensions are recorded for review. |
 | ROOM-02 | Add first-person movement and looking | To do | ROOM-01 | Player can traverse the space without passing through walls; mouse sensitivity and cursor release work. |
 | ROOM-03 | Add basic interactions | To do | ROOM-02 | One door opens, one item can be picked up and put down, and one placeholder inmate responds to a simple interaction; prompts are readable. |
 | ART-01 | Assemble a small visual reference board | To do | Existing art direction | Character, cell, lighting, and interface references have source links; user reviews the proposed direction. Can overlap room work. |
 | CHECK-01 | Playtest, adjust, and make a Windows build | To do | ROOM-03 | User reviews movement/scale; agreed adjustments are tested; standalone build launches and basic interactions work without blocking errors. |
+
+## Local checkpoint and recovery
+
+The Git repository root is `C:\Users\jjoaq\vscode-python\game`. It is separate from the parent `vscode-python` repository. Run game Git commands from this root; do not stage unrelated projects in the parent repository.
+
+Baseline commit: `bae004a` (Unity template and development docs before scene edit verification). Assets and their `.meta` files, Packages, ProjectSettings, and docs are tracked. Library, Temp, Logs, UserSettings, generated IDE projects, and build output are excluded.
+
+Recovery verification extracted a scene, its metadata, package manifest and lockfile, Editor version, and tracker from the commit archive into a temporary folder and compared their content to Git. An initial sandbox write attempt failed; the authorized retry passed after accounting for Windows line endings. No full reimport or standalone build was tested. Temporary verification files were removed.
+
+This is local version history. No remote repository or off-machine backup has been configured. When recovering work, inspect the target commit and affected files first; avoid overwriting newer user changes.
 
 ## Decisions and later work
 
@@ -76,7 +86,7 @@ Working hours include implementation, checks, troubleshooting, and active review
 
 ## Session handoff
 
-- Latest update: added AGENT-01 through AGENT-06 as deferred evaluations with triggers and completion criteria. No additional agents were launched or installed.
-- Next action: inspect repository boundaries and establish a recoverable checkpoint (SETUP-03) before modifying game scenes.
-- Current blockers: none confirmed for the next action. Repository scope must be checked before creating the checkpoint.
+- Latest update: completed SETUP-03 and SETUP-04; local checkpoint recovery and reversible MCP scene editing verified. Unity's first scene save updated template serialization and created SceneTemplateSettings.json; reviewed and retained. No gameplay implemented yet.
+- Next action: ROOM-01, create a separate prototype scene with a rough cell, corridor, and small common area using temporary dimensions for user review.
+- Current blockers: none confirmed for the next action.
 - User reviews upcoming: room scale/movement and visual reference direction.

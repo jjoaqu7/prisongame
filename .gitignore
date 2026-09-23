@@ -1,0 +1,33 @@
+# Unity regenerates these directories.
+/PrisonGame/[Ll]ibrary/
+/PrisonGame/[Tt]emp/
+/PrisonGame/[Oo]bj/
+/PrisonGame/[Ll]ogs/
+/PrisonGame/[Uu]ser[Ss]ettings/
+/PrisonGame/[Bb]uild/
+/PrisonGame/[Bb]uilds/
+/PrisonGame/[Mm]emoryCaptures/
+/PrisonGame/[Rr]ecordings/
+
+# Generated IDE projects and local editor settings.
+/PrisonGame/.vs/
+/PrisonGame/.idea/
+/PrisonGame/.vscode/
+/PrisonGame/*.csproj
+/PrisonGame/*.sln
+/PrisonGame/*.slnx
+/PrisonGame/*.suo
+/PrisonGame/*.user
+/PrisonGame/*.userprefs
+
+# Local credentials, OS clutter, and temporary exports.
+.env
+.env.*
+!.env.example
+Thumbs.db
+.DS_Store
+/PrisonGame/*.apk
+/PrisonGame/*.aab
+/PrisonGame/*.unitypackage
+
+# Keep Assets (including .meta), Packages, and ProjectSettings tracked.

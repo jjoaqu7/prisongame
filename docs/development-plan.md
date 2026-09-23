@@ -8,7 +8,7 @@ The agreed experience allows complex systems, deadlines, suspicion, and disrupti
 
 ## Execution checklist
 
-This is the milestone roadmap. Setup is partly complete; gameplay implementation is pending. The lists below describe required work; [Progress](progress.md) is authoritative for individual task status. Working assumptions are Windows PC and an initial solo prototype, not confirmation that co-op has been excluded from the game.
+This is the milestone roadmap. The rough room, movement, and basic interactions are implemented and user-approved for this prototype; the standalone Windows build and earning loop remain outstanding. The lists below describe required work; [Progress](progress.md) is authoritative for individual task status. Working assumptions are Windows PC and an initial solo prototype, not confirmation that co-op has been excluded from the game.
 
 First target: walk from a cell into a shared area, interact with an inmate, complete a small earning activity, improve the cell, and understand any active deadline or guard suspicion without the developer explaining it.
 

@@ -14,7 +14,7 @@ The [development plan](development-plan.md) owns milestone scope and sequencing.
 
 Finish setup and make the first rough room playable. Proposed task breakdown below implements the accepted broad workflow; specific room layout and visual choices remain subject to user review.
 
-Verified baseline: `PrisonGame/` uses Editor 6000.3.24f1 and URP. Room01_Blockout has geometry, furniture, a first-person controller, a sliding door, a carryable parcel, and a placeholder inmate. All 14 controller checks and 26 interaction checks passed in the Editor. User movement/scale/interaction review and a standalone build are pending.
+Verified baseline: `PrisonGame/` uses Editor 6000.3.24f1 and URP. Room01_Blockout has geometry, furniture, a first-person controller, a sliding door, a carryable parcel, and a placeholder inmate. All 14 controller checks and 26 interaction checks passed in the Editor. On September 23, 2026, the user responded "All looks great!" to the completed room and interaction playtest handoff. ROOM-02/03 are accepted for this prototype; this does not approve final artwork or settle later mechanics. A standalone build remains untested.
 
 ## Tasks
 
@@ -26,9 +26,9 @@ Verified baseline: `PrisonGame/` uses Editor 6000.3.24f1 and URP. Room01_Blockou
 | SETUP-03 | Establish recoverable version control checkpoint | Done | Check repository boundary | Separate `game/` repository; baseline commit `bae004a` contains 75 files. Six essential files recovered from its archive and compared successfully after line-ending normalization; generated caches excluded; `git fsck --full` passed. Visible Meta Files and text serialization confirmed. |
 | SETUP-04 | Verify a reversible MCP scene edit | Done | SETUP-03 | MCP created `__MCP_Verification_Temporary`, a scene read confirmed it, MCP deleted it, and a final read confirmed the original three objects and a saved scene. Saving updated template serialization to the installed Unity version; those reviewed changes are retained. |
 | SETUP-05 | Connect the user-designated private GitHub repository | Done | SETUP-03 | Configured origin as `https://github.com/jjoaqu7/prisongame.git`; pushed main with upstream tracking. `git ls-remote origin refs/heads/main` matched local checkpoint `e73bffa`. Existing baseline commits are included. |
-| ROOM-01 | Build rough cell, corridor, and small common area | Done | SETUP-04 | `Assets/Scenes/Room01_Blockout.unity` saved and reopened; 56 solid BoxColliders, connected passages, and placeholder furniture. Temporary dimensions recorded in prison-world.md. Technical checks below passed; user scale/feel approval awaits movement and playtesting. |
-| ROOM-02 | Add first-person movement and looking | Needs your review | ROOM-01 | Implemented in Room01_Blockout; 14 Play-mode controller checks passed, with zero console errors/warnings. User to assess speed, sensitivity, and room scale before recording approval. |
-| ROOM-03 | Add basic interactions | Needs your review | ROOM-02 implemented | Door and controls, parcel pickup/placement, inmate response, and prompts implemented; 26 Editor checks passed. User playtest and prompt readability review pending. |
+| ROOM-01 | Build rough cell, corridor, and small common area | Done | SETUP-04 | Saved/reopened scene with connected passages and placeholder furniture; technical checks below passed. User accepted the resulting prototype on September 23. Dimensions remain provisional. |
+| ROOM-02 | Add first-person movement and looking | Done | ROOM-01 | 14 Play-mode controller checks passed, with zero console errors/warnings. User accepted the resulting prototype on September 23. |
+| ROOM-03 | Add basic interactions | Done | ROOM-02 | Door/controls, pickup/placement, inmate response, and prompts implemented; 26 Editor checks passed. User accepted the resulting prototype on September 23. |
 | ART-01 | Assemble a small visual reference board | To do | Existing art direction | Character, cell, lighting, and interface references have source links; user reviews the proposed direction. Can overlap room work. |
 | CHECK-01 | Playtest, adjust, and make a Windows build | To do | ROOM-03 | User reviews movement/scale; agreed adjustments are tested; standalone build launches and basic interactions work without blocking errors. |
 
@@ -53,7 +53,7 @@ Passed 14 checks: cell doorway traversal; corridor travel/turn; common entry tra
 
 During test development, a diagonal-speed check initially intersected a bench; its starting position was corrected. Synthetic keyboard events were also rejected while Game view was unfocused; the test now temporarily accepts background input and restores the normal focus settings in `finally`. No production focus settings were relaxed. The successful final run reported zero console errors/warnings. Visually inspected the [scaled settings panel](../PrisonGame/Assets/Screenshots/room02-controls.png).
 
-User review: can you comfortably leave the cell, turn down the corridor, enter the common area, and walk around the furniture? Report any trapping/clipping, uncomfortable camera motion, movement speed changes wanted, and rooms that feel too large or small.
+User review received September 23: "All looks great!" Current movement and room accepted for the prototype, with no adjustments requested. Later playtests can still revise scale and feel.
 
 ## ROOM-03 controls and verification
 
@@ -70,7 +70,7 @@ Implemented at the user's request to proceed. The sliding mechanism, one-item ca
 
 Reran all 14 ROOM-02 checks successfully. That movement-only fixture temporarily disables the added door collider and restores it afterward; ROOM-03 separately tests closed/open door collision. Final Editor console: zero errors/warnings, no compilation failure. Scene saved and Editor left outside Play mode.
 
-Visually inspected the updated [controls panel](../PrisonGame/Assets/Screenshots/room03-controls.png). Automated capture repeatedly released Game-view focus, so this screenshot verifies the settings layout, not active interaction prompt readability. User review must cover those prompts, actual mouse/keyboard comfort, and the full pickup/carry/place route. No standalone build has been tested.
+Visually inspected the updated [controls panel](../PrisonGame/Assets/Screenshots/room03-controls.png). Automated capture repeatedly released Game-view focus, so this screenshot verifies the settings layout, not active interaction prompt readability. The user subsequently accepted the prototype with "All looks great!"; no specific usability problems were reported. No standalone build has been tested.
 
 ## Local checkpoint and recovery
 
@@ -129,8 +129,8 @@ Re-estimate after ROOM-02 implementation: the original 12-24 hour range above is
 
 ## Session handoff
 
-- Latest update: ROOM-03 implemented; 26 interaction and 14 controller checks passed. Scene, scripts, verification snippets, and controls screenshot saved. Editor left outside Play mode for the user's own test. ROOM-02 and ROOM-03 await subjective review.
+- Latest update: user accepted the room and interactions with "All looks great!" ROOM-02 and ROOM-03 marked Done for this prototype. No gameplay changes in this documentation update.
 - Publication: pending local commits include controller `393c9ed` and subsequent work. This session retried `git push origin main`; Git could not obtain a username with interactive prompts disabled. Remote verification still reported `150742e`. Committing works; publishing requires restored GitHub authentication. The user can run an interactive `git push origin main` once to sign in; agents are authorized to commit and push subsequent scoped game work when credentials are available.
-- Next action: user tests movement and E/Q interactions; address feedback. ART-01 references can proceed alongside review. Then CHECK-01 covers adjustments and a verified Windows build.
-- Current blockers: no implementation blocker; user feedback is pending before closing ROOM-02/03. Publishing is blocked on GitHub authentication.
-- User reviews upcoming: room scale/movement, interaction usability and prompt readability, and visual reference direction.
+- Next action: finish CHECK-01 with a Windows executable and launch/interaction checks; develop ART-01 references alongside it. Resolve the open co-op release direction before expanding inventory, economy, AI, or saving. Then select the first earning-loop activity; snack packs remain a candidate.
+- Current blockers: no blocker for building or collecting art references. Last push attempt was blocked on GitHub authentication; no new authentication evidence this turn.
+- User decisions/reviews upcoming: visual references, co-op release direction, and the proposed first earning activity.

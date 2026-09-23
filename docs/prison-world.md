@@ -52,7 +52,7 @@ Implemented for scale testing in `PrisonGame/Assets/Scenes/Room01_Blockout.unity
 | Corridor | 3 x 14 m | X -2 to 1; Z -7 to 7 |
 | Common area | 7 x 7 m | X 1 to 8; Z 0 to 7 |
 
-Walls are 0.2 m thick and 3.2 m high, centred on the footprint boundaries; clear internal widths are therefore slightly smaller. Floor tops are at Y=0. The cell opens into the corridor through a 1.4 m wide, 2.3 m high opening. The common area entry is 2.4 m wide and 2.5 m high. Door leaves and interactions are deferred to ROOM-03. Corridors end at solid walls in this test scene.
+Walls are 0.2 m thick and 3.2 m high, centred on the footprint boundaries; clear internal widths are therefore slightly smaller. Floor tops are at Y=0. The cell opens into the corridor through a 1.4 m wide, 2.3 m high opening. The common area entry is 2.4 m wide and 2.5 m high. ROOM-03 adds a temporary sliding barred cell door, with a fixed control on each side. Its movement and controls are prototype choices for review, not final prison access rules. Corridors end at solid walls in this test scene.
 
 A bunk, desk, stool, shared table, and benches provide static scale references. The top is open to inspect the layout; there is no finished ceiling, lighting design, or artwork. The player spawn marker is at (-3.4, 0, -0.5), facing the cell exit. ROOM-02 adds a player at 0.05 m above that marker, with a 1.8 m tall, 0.6 m wide collision capsule and camera 1.7 m above the player's feet. Gravity settles the player onto the floor.
 

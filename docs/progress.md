@@ -14,7 +14,7 @@ The [development plan](development-plan.md) owns milestone scope and sequencing.
 
 Finish setup and make the first rough room playable. Proposed task breakdown below implements the accepted broad workflow; specific room layout and visual choices remain subject to user review.
 
-Verified baseline: `PrisonGame/` uses Editor 6000.3.24f1 and URP. The Room01_Blockout scene now has static geometry, furniture, and a first-person controller. Technical controller checks passed; subjective movement/scale review is pending. Gameplay interactions are not implemented.
+Verified baseline: `PrisonGame/` uses Editor 6000.3.24f1 and URP. Room01_Blockout has geometry, furniture, a first-person controller, a sliding door, a carryable parcel, and a placeholder inmate. All 14 controller checks and 26 interaction checks passed in the Editor. User movement/scale/interaction review and a standalone build are pending.
 
 ## Tasks
 
@@ -28,7 +28,7 @@ Verified baseline: `PrisonGame/` uses Editor 6000.3.24f1 and URP. The Room01_Blo
 | SETUP-05 | Connect the user-designated private GitHub repository | Done | SETUP-03 | Configured origin as `https://github.com/jjoaqu7/prisongame.git`; pushed main with upstream tracking. `git ls-remote origin refs/heads/main` matched local checkpoint `e73bffa`. Existing baseline commits are included. |
 | ROOM-01 | Build rough cell, corridor, and small common area | Done | SETUP-04 | `Assets/Scenes/Room01_Blockout.unity` saved and reopened; 56 solid BoxColliders, connected passages, and placeholder furniture. Temporary dimensions recorded in prison-world.md. Technical checks below passed; user scale/feel approval awaits movement and playtesting. |
 | ROOM-02 | Add first-person movement and looking | Needs your review | ROOM-01 | Implemented in Room01_Blockout; 14 Play-mode controller checks passed, with zero console errors/warnings. User to assess speed, sensitivity, and room scale before recording approval. |
-| ROOM-03 | Add basic interactions | To do | ROOM-02 | One door opens, one item can be picked up and put down, and one placeholder inmate responds to a simple interaction; prompts are readable. |
+| ROOM-03 | Add basic interactions | Needs your review | ROOM-02 implemented | Door and controls, parcel pickup/placement, inmate response, and prompts implemented; 26 Editor checks passed. User playtest and prompt readability review pending. |
 | ART-01 | Assemble a small visual reference board | To do | Existing art direction | Character, cell, lighting, and interface references have source links; user reviews the proposed direction. Can overlap room work. |
 | CHECK-01 | Playtest, adjust, and make a Windows build | To do | ROOM-03 | User reviews movement/scale; agreed adjustments are tested; standalone build launches and basic interactions work without blocking errors. |
 
@@ -45,7 +45,7 @@ Verified baseline: `PrisonGame/` uses Editor 6000.3.24f1 and URP. The Room01_Blo
 
 Open `Assets/Scenes/Room01_Blockout.unity`, press Unity's Play button, select the Game tab, and click **Resume walking**. Use WASD to walk and the mouse to look. Escape releases the cursor and opens sensitivity settings; Resume captures it again. Leaving application focus also releases the mouse. Sensitivity is saved locally between sessions. Press Unity's Play button again to stop testing.
 
-Current temporary settings: 3 m/s walking, 70-degree vertical field of view, 1.7 m eye offset, pitch clamped to +/-85 degrees, default sensitivity 0.12 degrees per mouse pixel (adjustable 0.03-0.4). No jump, sprint, camera bob, or gameplay interaction is implemented. Releasing the mouse stops input-driven movement; it is not a global pause system.
+Current temporary settings: 3 m/s walking, 70-degree vertical field of view, 1.7 m eye offset, pitch clamped to +/-85 degrees, default sensitivity 0.12 degrees per mouse pixel (adjustable 0.03-0.4). No jump, sprint, or camera bob is implemented. ROOM-03 controls are below. Releasing the mouse stops movement input and interactions; it is not a global pause system.
 
 `Assets/Prototype/Scripts/FirstPersonController.cs` uses the installed Input System and a CharacterController. `tools/unity/verify-room02.cs` is a repeatable Pipeline evaluation snippet: run via `eval_file` in Play mode with this scene loaded. It tests actual controller movement against the scene and synthetic keyboard events; it restores player state and temporary input settings afterward, leaving the cursor released.
 
@@ -55,6 +55,23 @@ During test development, a diagonal-speed check initially intersected a bench; i
 
 User review: can you comfortably leave the cell, turn down the corridor, enter the common area, and walk around the furniture? Report any trapping/clipping, uncomfortable camera motion, movement speed changes wanted, and rooms that feel too large or small.
 
+## ROOM-03 controls and verification
+
+Implemented at the user's request to proceed. The sliding mechanism, one-item carrying limit, parcel appearance, and inmate lines are temporary prototype choices, not approved final mechanics or artwork.
+
+- Aim at the cell door or either ochre wall button and press **E** to open/close it. Buttons remain reachable when the door slides out of view. An occupied doorway refuses closing or reopens during closing.
+- The parcel starts on the cell desk. Aim at it and press **E** to carry it; **Q** puts it on a clear tabletop or floor. Blocked placement keeps the parcel in your hands and explains the problem.
+- Approach the placeholder inmate in the common area, aim at them, and press **E** for a short response. The response changes while carrying the parcel. There is no trading or quest system yet.
+- Prompts depend on the first object hit within 2.4 m; walls block interaction. Carrying status and transient feedback appear on screen. Escape opens settings and prevents E/Q actions until walking resumes.
+
+`tools/unity/build-room03.cs` records scene construction and refuses duplicate installation. The saved scene is authoritative; do not rerun it for normal editing. Six new runtime scripts under `Assets/Prototype/Scripts` handle targets, player interaction, the door, fixed controls, pickup, and inmate response.
+
+`tools/unity/verify-room03.cs` passed 26 checks in Play mode: door targeting/prompt, closed-door collision, opening/traversal, controls from both sides, occupied-door protection, parcel pickup/placement/retargeting, full hands, wall and distance restrictions, inmate response, and synthetic E/Q keyboard events with settings both open and closed. Test state and temporary input settings are restored in `finally`. The first across-wall placement test had a support probe on the player's side of the wall; the fixture was corrected before the passing run.
+
+Reran all 14 ROOM-02 checks successfully. That movement-only fixture temporarily disables the added door collider and restores it afterward; ROOM-03 separately tests closed/open door collision. Final Editor console: zero errors/warnings, no compilation failure. Scene saved and Editor left outside Play mode.
+
+Visually inspected the updated [controls panel](../PrisonGame/Assets/Screenshots/room03-controls.png). Automated capture repeatedly released Game-view focus, so this screenshot verifies the settings layout, not active interaction prompt readability. User review must cover those prompts, actual mouse/keyboard comfort, and the full pickup/carry/place route. No standalone build has been tested.
+
 ## Local checkpoint and recovery
 
 The Git repository root is `C:\Users\jjoaq\vscode-python\game`. It is separate from the parent `vscode-python` repository. Run game Git commands from this root; do not stage unrelated projects in the parent repository.
@@ -63,7 +80,7 @@ Baseline commit: `bae004a` (Unity template and development docs before scene edi
 
 Recovery verification extracted a scene, its metadata, package manifest and lockfile, Editor version, and tracker from the commit archive into a temporary folder and compared their content to Git. An initial sandbox write attempt failed; the authorized retry passed after accounting for Windows line endings. No full reimport or standalone build was tested. Temporary verification files were removed.
 
-The user designated `https://github.com/jjoaqu7/prisongame.git` as this game's private remote. Origin is connected and main is pushed with upstream tracking; SETUP-05 records verification. Uncommitted changes and ignored files are not backed up by GitHub. When recovering work, inspect the target commit and affected files first; avoid overwriting newer user changes.
+The user designated `https://github.com/jjoaqu7/prisongame.git` as this game's private remote. Origin is connected and main has upstream tracking; SETUP-05 records the initial successful push. Later publication status is recorded in the handoff below. Local commits, uncommitted changes, and ignored files are not necessarily backed up by GitHub. When recovering work, inspect the target commit and affected files first; avoid overwriting newer user changes.
 
 ## Decisions and later work
 
@@ -112,8 +129,8 @@ Re-estimate after ROOM-02 implementation: the original 12-24 hour range above is
 
 ## Session handoff
 
-- Latest update: ROOM-02 implemented and technically verified; controller, scene, test snippet, and controls screenshot saved. Editor left outside Play mode for the user's own test.
-- Publication: controller commit `393c9ed` is saved locally. GitHub still pointed to `150742e` on verification. Push stalled in the credential helper; a non-interactive retry confirmed that Git cannot obtain credentials. User must restore GitHub authentication and run `git push origin main` from the game repository to publish the pending commits.
-- Next action: user reviews ROOM-02 movement and scale; address feedback, then proceed to ROOM-03 interactions. ART-01 references can be developed alongside this review.
-- Current blockers: no gameplay blocker; user feedback is pending before closing ROOM-02. Publishing the latest commits is blocked on GitHub authentication.
-- User reviews upcoming: room scale/movement and visual reference direction.
+- Latest update: ROOM-03 implemented; 26 interaction and 14 controller checks passed. Scene, scripts, verification snippets, and controls screenshot saved. Editor left outside Play mode for the user's own test. ROOM-02 and ROOM-03 await subjective review.
+- Publication: pending local commits include controller `393c9ed` and subsequent work. This session retried `git push origin main`; Git could not obtain a username with interactive prompts disabled. Remote verification still reported `150742e`. Committing works; publishing requires restored GitHub authentication. The user can run an interactive `git push origin main` once to sign in; agents are authorized to commit and push subsequent scoped game work when credentials are available.
+- Next action: user tests movement and E/Q interactions; address feedback. ART-01 references can proceed alongside review. Then CHECK-01 covers adjustments and a verified Windows build.
+- Current blockers: no implementation blocker; user feedback is pending before closing ROOM-02/03. Publishing is blocked on GitHub authentication.
+- User reviews upcoming: room scale/movement, interaction usability and prompt readability, and visual reference direction.

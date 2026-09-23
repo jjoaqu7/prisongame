@@ -25,6 +25,7 @@ namespace PrisonGame.Prototype
         private GUIStyle hintStyle;
         private GUIStyle labelStyle;
         private GUIStyle buttonStyle;
+        public bool ControlsActive => cursorCaptured && Cursor.lockState == CursorLockMode.Locked;
 
         private void Awake()
         {
@@ -143,8 +144,8 @@ namespace PrisonGame.Prototype
             if (cursorCaptured)
             {
                 GUI.Label(new Rect(viewWidth / 2f - 12, viewHeight / 2f - 12, 24, 24), "+", hintStyle);
-                GUI.Box(new Rect(viewWidth / 2f - 230, viewHeight - 42, 460, 32), GUIContent.none);
-                GUI.Label(new Rect(viewWidth / 2f - 230, viewHeight - 42, 460, 32), "WASD: walk    Mouse: look    Esc: settings", hintStyle);
+                GUI.Box(new Rect(viewWidth / 2f - 300, viewHeight - 42, 600, 32), GUIContent.none);
+                GUI.Label(new Rect(viewWidth / 2f - 300, viewHeight - 42, 600, 32), "WASD: walk   E: interact   Q: put down   Esc: settings", hintStyle);
                 GUI.matrix = previousMatrix;
                 return;
             }
@@ -154,6 +155,7 @@ namespace PrisonGame.Prototype
             GUI.Box(panel, "Prison prototype - movement test");
             GUILayout.BeginArea(new Rect(panel.x + 20, panel.y + 30, panel.width - 40, panel.height - 40));
             GUILayout.Label("WASD to walk. Move the mouse to look.", labelStyle);
+            GUILayout.Label("E interacts. Q puts down a carried item.", labelStyle);
             GUILayout.Label("Escape releases the mouse and opens these settings.", labelStyle);
             GUILayout.Space(10);
             GUILayout.Label("Mouse sensitivity: " + mouseSensitivity.ToString("0.00"), labelStyle);

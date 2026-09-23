@@ -16,6 +16,11 @@ var originalCameraRotation = camera.transform.localRotation;
 var originalPitch = type.GetField("pitch", flags).GetValue(script);
 var originalVertical = type.GetField("verticalSpeed", flags).GetValue(script);
 bool wasEnabled = script.enabled;
+// ROOM-03 adds a closed door. These movement-only checks need a clear doorway;
+// verify-room03.cs separately checks movement against the closed and open door.
+var door = UnityEngine.Object.FindFirstObjectByType<PrisonGame.Prototype.PrototypeDoor>();
+var doorCollider = door != null ? door.GetComponent<BoxCollider>() : null;
+bool doorWasEnabled = doorCollider != null && doorCollider.enabled;
 var inputSettings = UnityEngine.InputSystem.InputSystem.settings;
 var previousBackground = inputSettings.backgroundBehavior;
 var previousEditorInput = inputSettings.editorInputBehaviorInPlayMode;
@@ -30,6 +35,7 @@ void Walk(Vector2 input, int frames, float dt) {
     for (int i=0;i<frames;i++) step.Invoke(script,new object[]{input,dt});
 }
 try {
+    if (doorCollider != null) doorCollider.enabled = false;
     // Synthetic device tests must not depend on whether the user is focused on VS Code.
     // These temporary test settings are restored below; production focus behavior is unchanged.
     inputSettings.backgroundBehavior = UnityEngine.InputSystem.InputSettings.BackgroundBehavior.IgnoreFocus;
@@ -94,6 +100,7 @@ try {
     Check(Cursor.lockState==CursorLockMode.None && Cursor.visible,"Escape releases cursor");
     return string.Join("\n",results);
 } finally {
+    if (doorCollider != null) doorCollider.enabled = doorWasEnabled;
     if(keyboard!=null) UnityEngine.InputSystem.InputSystem.RemoveDevice(keyboard);
     inputSettings.backgroundBehavior = previousBackground;
     inputSettings.editorInputBehaviorInPlayMode = previousEditorInput;

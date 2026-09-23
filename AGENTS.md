@@ -1,5 +1,5 @@
 # Project
-First-person prison sandbox game. A rough room layout and tested first-person controller exist; user movement/scale review and basic interactions are next. Read `docs/progress.md` for verified implementation status.
+First-person prison sandbox game. A rough room, first-person controller, and basic door/pickup/inmate interactions exist and have passed Editor checks. User playtest review, art references, and a Windows build are next. Read `docs/progress.md` for verified implementation status.
 
 # Sources of truth (in priority order)
 1. `docs/` (start at `docs/README.md`). Current and authoritative.

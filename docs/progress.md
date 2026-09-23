@@ -29,7 +29,7 @@ Verified baseline: `PrisonGame/` uses Editor 6000.3.24f1 and URP. Room01_Blockou
 | ROOM-01 | Build rough cell, corridor, and small common area | Done | SETUP-04 | Saved/reopened scene with connected passages and placeholder furniture; technical checks below passed. User accepted the resulting prototype on September 23. Dimensions remain provisional. |
 | ROOM-02 | Add first-person movement and looking | Done | ROOM-01 | 14 Play-mode controller checks passed, with zero console errors/warnings. User accepted the resulting prototype on September 23. |
 | ROOM-03 | Add basic interactions | Done | ROOM-02 | Door/controls, pickup/placement, inmate response, and prompts implemented; 26 Editor checks passed. User accepted the resulting prototype on September 23. |
-| ART-01 | Assemble a small visual reference board | Needs your review | Existing art direction | Four inspected reference images in art-reference-board.md cover character/dialogue, prison architecture/daylight, props/materials, and accent lighting. Sources credited; specific choices await user review. |
+| ART-01 | Assemble a small visual reference board | Needs your review | Existing art direction | Five inspected/credited images. User agreed funny/cute original characters near Schedule I's proportions, its surface-detail level, and occasional cozy dramatic lighting. Added enclosed fluorescent corridor as B2; B1/B2/combination choice remains open. |
 | CHECK-01 | Playtest, adjust, and make a Windows build | Done | ROOM-03 | Windows x86-64 Development build succeeded; 18 executable checks passed, with rendered scene inspected. User already approved the room. Visible menu clicks and testing on another PC remain outside this automated verification. |
 
 ## ROOM-01 verification
@@ -102,7 +102,7 @@ The user designated `https://github.com/jjoaqu7/prisongame.git` as this game's p
 
 ## Decisions and later work
 
-- ART-01 draft: [four-image board](art-reference-board.md), with original image copies under `docs/art-references/`. Three official TVGS/Steam screenshots and one NPS cellhouse photo were opened and visually inspected. All proposed applications remain unapproved. The next step is the user's feedback, beginning with character proportions if useful; then one inmate/cell-corner sample. No Unity assets or scene appearance changed for this board.
+- ART-01: [updated board](art-reference-board.md), with reference images under `docs/art-references/`. Three TVGS/Steam screenshots, one NPS cellhouse photo, and one Jasper Kortmann/Pexels fluorescent corridor photo were opened and visually inspected. User feedback is recorded as agreed in art-and-tone.md for characters, surface-detail level, and occasional dramatic/cozy lighting. B1/B2/combination remains open; reusable material workflow and sample designs remain proposed. No Unity assets or scene appearance changed for this update.
 - Agreed September 23: release 1 single-player, release 2 co-op. Keep later co-op in mind as systems grow; boundaries and open hosting/progression choices are in the development plan. No networking implementation is authorized by this note alone.
 - Earning-loop work is deferred at the user's request. The snack-pack example remains proposed; resume selection and implementation later.
 - Once room dimensions work, begin one representative art sample alongside the small earning loop. Finished characters, rigging, animation, and a full art set are later work.
@@ -149,8 +149,8 @@ Re-estimate after ROOM-02 implementation: the original 12-24 hour range above is
 
 ## Session handoff
 
-- Latest update: ART-01 first reference board prepared and linked from README/art-and-tone. Four source images inspected and annotated; user review pending. Windows prototype remains built and verified; no gameplay or Unity scene changes this turn.
+- Latest update: recorded the user's A/C/D art decisions and added a visually inspected B2 fluorescent-lit prison corridor with photo/source credit. Board and owning art document distinguish agreed choices from proposals. Windows prototype unchanged.
 - Publication: local commits contain the prototype and approval. The last confirmed push attempt could not obtain GitHub credentials; the last remote verification reported `150742e`. Agents are authorized to commit and push scoped game work when authentication works. The built executable is ignored by Git; source and test evidence are versioned.
-- Next action: user reviews A-D in art-reference-board.md, starting with character proportions. Record chosen visual details in art-and-tone.md, then develop the proposed inmate/cell-corner sample. Standalone visible menu/use checks remain available; earning-loop work stays deferred at the user's request.
+- Next action: user compares B1 (tall/daylit) and B2 (enclosed/fluorescent), with a combination also proposed. Record the choice, then develop the proposed original inmate/cell-corner sample using the agreed character/detail/accent-light direction. Standalone visible menu/use checks remain available; earning-loop work stays deferred.
 - Current blockers: no build or gameplay blocker found in automated checks. Last publication attempt was blocked on GitHub authentication. Co-op implementation is deferred to release 2, not blocking the solo prototype.
-- User decisions/reviews upcoming: standalone visible menu use and art references; return to the earning-loop activity later. Release 2 hosting/player count/shared progression remain open.
+- User decisions/reviews upcoming: everyday interior B1/B2/combination, then original character and cell-corner designs; standalone visible menu use. Return to the earning-loop activity later. Release 2 hosting/player count/shared progression remain open.

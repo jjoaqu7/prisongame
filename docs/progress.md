@@ -113,6 +113,7 @@ Re-estimate after ROOM-02 implementation: the original 12-24 hour range above is
 ## Session handoff
 
 - Latest update: ROOM-02 implemented and technically verified; controller, scene, test snippet, and controls screenshot saved. Editor left outside Play mode for the user's own test.
+- Publication: controller commit `393c9ed` is saved locally. GitHub still pointed to `150742e` on verification. Push stalled in the credential helper; a non-interactive retry confirmed that Git cannot obtain credentials. User must restore GitHub authentication and run `git push origin main` from the game repository to publish the pending commits.
 - Next action: user reviews ROOM-02 movement and scale; address feedback, then proceed to ROOM-03 interactions. ART-01 references can be developed alongside this review.
-- Current blockers: no technical blocker; user feedback is pending before closing ROOM-02.
+- Current blockers: no gameplay blocker; user feedback is pending before closing ROOM-02. Publishing the latest commits is blocked on GitHub authentication.
 - User reviews upcoming: room scale/movement and visual reference direction.

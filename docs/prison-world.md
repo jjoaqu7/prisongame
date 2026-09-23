@@ -54,6 +54,6 @@ Implemented for scale testing in `PrisonGame/Assets/Scenes/Room01_Blockout.unity
 
 Walls are 0.2 m thick and 3.2 m high, centred on the footprint boundaries; clear internal widths are therefore slightly smaller. Floor tops are at Y=0. The cell opens into the corridor through a 1.4 m wide, 2.3 m high opening. The common area entry is 2.4 m wide and 2.5 m high. Door leaves and interactions are deferred to ROOM-03. Corridors end at solid walls in this test scene.
 
-A bunk, desk, stool, shared table, and benches provide static scale references. The top is open to inspect the layout; there is no finished ceiling, lighting design, or artwork. The player spawn marker is at (-3.4, 0, -0.5), facing the cell exit. A player controller has not been added.
+A bunk, desk, stool, shared table, and benches provide static scale references. The top is open to inspect the layout; there is no finished ceiling, lighting design, or artwork. The player spawn marker is at (-3.4, 0, -0.5), facing the cell exit. ROOM-02 adds a player at 0.05 m above that marker, with a 1.8 m tall, 0.6 m wide collision capsule and camera 1.7 m above the player's feet. Gravity settles the player onto the floor.
 
-The current camera is an overhead layout preview. Open the scene from `Assets/Scenes` to inspect it; [saved overview](../PrisonGame/Assets/Screenshots/room01-overview.png). Completion evidence and next work live in [Progress](progress.md).
+The Game camera is now first-person; the Scene view can still be used to inspect the whole layout. Open the scene from `Assets/Scenes`; [saved ROOM-01 overview](../PrisonGame/Assets/Screenshots/room01-overview.png). Completion evidence, controls, and next work live in [Progress](progress.md).

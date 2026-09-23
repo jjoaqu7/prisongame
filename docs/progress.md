@@ -14,7 +14,7 @@ The [development plan](development-plan.md) owns milestone scope and sequencing.
 
 Finish setup and make the first rough room playable. Proposed task breakdown below implements the accepted broad workflow; specific room layout and visual choices remain subject to user review.
 
-Verified baseline: `PrisonGame/` uses Editor 6000.3.24f1 and URP. ROOM-01 now exists as a separate scene with static geometry and furniture. First-person movement and gameplay interactions are not implemented.
+Verified baseline: `PrisonGame/` uses Editor 6000.3.24f1 and URP. The Room01_Blockout scene now has static geometry, furniture, and a first-person controller. Technical controller checks passed; subjective movement/scale review is pending. Gameplay interactions are not implemented.
 
 ## Tasks
 
@@ -27,7 +27,7 @@ Verified baseline: `PrisonGame/` uses Editor 6000.3.24f1 and URP. ROOM-01 now ex
 | SETUP-04 | Verify a reversible MCP scene edit | Done | SETUP-03 | MCP created `__MCP_Verification_Temporary`, a scene read confirmed it, MCP deleted it, and a final read confirmed the original three objects and a saved scene. Saving updated template serialization to the installed Unity version; those reviewed changes are retained. |
 | SETUP-05 | Connect the user-designated private GitHub repository | Done | SETUP-03 | Configured origin as `https://github.com/jjoaqu7/prisongame.git`; pushed main with upstream tracking. `git ls-remote origin refs/heads/main` matched local checkpoint `e73bffa`. Existing baseline commits are included. |
 | ROOM-01 | Build rough cell, corridor, and small common area | Done | SETUP-04 | `Assets/Scenes/Room01_Blockout.unity` saved and reopened; 56 solid BoxColliders, connected passages, and placeholder furniture. Temporary dimensions recorded in prison-world.md. Technical checks below passed; user scale/feel approval awaits movement and playtesting. |
-| ROOM-02 | Add first-person movement and looking | To do | ROOM-01 | Player can traverse the space without passing through walls; mouse sensitivity and cursor release work. |
+| ROOM-02 | Add first-person movement and looking | Needs your review | ROOM-01 | Implemented in Room01_Blockout; 14 Play-mode controller checks passed, with zero console errors/warnings. User to assess speed, sensitivity, and room scale before recording approval. |
 | ROOM-03 | Add basic interactions | To do | ROOM-02 | One door opens, one item can be picked up and put down, and one placeholder inmate responds to a simple interaction; prompts are readable. |
 | ART-01 | Assemble a small visual reference board | To do | Existing art direction | Character, cell, lighting, and interface references have source links; user reviews the proposed direction. Can overlap room work. |
 | CHECK-01 | Playtest, adjust, and make a Windows build | To do | ROOM-03 | User reviews movement/scale; agreed adjustments are tested; standalone build launches and basic interactions work without blocking errors. |
@@ -40,6 +40,20 @@ Verified baseline: `PrisonGame/` uses Editor 6000.3.24f1 and URP. ROOM-01 now ex
 - Visually inspected the [overview capture](../PrisonGame/Assets/Screenshots/room01-overview.png). Removed temporary text labels that rendered through walls before capturing the final view.
 - Initial evaluation failed to compile because Pipeline eval expects a method body rather than namespace imports. Corrected the snippet before successful execution; no gameplay scripts were compiled or introduced.
 - Limits: these are Editor geometry checks, not a controller playtest or standalone build. Final room dimensions, colours, furniture, and movement feel have not been approved by the user. No gameplay or runtime automation tests were added for this static blockout.
+
+## ROOM-02 controls and verification
+
+Open `Assets/Scenes/Room01_Blockout.unity`, press Unity's Play button, select the Game tab, and click **Resume walking**. Use WASD to walk and the mouse to look. Escape releases the cursor and opens sensitivity settings; Resume captures it again. Leaving application focus also releases the mouse. Sensitivity is saved locally between sessions. Press Unity's Play button again to stop testing.
+
+Current temporary settings: 3 m/s walking, 70-degree vertical field of view, 1.7 m eye offset, pitch clamped to +/-85 degrees, default sensitivity 0.12 degrees per mouse pixel (adjustable 0.03-0.4). No jump, sprint, camera bob, or gameplay interaction is implemented. Releasing the mouse stops input-driven movement; it is not a global pause system.
+
+`Assets/Prototype/Scripts/FirstPersonController.cs` uses the installed Input System and a CharacterController. `tools/unity/verify-room02.cs` is a repeatable Pipeline evaluation snippet: run via `eval_file` in Play mode with this scene loaded. It tests actual controller movement against the scene and synthetic keyboard events; it restores player state and temporary input settings afterward, leaving the cursor released.
+
+Passed 14 checks: cell doorway traversal; corridor travel/turn; common entry traversal; sustained wall blocking; gravity/floor support; consistent 3 m/s at 30/60/144 simulated FPS; no diagonal speed boost; upper/lower pitch limits; fall recovery; W/A action bindings; focus-loss release; Escape release. This is an in-Editor integration check, not a standalone build or a substitute for the user's mouse/keyboard playtest.
+
+During test development, a diagonal-speed check initially intersected a bench; its starting position was corrected. Synthetic keyboard events were also rejected while Game view was unfocused; the test now temporarily accepts background input and restores the normal focus settings in `finally`. No production focus settings were relaxed. The successful final run reported zero console errors/warnings. Visually inspected the [scaled settings panel](../PrisonGame/Assets/Screenshots/room02-controls.png).
+
+User review: can you comfortably leave the cell, turn down the corridor, enter the common area, and walk around the furniture? Report any trapping/clipping, uncomfortable camera motion, movement speed changes wanted, and rooms that feel too large or small.
 
 ## Local checkpoint and recovery
 
@@ -94,9 +108,11 @@ Assume a solo placeholder prototype, existing Unity/CLI/MCP installation, agent-
 
 Working hours include implementation, checks, troubleshooting, and active review, not just user typing time. At roughly two focused hours per working day, allow 6-12 working days. Waiting for feedback, extended Unity learning, unexpected setup failures, or scope changes adds calendar time. Custom finished models, multiplayer, economy, saving, and extensive animation are outside this range. Re-estimate after ROOM-02 using actual elapsed work; record the reason when the range changes.
 
+Re-estimate after ROOM-02 implementation: the original 12-24 hour range above is retained as an initial forecast, not a current remaining-work estimate. The rough room and controller each took minutes of agent execution rather than the originally allocated hours; the controller implementation/checking pass was roughly 15 minutes, excluding user review. A provisional remaining allowance is 3-8 focused hours for interaction work (1-3), references (1-2), and playtest adjustments/build troubleshooting (1-3). This assumes no major scope change; human feedback and asset decisions remain unmeasured. Revisit after the user's first movement playtest.
+
 ## Session handoff
 
-- Latest update: completed ROOM-01 geometry, collision checks, scene reload, and overview capture; recorded provisional dimensions and remaining limitations.
-- Next action: ROOM-02, add first-person movement and looking at the recorded player spawn; then have the user evaluate scale and movement feel.
-- Current blockers: none confirmed for the next action.
+- Latest update: ROOM-02 implemented and technically verified; controller, scene, test snippet, and controls screenshot saved. Editor left outside Play mode for the user's own test.
+- Next action: user reviews ROOM-02 movement and scale; address feedback, then proceed to ROOM-03 interactions. ART-01 references can be developed alongside this review.
+- Current blockers: no technical blocker; user feedback is pending before closing ROOM-02.
 - User reviews upcoming: room scale/movement and visual reference direction.

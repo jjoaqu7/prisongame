@@ -36,6 +36,7 @@ The agreed tracking workflow makes the primary development agent responsible for
 | [Prison world](prison-world.md) | Layout, movement, restricted areas, and expansion |
 | [Factions and events](factions-and-events.md) | Gangs, rivalries, fights, guards, and consequences |
 | [Art and tone](art-and-tone.md) | Visual style, character presentation, and humor |
+| [Art reference board](art-reference-board.md) | Labelled reference pictures and proposed visual choices for review |
 | [Development plan](development-plan.md) | Next design step, a proposed short session, first playable version, and unresolved decisions |
 | [Progress and next tasks](progress.md) | Current work, task status, evidence, blockers, and session handoff |
 

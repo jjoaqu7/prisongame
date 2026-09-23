@@ -22,7 +22,7 @@ The latest clarification explicitly allows deadlines, guard suspicion, supply di
 
 The user accepted the development sequence: establish the basics, build a rough playable room, develop gameplay and feedback together, explore a small art sample alongside that work, polish one integrated section, and then expand.
 
-The current project uses Unity 6.3 LTS and URP. Single-player/co-op release scope remains open; an initial solo prototype is the working recommendation. Reasons and tradeoffs are recorded in [Development plan](development-plan.md).
+The current project uses Unity 6.3 LTS and URP. Agreed on September 23: release 1 is single-player, with co-op planned for release 2. Develop the solo systems with later co-op in mind; this reduces avoidable rework but does not remove later networking work. Reasons, boundaries, and remaining choices are recorded in [Development plan](development-plan.md).
 
 Start each work session at [Progress and next tasks](progress.md). It owns task status and verified results; the [development plan](development-plan.md#execution-checklist) owns the long-term milestones and completion criteria.
 

@@ -39,6 +39,8 @@ As a presentation proposal, keep ordinary activity readable and calm. Use a cons
 
 ## Early art work - agreed approach, proposed assets
 
+An art reference board is a small collection of labelled pictures showing candidate character proportions, prison interiors, lighting, colours, and interface treatment. Each reference should state what we want to borrow from its appearance and link to its source. It supports a visual decision; it is not a set of finished game assets or permission to copy another game's artwork. ART-01 tracks the board and user review; no board has been produced yet.
+
 The user accepted developing a small art study alongside the playable prototype, followed by a polished integrated sample and broader production. Proposed initial assets are one inmate design, a cell corner, a few props, and a sample of the interface. Test proportions, materials, lighting, and readability from the actual first-person camera in the engine. A reusable wall section, door, bunk, table, and character body can establish the direction before producing many variations.
 
 Keep the study easy to revise while room scale and interaction distances are being tested. Detailed production of the full prison and character cast follows a successful small integrated scene.

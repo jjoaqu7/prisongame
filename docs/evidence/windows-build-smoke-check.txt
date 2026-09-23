@@ -1,0 +1,22 @@
+PASS - standalone Windows smoke check
+Unity: 6000.3.24f1
+Scene: Room01_Blockout
+Graphics: Direct3D12
+PASS: Correct startup scene
+PASS: Player and interactive objects included in build
+PASS: Startup releases cursor and presents settings
+PASS: All 75 rendered materials supported
+PASS: Door targeting
+PASS: Closed door blocks walking
+PASS: Animation clock advances
+PASS: E opens door
+PASS: Open door allows walking into corridor
+PASS: Parcel targeting
+PASS: Settings block E interaction
+PASS: E picks up parcel
+PASS: Settings block Q placement
+PASS: Q places parcel and restores physics
+PASS: Wall blocks interaction
+PASS: Inmate targeting
+PASS: E produces inmate response
+PASS: Escape releases controls

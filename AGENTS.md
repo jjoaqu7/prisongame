@@ -1,5 +1,5 @@
 # Project
-First-person prison sandbox game. The rough room, first-person controller, and basic door/pickup/inmate interactions passed Editor checks and received user approval as a prototype. Art references and a Windows build are next; resolve co-op scope before expanding gameplay systems. Read `docs/progress.md` for verified implementation status.
+First-person prison sandbox game. The rough room, first-person controller, and basic door/pickup/inmate interactions passed Editor checks and received user approval as a prototype. Release 1 is single-player; co-op is planned for release 2. Read `docs/progress.md` for verified implementation status and next work.
 
 # Sources of truth (in priority order)
 1. `docs/` (start at `docs/README.md`). Current and authoritative.
@@ -10,6 +10,7 @@ First-person prison sandbox game. The rough room, first-person controller, and b
 - I make design decisions. Label every idea agreed, proposed, or open, per "How to maintain these notes" in `docs/README.md`.
 - Never promote a proposal to agreed, or drop one of my ideas, without asking me.
 - If you think my idea is bad, say so and why. Do not quietly design around it.
+- Keep release 2 co-op in mind while implementing release 1: separate game rules/state from local input, camera, and UI; pass the acting player explicitly where relevant; distinguish shared world state from per-player state. Apply this as systems are developed, without claiming multiplayer readiness or adding speculative networking infrastructure. See the release decision in `docs/development-plan.md`.
 - When I decide something, update its owning doc in `docs/` and its status. Do not edit `docs/history/` except to fix links.
 
 # Communication

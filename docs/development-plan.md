@@ -2,13 +2,13 @@
 
 ## Status
 
-The user accepted the broad development sequence on September 23, 2026. The current project uses Unity 6.3 LTS (6000.3.24f1) and URP. Multiplayer scope, implementation schedule, and detailed prototype content remain open. Documentation does not mean a feature is implemented. Current task status and verification evidence live in [Progress](progress.md).
+The user accepted the broad development sequence on September 23, 2026. The current project uses Unity 6.3 LTS (6000.3.24f1) and URP. Release 1 is single-player; co-op is planned for release 2. Player count, hosting, schedule, and detailed prototype content remain open. Documentation does not mean a feature is implemented. Current task status and verification evidence live in [Progress](progress.md).
 
 The agreed experience allows complex systems, deadlines, suspicion, and disruptions. The game handles bookkeeping and clearly communicates what applies to the player, so the player can focus on actions and decisions. Evaluate the clarity of those systems in the prototype, alongside whether the core activity feels enjoyable.
 
 ## Execution checklist
 
-This is the milestone roadmap. The rough room, movement, and basic interactions are implemented and user-approved for this prototype; the standalone Windows build and earning loop remain outstanding. The lists below describe required work; [Progress](progress.md) is authoritative for individual task status. Working assumptions are Windows PC and an initial solo prototype, not confirmation that co-op has been excluded from the game.
+This is the milestone roadmap. The rough room, movement, and basic interactions are implemented and user-approved for this prototype. The lists below describe required work; [Progress](progress.md) is authoritative for individual task status. Windows PC is the current build target; the first release is agreed single-player, with co-op planned for the second release.
 
 First target: walk from a cell into a shared area, interact with an inmate, complete a small earning activity, improve the cell, and understand any active deadline or guard suspicion without the developer explaining it.
 
@@ -32,13 +32,14 @@ Done when the project opens reliably, the test build launches, and there are no 
 
 Done when walking and interacting feel comfortable and it is clear which objects can be used. Start the small art study in milestone 5 once this scene establishes useful dimensions.
 
-### 3. Resolve the co-op direction before expanding systems
+### 3. Keep later co-op in mind as solo systems grow
 
-- Decide whether co-op is a likely release requirement or a possible future addition.
-- If likely required, test two players moving in the same room, using the door, and competing to pick up one item. Add a basic shared trade, clock, and guard state before expanding those systems.
-- If only a future possibility, proceed with a solo first version and record that later networking may require substantial rework.
+- Release direction is agreed: single-player first release; co-op second release.
+- Separate world rules from local controls and presentation. Specify the acting player for interactions, and distinguish shared world state from personal inventory, objectives, and settings as those systems are designed.
+- Centralize checks and changes for important actions such as taking an item or completing a sale so a later host can validate them. Introduce stable identities and versioned data when saving is implemented; avoid using camera references or scene names as persistent ownership.
+- Plan a bounded two-player feasibility test before the larger inventory/economy/save design becomes expensive to change. Its timing is proposed and it is not part of the current Windows build task. Shipping co-op remains release 2.
 
-Done when the scope decision is recorded and, if pursuing co-op, the small shared-world test works consistently. Do not treat separating code into modules as proof that it is multiplayer-ready.
+The release decision is recorded. Apply these implementation boundaries as each system is added and revisit them at milestone reviews. No networking package or shared-world test has been implemented. Separating code does not establish multiplayer readiness.
 
 ### 4. Build one earning loop with its feedback
 
@@ -142,7 +143,9 @@ Unity's [2026 rendering strategy](https://unity.com/topics/render-pipelines-stra
 
 HDRP remains capable, but we have not identified a visual requirement that justifies selecting it for this game. An older renderer can still support a successful released game; that alone does not make it the best starting choice today. Switching pipelines later can require material and shader changes, so test our first character and cell art in the selected pipeline before producing many assets.
 
-## Single-player and co-op - decision open
+## Single-player first release, co-op second release - agreed
+
+On September 23, the user clarified that co-op belongs in the second game release, not the first, and requested development choices that reduce later rework. This is a planned second release of this project; whether it is an update or a separately distributed release is not specified. Networking implementation is deferred. Player count, hosting, joining/leaving behavior, shared progression, and old-save compatibility remain open.
 
 Co-op is substantially more implementation and testing work than the same world in single-player. No reliable percentage or time multiplier can be given before the features and connection model are defined. Unity provides networking and session tools, but gameplay still needs explicit synchronization and rules about which machine decides shared results. [Unity casual co-op quickstart](https://docs.unity.com/en-us/multiplayer/quickstarts/casual-co-op-quickstart).
 
@@ -155,13 +158,13 @@ For this prison game, additional design and implementation would include:
 - Deciding who owns the world save and what joining, leaving, reconnecting, and host departure do to progress.
 - Testing multiple clients, delayed messages, dropped connections, and adverse network conditions. Unity explicitly recommends testing under simulated latency and packet loss during development. [Unity multiplayer testing guidance](https://docs-multiplayer.unity3d.com/netcode/2.3.2/tutorials/testing/testing_with_artificial_conditions/).
 
-Recommendation: begin with a small solo interaction prototype. If co-op is likely to be part of the release, follow it with an early two-player test of movement, item pickup, one trade, one guard, and synchronized time before building the wider inventory, economy, AI, and save systems. Expanding a small networked foundation differs from adding multiplayer after a finished solo game.
+Implementation recommendation: continue the solo prototype, separating player requests, world-state changes, and local presentation as systems grow. Important interactions should identify the acting player; world rules should not read the local keyboard or depend on the main camera. Document which state is shared or personal. Unity's [ownership and authority guidance](https://docs-multiplayer.unity3d.com/netcode/2.3.2/basics/ownership/) explains why networked state later needs explicit ownership and permission to change it; the specific architecture above is our project recommendation, not a selected networking library.
 
-If co-op is only a possible future addition, a single-player first release is the lower-work option. Keep world rules separate from the local camera and interface and avoid unnecessarily tying every system to one player. This can reduce rework but does not make later networking cheap or automatic.
+These boundaries reduce avoidable coupling but cannot guarantee a cheap co-op conversion. Synchronization, simultaneous item use, latency, disconnects, UI/session flow, and multiplayer testing remain additional work. The current movement and pickup scripts are solo prototypes, not a verified networking foundation. Proposed later risk check: use an isolated two-player test before inventory, economy, and saving become large. Do not delay the current standalone build for this test or build a generic networking framework in advance.
 
 A possible limited co-op scope is a private game hosted by one player, beginning with two players and a save kept by the host. If the host leaves, the session ends. This avoids needing seamless transfer of the host role initially, but still requires connection handling, state synchronization, persistence rules, and multiplayer testing. Player count and hosting choices are proposals only.
 
-The immediate choice is whether co-op is a likely release requirement or an optional later possibility. The first rough room can be explored solo in either case; the answer determines how soon the shared-world test must follow.
+The release-order decision is settled. The next networking decisions are the second release's player count, hosting model, and shared/personal progression rules; those can be addressed separately from this Windows prototype build.
 
 ## Next step - design and test one short session
 
@@ -184,7 +187,7 @@ Provide enough starting supplies to complete the first sale and an accessible wa
 
 For this earliest test, connect a cell, shared landing, and small common room with the table and supplier. A few placeholder characters suffice. This precedes the larger first playable prison day below. It does not require a functioning whole prison, combat, a gang simulation, or finished artwork.
 
-Choose the engine and whether multiplayer is a goal before building substantial systems. Meanwhile, the session and rough floor plan can be designed without those decisions.
+Unity and the release order are selected. Use the implementation boundaries above when the earning loop resumes. The user deferred earning-loop work on September 23; its snack-pack activity remains a proposal.
 
 After playing the test, ask:
 
@@ -236,6 +239,6 @@ The larger prison can be sketched now; only the spaces needed for the current pl
 5. How do the earlier labor quotas, multipliers, and global upgrades fit the sandbox?
 6. What does gang progression allow, and can it support a long-term goal beyond escape?
 7. Which asset tools should be selected? The current project uses Unity 6.3 LTS and URP; the asset creation workflow remains open.
-8. Is co-op a likely release requirement or only a possible future addition? Resolve this before substantial inventory, economy, AI, and save implementation; use the tradeoffs above.
+8. For release 2 co-op, what player count, hosting model, shared/personal progression, and save compatibility should be supported? Release 1 single-player / release 2 co-op is already agreed.
 
 The immediate development milestone is a rough Unity room with movement, interaction, a small earning loop, and understandable feedback for a deadline and rising guard suspicion. A small visual study can proceed alongside that work. A full prison day follows once those interactions are enjoyable and clear.

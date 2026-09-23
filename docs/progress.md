@@ -14,7 +14,7 @@ The [development plan](development-plan.md) owns milestone scope and sequencing.
 
 Finish setup and make the first rough room playable. Proposed task breakdown below implements the accepted broad workflow; specific room layout and visual choices remain subject to user review.
 
-Verified baseline: `PrisonGame/` uses Editor 6000.3.24f1 and URP. Room01_Blockout has geometry, furniture, a first-person controller, a sliding door, a carryable parcel, and a placeholder inmate. All 14 controller checks and 26 interaction checks passed in the Editor. On September 23, 2026, the user responded "All looks great!" to the completed room and interaction playtest handoff. ROOM-02/03 are accepted for this prototype; this does not approve final artwork or settle later mechanics. A standalone build remains untested.
+Verified baseline: `PrisonGame/` uses Editor 6000.3.24f1 and URP. Room01_Blockout has geometry, furniture, a first-person controller, a sliding door, a carryable parcel, and a placeholder inmate. All 14 controller checks and 26 interaction checks passed in the Editor. On September 23, 2026, the user responded "All looks great!" to the completed room and interaction playtest handoff. ROOM-02/03 are accepted for this prototype; this does not approve final artwork or settle later mechanics. The Windows Development executable now passes 18 standalone checks; visible menu-button use remains a user check.
 
 ## Tasks
 
@@ -30,7 +30,7 @@ Verified baseline: `PrisonGame/` uses Editor 6000.3.24f1 and URP. Room01_Blockou
 | ROOM-02 | Add first-person movement and looking | Done | ROOM-01 | 14 Play-mode controller checks passed, with zero console errors/warnings. User accepted the resulting prototype on September 23. |
 | ROOM-03 | Add basic interactions | Done | ROOM-02 | Door/controls, pickup/placement, inmate response, and prompts implemented; 26 Editor checks passed. User accepted the resulting prototype on September 23. |
 | ART-01 | Assemble a small visual reference board | To do | Existing art direction | Character, cell, lighting, and interface references have source links; user reviews the proposed direction. Can overlap room work. |
-| CHECK-01 | Playtest, adjust, and make a Windows build | To do | ROOM-03 | User reviews movement/scale; agreed adjustments are tested; standalone build launches and basic interactions work without blocking errors. |
+| CHECK-01 | Playtest, adjust, and make a Windows build | Done | ROOM-03 | Windows x86-64 Development build succeeded; 18 executable checks passed, with rendered scene inspected. User already approved the room. Visible menu clicks and testing on another PC remain outside this automated verification. |
 
 ## ROOM-01 verification
 
@@ -70,7 +70,25 @@ Implemented at the user's request to proceed. The sliding mechanism, one-item ca
 
 Reran all 14 ROOM-02 checks successfully. That movement-only fixture temporarily disables the added door collider and restores it afterward; ROOM-03 separately tests closed/open door collision. Final Editor console: zero errors/warnings, no compilation failure. Scene saved and Editor left outside Play mode.
 
-Visually inspected the updated [controls panel](../PrisonGame/Assets/Screenshots/room03-controls.png). Automated capture repeatedly released Game-view focus, so this screenshot verifies the settings layout, not active interaction prompt readability. The user subsequently accepted the prototype with "All looks great!"; no specific usability problems were reported. No standalone build has been tested.
+Visually inspected the updated [controls panel](../PrisonGame/Assets/Screenshots/room03-controls.png). Automated capture repeatedly released Game-view focus, so this screenshot verifies the settings layout, not active interaction prompt readability. The user subsequently accepted the prototype with "All looks great!"; no specific usability problems were reported. Later standalone verification is recorded under CHECK-01 below.
+
+## CHECK-01 Windows build
+
+Build target: Windows x86-64, Mono backend, Development build, Unity 6000.3.24f1. The only included scene is `Assets/Scenes/Room01_Blockout.unity`; the empty template scene has been removed from the build list, not deleted. Default window is resizable, 1280 x 720. Escape opens settings; the standalone settings panel adds **Quit game**.
+
+Output: `PrisonGame/Builds/Windows/PrisonGame.exe`. Run it from its existing folder; the executable needs the accompanying `_Data` folder, UnityPlayer.dll, and runtime files. Build output is ignored by Git and is regenerated from source.
+
+Rebuild using Unity MCP `build` with target `StandaloneWindows64`, outputPath `Builds/Windows/PrisonGame.exe`, scenes `["Assets/Scenes/Room01_Blockout.unity"]`, options `["Development", "DetailedBuildReport"]`, and confirm `true`; poll `build_status` to completion. Do not build while Play mode is running or a previous copy of the executable is still open.
+
+Run `./tools/test-windows-build.ps1` from PowerShell for automated executable checks. It launches the build with `-prototype-smoke-test`, checks startup/physics/interactions/input, saves a camera image and results under `Builds/Windows/SmokeCheck`, and exits. `StandaloneSmokeCheck.cs` is opt-in, excluded from non-development Players, and does not create a test object during ordinary launches. Camera rendering verifies the 3D scene; it does not capture the settings or interaction UI. The script has a 45-second timeout and clears only its previous evidence files to prevent stale results.
+
+Final build succeeded with zero errors and one warning that Pipeline automation is disabled in Players because no RuntimePipelineConfig exists. No runtime automation service was enabled to remove that warning. Initial build took about 100 seconds; final incremental build took about 12 seconds. BuildReport size: 179,328,865 bytes (about 171 MiB), excluding separate debug/evidence files. Unity refreshed URP build settings and serialized project settings during this first build; the resulting scene rendering was checked.
+
+Passed 18 checks inside the executable: correct startup scene and objects, released startup controls, all 75 rendered materials supported, door targeting/closed collision/animation/opening/passage, parcel targeting, settings blocking E/Q, E pickup, Q placement with physics, wall occlusion, inmate targeting/response, and Escape release. The successful run exited with code 0 and recorded no Unity error/exception/assert events. [Saved report](evidence/windows-build-smoke-check.txt); [inspected camera capture](evidence/windows-build-camera.png). The native log contains a D3D12 info-queue query diagnostic; Direct3D12 rendering and all checks succeeded despite it.
+
+Early test failures were in the verification fixture: hidden-window backbuffer capture failed, a fixed animation tick budget was too short at the Player's small frame time, and the manually advanced door needed a physics-transform sync before walking through it. Corrected those test assumptions without weakening checks or changing door gameplay. Sandbox execution also denied normal Unity per-user folders; final verification ran with normal Windows access.
+
+An ordinary launch without the test flag stayed running for the eight-second startup check. Closing its hidden window through the OS window helper was unavailable, so that test process was explicitly stopped; do not count this as a verified Quit-button click. User can now open the executable normally, click Resume walking, try the interactions, and use Escape > Quit game. The camera capture excludes UI. This is a local prototype Development build, not a shipping/performance certification or a test on other PCs.
 
 ## Local checkpoint and recovery
 
@@ -84,7 +102,8 @@ The user designated `https://github.com/jjoaqu7/prisongame.git` as this game's p
 
 ## Decisions and later work
 
-- Co-op release scope remains open. Resolve it before expanding inventory, economy, AI, and saving; an early solo room does not settle it.
+- Agreed September 23: release 1 single-player, release 2 co-op. Keep later co-op in mind as systems grow; boundaries and open hosting/progression choices are in the development plan. No networking implementation is authorized by this note alone.
+- Earning-loop work is deferred at the user's request. The snack-pack example remains proposed; resume selection and implementation later.
 - Once room dimensions work, begin one representative art sample alongside the small earning loop. Finished characters, rigging, animation, and a full art set are later work.
 - Add an asset register when collecting production assets: source, usage terms, editable source file, Unity location, and temporary/finished status.
 - Use independent review when a substantial feature or milestone warrants it. No additional agents are running or scheduled by this document.
@@ -101,7 +120,7 @@ Agreed: retain these as future evaluation tasks. Adding or running the agents is
 | AGENT-03 | Art and asset specialist | To do | First representative assets are imported | Assess scale, materials, collisions, and consistency with the user-approved art direction. |
 | AGENT-04 | Interface reviewer | To do | Orders, deadlines, or suspicion indicators exist | Check that cause, timing, progress, and consequences are understandable; retain user playtesting. |
 | AGENT-05 | Performance specialist | To do | A representative prison scene can be measured | Define performance targets, collect measurements, and assess whether specialist investigation is useful. |
-| AGENT-06 | Networking specialist | To do | Co-op is selected as a likely release requirement | Review shared item ownership and simultaneous interactions during the early multiplayer test, before expanding systems. |
+| AGENT-06 | Networking specialist | To do | Planning the release 2 co-op feasibility test | Review shared item ownership, simultaneous interactions, and state boundaries; evaluation deferred, no networking agent running. |
 
 For each evaluation, record whether to adopt, defer, or decline the role and why. A decision to defer or decline completes the evaluation without implying an agent was installed or run. Additional roles can be added when a concrete need appears.
 
@@ -129,8 +148,8 @@ Re-estimate after ROOM-02 implementation: the original 12-24 hour range above is
 
 ## Session handoff
 
-- Latest update: user accepted the room and interactions with "All looks great!" ROOM-02 and ROOM-03 marked Done for this prototype. No gameplay changes in this documentation update.
-- Publication: pending local commits include controller `393c9ed` and subsequent work. This session retried `git push origin main`; Git could not obtain a username with interactive prompts disabled. Remote verification still reported `150742e`. Committing works; publishing requires restored GitHub authentication. The user can run an interactive `git push origin main` once to sign in; agents are authorized to commit and push subsequent scoped game work when credentials are available.
-- Next action: finish CHECK-01 with a Windows executable and launch/interaction checks; develop ART-01 references alongside it. Resolve the open co-op release direction before expanding inventory, economy, AI, or saving. Then select the first earning-loop activity; snack packs remain a candidate.
-- Current blockers: no blocker for building or collecting art references. Last push attempt was blocked on GitHub authentication; no new authentication evidence this turn.
-- User decisions/reviews upcoming: visual references, co-op release direction, and the proposed first earning activity.
+- Latest update: CHECK-01 built and verified. Windows executable is under `PrisonGame/Builds/Windows`; Editor is outside Play mode with a saved scene. Added standalone Quit button and opt-in executable verification. Recorded first release single-player / second release co-op, with coding boundaries in AGENTS.md and development-plan.md.
+- Publication: local commits contain the prototype and approval. The last confirmed push attempt could not obtain GitHub credentials; the last remote verification reported `150742e`. Agents are authorized to commit and push scoped game work when authentication works. The built executable is ignored by Git; source and test evidence are versioned.
+- Next action: user opens the Windows executable normally for visible menu/use checks. ART-01 references remain the next design task; the user asked what a reference board means and has not selected its specific visual proposals. Earning-loop work is deferred at the user's request.
+- Current blockers: no build or gameplay blocker found in automated checks. Last publication attempt was blocked on GitHub authentication. Co-op implementation is deferred to release 2, not blocking the solo prototype.
+- User decisions/reviews upcoming: standalone visible menu use and art references; return to the earning-loop activity later. Release 2 hosting/player count/shared progression remain open.

@@ -151,8 +151,9 @@ namespace PrisonGame.Prototype
             }
 
             float width = Mathf.Min(440, viewWidth - 20);
-            Rect panel = new Rect((viewWidth - width) / 2f, Mathf.Max(10, (viewHeight - 270) / 2f), width, 270);
-            GUI.Box(panel, "Prison prototype - movement test");
+            float panelHeight = Application.isEditor ? 270 : 320;
+            Rect panel = new Rect((viewWidth - width) / 2f, Mathf.Max(10, (viewHeight - panelHeight) / 2f), width, panelHeight);
+            GUI.Box(panel, "Prison prototype - settings");
             GUILayout.BeginArea(new Rect(panel.x + 20, panel.y + 30, panel.width - 40, panel.height - 40));
             GUILayout.Label("WASD to walk. Move the mouse to look.", labelStyle);
             GUILayout.Label("E interacts. Q puts down a carried item.", labelStyle);
@@ -168,6 +169,7 @@ namespace PrisonGame.Prototype
             }
             GUILayout.Space(12);
             if (GUILayout.Button("Resume walking", buttonStyle, GUILayout.Height(40))) SetCursorCaptured(true);
+            if (!Application.isEditor && GUILayout.Button("Quit game", buttonStyle, GUILayout.Height(36))) Application.Quit();
             GUILayout.EndArea();
             GUI.matrix = previousMatrix;
         }

@@ -14,7 +14,7 @@ The [development plan](development-plan.md) owns milestone scope and sequencing.
 
 Finish setup and make the first rough room playable. Proposed task breakdown below implements the accepted broad workflow; specific room layout and visual choices remain subject to user review.
 
-Verified baseline: `PrisonGame/` exists, its Editor version is 6000.3.24f1, and the user opened its URP SampleScene. Gameplay implementation has not started: the Assets scripts found are template Readme scripts.
+Verified baseline: `PrisonGame/` uses Editor 6000.3.24f1 and URP. ROOM-01 now exists as a separate scene with static geometry and furniture. First-person movement and gameplay interactions are not implemented.
 
 ## Tasks
 
@@ -26,11 +26,20 @@ Verified baseline: `PrisonGame/` exists, its Editor version is 6000.3.24f1, and 
 | SETUP-03 | Establish recoverable version control checkpoint | Done | Check repository boundary | Separate `game/` repository; baseline commit `bae004a` contains 75 files. Six essential files recovered from its archive and compared successfully after line-ending normalization; generated caches excluded; `git fsck --full` passed. Visible Meta Files and text serialization confirmed. |
 | SETUP-04 | Verify a reversible MCP scene edit | Done | SETUP-03 | MCP created `__MCP_Verification_Temporary`, a scene read confirmed it, MCP deleted it, and a final read confirmed the original three objects and a saved scene. Saving updated template serialization to the installed Unity version; those reviewed changes are retained. |
 | SETUP-05 | Connect the user-designated private GitHub repository | Done | SETUP-03 | Configured origin as `https://github.com/jjoaqu7/prisongame.git`; pushed main with upstream tracking. `git ls-remote origin refs/heads/main` matched local checkpoint `e73bffa`. Existing baseline commits are included. |
-| ROOM-01 | Build rough cell, corridor, and small common area | To do | SETUP-04 | Separate prototype scene has connected spaces and collisions; temporary dimensions are recorded for review. |
+| ROOM-01 | Build rough cell, corridor, and small common area | Done | SETUP-04 | `Assets/Scenes/Room01_Blockout.unity` saved and reopened; 56 solid BoxColliders, connected passages, and placeholder furniture. Temporary dimensions recorded in prison-world.md. Technical checks below passed; user scale/feel approval awaits movement and playtesting. |
 | ROOM-02 | Add first-person movement and looking | To do | ROOM-01 | Player can traverse the space without passing through walls; mouse sensitivity and cursor release work. |
 | ROOM-03 | Add basic interactions | To do | ROOM-02 | One door opens, one item can be picked up and put down, and one placeholder inmate responds to a simple interaction; prompts are readable. |
 | ART-01 | Assemble a small visual reference board | To do | Existing art direction | Character, cell, lighting, and interface references have source links; user reviews the proposed direction. Can overlap room work. |
 | CHECK-01 | Playtest, adjust, and make a Windows build | To do | ROOM-03 | User reviews movement/scale; agreed adjustments are tested; standalone build launches and basic interactions work without blocking errors. |
+
+## ROOM-01 verification
+
+- Created the scene through Unity MCP using `tools/unity/build-room01.cs`. This file is a Pipeline C# evaluation snippet outside Assets, not a gameplay script. It refuses to overwrite the existing scene and checks for unsaved scenes before creating a new one. Edit the saved scene normally; re-running is unnecessary.
+- Physics checks sampled 115 points along a route from the cell, through both entries, and into the common area. A 0.6 m wide, 1.7 m high capsule with 0.05 m floor clearance found no obstructions; floor raycasts found support at every sample. Seven exterior wall probes found colliders.
+- Reopened the saved scene; it contains 56 enabled, non-trigger BoxColliders, with no missing/error materials. Editor console reported zero errors/warnings and no compilation failure.
+- Visually inspected the [overview capture](../PrisonGame/Assets/Screenshots/room01-overview.png). Removed temporary text labels that rendered through walls before capturing the final view.
+- Initial evaluation failed to compile because Pipeline eval expects a method body rather than namespace imports. Corrected the snippet before successful execution; no gameplay scripts were compiled or introduced.
+- Limits: these are Editor geometry checks, not a controller playtest or standalone build. Final room dimensions, colours, furniture, and movement feel have not been approved by the user. No gameplay or runtime automation tests were added for this static blockout.
 
 ## Local checkpoint and recovery
 
@@ -87,7 +96,7 @@ Working hours include implementation, checks, troubleshooting, and active review
 
 ## Session handoff
 
-- Latest update: added the user's standing communication rule to AGENTS.md; connected origin, pushed main, and verified the remote checkpoint matches the local project. No gameplay implemented yet.
-- Next action: ROOM-01, create a separate prototype scene with a rough cell, corridor, and small common area using temporary dimensions for user review.
+- Latest update: completed ROOM-01 geometry, collision checks, scene reload, and overview capture; recorded provisional dimensions and remaining limitations.
+- Next action: ROOM-02, add first-person movement and looking at the recorded player spawn; then have the user evaluate scale and movement feel.
 - Current blockers: none confirmed for the next action.
 - User reviews upcoming: room scale/movement and visual reference direction.

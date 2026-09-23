@@ -43,6 +43,8 @@ The user accepted developing a small art study alongside the playable prototype,
 
 Keep the study easy to revise while room scale and interaction distances are being tested. Detailed production of the full prison and character cast follows a successful small integrated scene.
 
-Unity is the working engine preference. URP and Blender for models remain recommendations, not confirmed selections. A similar cartoon appearance depends on shapes, materials, lighting, animation, and art direction. Choosing a render pipeline alone does not create the style. See [Development plan](development-plan.md) for the tool recommendation and source links.
+The current project uses Unity and URP. Blender for models remains a recommendation, not a confirmed selection. A similar cartoon appearance depends on shapes, materials, lighting, animation, and art direction. Choosing a render pipeline alone does not create the style. See [Development plan](development-plan.md) for the tool recommendation and source links.
 
 The final asset workflow, animation approach, and exact level of geometric detail remain open. No concept artwork or final assets have been produced as part of these notes.
+
+ROOM-01 uses temporary flat materials, two-tone walls, and box-built furniture for scale testing. These are implementation placeholders, not an approved visual style or a completed art study.

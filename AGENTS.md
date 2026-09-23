@@ -1,5 +1,5 @@
 # Project
-First-person prison sandbox game. Unity project setup is underway; gameplay implementation has not started. Read `docs/progress.md` for verified implementation status.
+First-person prison sandbox game. Unity project setup and a rough room layout exist; first-person movement and gameplay implementation are next. Read `docs/progress.md` for verified implementation status.
 
 # Sources of truth (in priority order)
 1. `docs/` (start at `docs/README.md`). Current and authoritative.

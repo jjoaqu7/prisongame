@@ -17,6 +17,12 @@ First-person prison sandbox game. Unity project setup is underway; gameplay impl
 2. Explain when needed, in plain terms for someone new to game dev and Unity (I'm an engineer). No analogies. Comparisons to other games are fine.
 3. Don't agree to be agreeable. Correct me when I'm wrong and give the reason.
 4. Use my vocabulary. Introduce a new term only if it's shorter, and define it once.
+5. Explain what you are doing as you work. Before starting, state the immediate action and its purpose. During work, give brief plain-language updates at meaningful steps and at least about once a minute during sustained work, including findings, blockers, and changes of direction. Finish with what changed, what was verified, and what comes next. Do not leave all explanation until the final response. Pass this rule to delegated agents; the primary agent keeps user-facing updates coordinated.
+
+# Version control
+- Use the game's own repository at `C:\Users\jjoaq\vscode-python\game`.
+- The user-designated private remote is `https://github.com/jjoaqu7/prisongame.git` (`origin`). Use it for this game's version control going forward; preserve its visibility and existing history.
+- Keep changes scoped to this game. Do not stage unrelated projects from the parent `vscode-python` repository.
 
 # Environment
 Windows. Use `python`, not `python3`.

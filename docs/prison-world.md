@@ -4,6 +4,8 @@
 
 The game takes place inside a prison that the player explores in first person. Routines and restrictions shape where the player can go. The final size and number of blocks are open.
 
+For the interior direction, the user selected an open common area connected to more enclosed corridors, combining reference-board B1/B2. Lighting and interiors should usually feel "eerily cozy/comfy" while retaining the prison setting. [Art and tone](art-and-tone.md) owns the mood and visual test brief. Exact heights, materials, lighting, and the larger layout remain open.
+
 ## What one cell block means
 
 One cell block describes the proposed first playable development scope. The fictional prison is larger. That version also needs shared spaces, such as a cafeteria, yard, and one work area, so the player has somewhere to go and reasons to meet people.

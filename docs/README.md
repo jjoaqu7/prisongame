@@ -7,6 +7,7 @@ Last updated: September 23, 2026.
 A first-person game where the player walks around and builds a life inside a prison. Schedule I is a reference for the feel of walking around, interacting with people, growing an operation, and the simple cartoon appearance.
 
 - Stylized, slightly grimy visuals, dark humor, and eccentric characters.
+- Lighting and interiors usually feel "eerily cozy/comfy" while retaining the prison setting; open common areas connect to more enclosed corridors. Detailed visual decisions live in [Art and tone](art-and-tone.md).
 - An approachable experience with clear, simple management of potentially complex systems. The game handles tracking and bookkeeping so the player can concentrate on current actions and decisions.
 - Daily routines affect access to people and places.
 - Trading, favors, prison jobs, relationships, and cell improvements create progression.

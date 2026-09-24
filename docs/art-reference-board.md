@@ -1,8 +1,8 @@
 # ART-01 - first art reference board
 
-**Status: partially agreed; interior comparison needs your review.** Updated September 23, 2026. Open this file in VS Code and press **Ctrl+Shift+V** to see the pictures.
+**Status: broad direction agreed; ART-01 complete.** Updated September 23, 2026. Specific assets and lighting treatments will be reviewed in the next sample. Open this file in VS Code and press **Ctrl+Shift+V** to see the pictures.
 
-Agreed starting point: simple cartoon appearance, slightly grimy prison, dark humor, eccentric characters, and clear first-person interaction. User feedback has settled the character direction, sufficient surface-detail level, and use of occasional dramatic lighting. Everyday interior lighting remains open. The images are design references; they are stored in documentation and have not been imported as game assets. Owning decisions are in [Art and tone](art-and-tone.md#reference-board-decisions---agreed).
+Agreed starting point: simple cartoon appearance, slightly grimy prison, dark humor, eccentric characters, and clear first-person interaction. User feedback settled the character direction, sufficient surface-detail level, occasional dramatic lighting, and the B1/B2 combination. The usual lighting and interiors should feel "eerily cozy/comfy" while still feeling like a prison. Exact treatments need an in-game test. The images are design references stored in documentation. Owning decisions are in [Art and tone](art-and-tone.md#reference-board-decisions---agreed).
 
 ## A. Characters and dialogue
 
@@ -42,7 +42,7 @@ Agreed starting point: simple cartoon appearance, slightly grimy prison, dark hu
 | B2 | Close ceiling, solid walls, overhead fixtures, shorter enclosed views | Cell corridor or service area |
 | Combination | Different light and enclosure in different spaces | Open common area connected to more enclosed corridors |
 
-**Still open:** which everyday interior feels right: B1, B2, or a combination? Your request to see B2 does not select it. Both can support the agreed occasional cozy, dramatic lighting. These references do not change our approved prototype dimensions.
+**Agreed from your review:** the combination: an open common area connected to more enclosed corridors. The lighting and interior should usually feel "eerily cozy/comfy," with the prison setting still evident. Exact brightness, colours, ceiling treatment, and fixtures remain to be tested. These references do not change our approved prototype dimensions.
 
 ## C. Props and surface detail
 
@@ -64,7 +64,7 @@ Agreed starting point: simple cartoon appearance, slightly grimy prison, dark hu
 
 **Study:** local coloured light makes one area visually distinct; much of the surrounding room is in shadow.
 
-**Agreed from your review:** occasional lighting this dramatic is welcome; you described its feeling as cozy and comfy. Treat that as an intended mood. Everyday interior lighting remains the separate B1/B2 choice.
+**Agreed from your review:** occasional lighting this dramatic is welcome; you described its feeling as cozy and comfy. Your later clarification makes "eerily cozy/comfy" the usual atmosphere of the lighting and interiors as well. Occasional stronger accents can sit within that everyday mood.
 
 **Proposed application:** try a personal lamp, a warmly lit cell corner, or a small area with stronger colour. Review it from the player camera so usable objects and faces remain readable. Specific fixtures, colours, locations, and frequency remain proposed.
 
@@ -72,6 +72,6 @@ Agreed starting point: simple cartoon appearance, slightly grimy prison, dark hu
 
 Make **one inmate and one cell corner** using the approved choices: a wall, barred door, bunk, small personal prop, and representative lighting. Put them in the running Unity scene and review them from the player camera. Interface styling can be tried on the existing interaction prompt at the same time.
 
-Use the agreed funny/cute character direction, Schedule I-level surface detail, and occasional cozy dramatic lighting for that sample. Choose its everyday interior from B1/B2 or a combination before settling the lighting and ceiling treatment. Original character designs and the sample itself still need review.
+Use the agreed funny/cute character direction, Schedule I-level surface detail, combined open/enclosed interiors, and usual "eerily cozy/comfy" atmosphere for that sample. Original character designs and the sample itself still need review.
 
-The remaining board question is **B1, B2, or a combination**. You can also specify a brightness change, for example: "B2's enclosed shape, but brighter and warmer." We then record that choice in [Art and tone](art-and-tone.md) and develop the proposed small sample. No new software or finished asset purchases are needed to review these pictures.
+**Next proposed task:** make two lighting/material treatments of the same cell corner and adjoining corridor in Unity, with a view into the open common area. Judge the mood and readability while walking through it. Then develop the original inmate design. The detailed test brief is in [Art and tone](art-and-tone.md#first-atmosphere-test---proposed-execution); progress is tracked under ART-02/03. The reference-board choices do not approve a finished art sample on the user's behalf.

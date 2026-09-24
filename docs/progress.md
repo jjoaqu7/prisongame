@@ -12,7 +12,7 @@ The [development plan](development-plan.md) owns milestone scope and sequencing.
 
 ## Current milestone
 
-Finish setup and make the first rough room playable. Proposed task breakdown below implements the accepted broad workflow; specific room layout and visual choices remain subject to user review.
+Develop the first small art sample now that the rough room, Windows build, and broad reference-board direction are complete. Begin with the proposed atmosphere test (ART-02), then an original inmate study (ART-03). Exact visual treatments remain subject to user review; earning-loop work stays deferred.
 
 Verified baseline: `PrisonGame/` uses Editor 6000.3.24f1 and URP. Room01_Blockout has geometry, furniture, a first-person controller, a sliding door, a carryable parcel, and a placeholder inmate. All 14 controller checks and 26 interaction checks passed in the Editor. On September 23, 2026, the user responded "All looks great!" to the completed room and interaction playtest handoff. ROOM-02/03 are accepted for this prototype; this does not approve final artwork or settle later mechanics. The Windows Development executable now passes 18 standalone checks; visible menu-button use remains a user check.
 
@@ -29,7 +29,9 @@ Verified baseline: `PrisonGame/` uses Editor 6000.3.24f1 and URP. Room01_Blockou
 | ROOM-01 | Build rough cell, corridor, and small common area | Done | SETUP-04 | Saved/reopened scene with connected passages and placeholder furniture; technical checks below passed. User accepted the resulting prototype on September 23. Dimensions remain provisional. |
 | ROOM-02 | Add first-person movement and looking | Done | ROOM-01 | 14 Play-mode controller checks passed, with zero console errors/warnings. User accepted the resulting prototype on September 23. |
 | ROOM-03 | Add basic interactions | Done | ROOM-02 | Door/controls, pickup/placement, inmate response, and prompts implemented; 26 Editor checks passed. User accepted the resulting prototype on September 23. |
-| ART-01 | Assemble a small visual reference board | Needs your review | Existing art direction | Five inspected/credited images. User agreed funny/cute original characters near Schedule I's proportions, its surface-detail level, and occasional cozy dramatic lighting. Added enclosed fluorescent corridor as B2; B1/B2/combination choice remains open. |
+| ART-01 | Assemble a small visual reference board | Done | Existing art direction | Five inspected/credited images; user selected original funny/cute characters, Schedule I-level surface detail, combined open common area/enclosed corridors, usual "eerily cozy/comfy" atmosphere, and occasional dramatic lighting. Specific sample designs remain to be reviewed. |
+| ART-02 | Test lighting and materials in a small playable area | To do | ART-01 | Proposed: two treatments of the same cell corner/adjoining corridor with a view into the common area. User judges eerie/cozy mood; doors, props, faces, and prompts remain readable. Brief in art-and-tone.md. |
+| ART-03 | Develop one original inmate design | To do | ART-01; review in ART-02 lighting | Proposed: original funny/cute face variations, choose one with the user, then a simple in-game character sample. Check recognizability at conversation distance; exact asset workflow remains open. |
 | CHECK-01 | Playtest, adjust, and make a Windows build | Done | ROOM-03 | Windows x86-64 Development build succeeded; 18 executable checks passed, with rendered scene inspected. User already approved the room. Visible menu clicks and testing on another PC remain outside this automated verification. |
 
 ## ROOM-01 verification
@@ -102,7 +104,7 @@ The user designated `https://github.com/jjoaqu7/prisongame.git` as this game's p
 
 ## Decisions and later work
 
-- ART-01: [updated board](art-reference-board.md), with reference images under `docs/art-references/`. Three TVGS/Steam screenshots, one NPS cellhouse photo, and one Jasper Kortmann/Pexels fluorescent corridor photo were opened and visually inspected. User feedback is recorded as agreed in art-and-tone.md for characters, surface-detail level, and occasional dramatic/cozy lighting. B1/B2/combination remains open; reusable material workflow and sample designs remain proposed. No Unity assets or scene appearance changed for this update.
+- ART-01: [completed direction board](art-reference-board.md), with five credited, inspected reference images under `docs/art-references/`. The user selected the open-common-area/enclosed-corridor combination and clarified that "eerily cozy/comfy" applies to the usual lighting/interior mood, alongside previously agreed character/detail/accent choices. Owning decisions and the proposed ART-02 brief are in art-and-tone.md. No Unity assets or scene appearance changed in this decision update.
 - Agreed September 23: release 1 single-player, release 2 co-op. Keep later co-op in mind as systems grow; boundaries and open hosting/progression choices are in the development plan. No networking implementation is authorized by this note alone.
 - Earning-loop work is deferred at the user's request. The snack-pack example remains proposed; resume selection and implementation later.
 - Once room dimensions work, begin one representative art sample alongside the small earning loop. Finished characters, rigging, animation, and a full art set are later work.
@@ -149,8 +151,8 @@ Re-estimate after ROOM-02 implementation: the original 12-24 hour range above is
 
 ## Session handoff
 
-- Latest update: recorded the user's A/C/D art decisions and added a visually inspected B2 fluorescent-lit prison corridor with photo/source credit. Board and owning art document distinguish agreed choices from proposals. Windows prototype unchanged.
+- Latest update: recorded the user's usual "eerily cozy/comfy" mood and B1/B2 combination approval; ART-01 marked Done. Added proposed ART-02 atmosphere test and ART-03 original inmate study. Updated owning art/world docs and board; Windows prototype unchanged.
 - Publication: local commits contain the prototype and approval. The last confirmed push attempt could not obtain GitHub credentials; the last remote verification reported `150742e`. Agents are authorized to commit and push scoped game work when authentication works. The built executable is ignored by Git; source and test evidence are versioned.
-- Next action: user compares B1 (tall/daylit) and B2 (enclosed/fluorescent), with a combination also proposed. Record the choice, then develop the proposed original inmate/cell-corner sample using the agreed character/detail/accent-light direction. Standalone visible menu/use checks remain available; earning-loop work stays deferred.
+- Next action: ART-02, a small Unity lighting/materials comparison using the brief in art-and-tone.md. Review the mood from the player camera before detailed asset production; ART-03 develops the original inmate. These samples have not been implemented. Standalone visible menu/use checks remain available; earning-loop work stays deferred.
 - Current blockers: no build or gameplay blocker found in automated checks. Last publication attempt was blocked on GitHub authentication. Co-op implementation is deferred to release 2, not blocking the solo prototype.
-- User decisions/reviews upcoming: everyday interior B1/B2/combination, then original character and cell-corner designs; standalone visible menu use. Return to the earning-loop activity later. Release 2 hosting/player count/shared progression remain open.
+- User decisions/reviews upcoming: the actual atmosphere treatments and original inmate design; standalone visible menu use. Broad interior combination and usual mood are now agreed. Return to the earning-loop activity later. Release 2 hosting/player count/shared progression remain open.

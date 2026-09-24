@@ -6,12 +6,14 @@ Stylized, slightly grimy visuals with dark humor and eccentric characters. The u
 
 The intended play experience is approachable even when systems are complex. A grimy setting and conflict can coexist with familiar routines. Presentation must make active deadlines, suspicion, and disruptions immediately understandable.
 
+The usual atmosphere of the lighting and interiors should feel **"eerily cozy/comfy"**, in the user's words. This applies in most cases, beyond the occasional dramatic lighting accents. The place should still feel like a prison. The specific visual treatment needs testing in the running scene.
+
 ### Reference-board decisions - agreed
 
 - **Characters:** proportions close to the Schedule I reference, with funny, cute faces. Create original character designs rather than directly copying its faces. Exact head shapes, eye shapes, noses, and expressions remain to be designed and reviewed.
 - **Surface detail:** the level shown in Schedule I is sufficient. Keep the production effort practical; the user does not want time spent adding extensive individual surface details.
 - **Lighting accents:** occasional dramatic, coloured lighting is welcome because the user finds it cozy and comfy. Preserve that feeling alongside clear interaction feedback.
-- **Everyday prison interior: open.** The user requested a visual example of the enclosed, fluorescent-lit alternative before deciding. Compare B1 and B2 in the [reference board](art-reference-board.md); neither is selected as the everyday interior yet.
+- **Everyday prison interior:** the user accepted the combination: an open common area connected to more enclosed corridors, using B1/B2 in the [reference board](art-reference-board.md). Exact ceiling heights, daylight exposure, colours, and fixture placement remain to be tested; this choice does not adopt every detail of either photograph.
 
 ## Visual proposals
 
@@ -24,6 +26,17 @@ The intended play experience is approachable even when systems are complex. A gr
 Muted walls, faded uniforms, institutional signage, and occasional bright personal objects are a palette candidate. Exact colors, proportions, and rendering choices remain open.
 
 Reusable character bodies and modular rooms are production proposals. Important inmates need enough variation to be recognizable during ordinary play.
+
+### First atmosphere test - proposed execution
+
+Test the agreed "eerily cozy/comfy" feeling in one cell corner, the adjoining enclosed corridor, and a view into the open common area. Begin with existing geometry and a few reusable materials so lighting can be judged before detailed asset production.
+
+- Try soft warm light around the bunk or personal objects, with cooler or muted light in the corridor and common area.
+- Use gentle falloff into shadow, while keeping faces, doors, and interaction targets legible from the player camera.
+- Let bars, doors, worn institutional surfaces, and the enclosed corridor retain the sense of confinement. A few personal belongings can contribute comfort.
+- Compare two lighting treatments of the same small space. Keep camera position and geometry consistent so the differences are easy to judge.
+
+These are proposed ways to produce the mood, not newly agreed palette or fixture decisions. Success requires the user's judgment that ordinary time spent there feels both comfortable and subtly unsettling, with readable gameplay. After that, develop one original funny/cute inmate and review it under the chosen light; no final character design is selected yet.
 
 ## Humor proposals
 
@@ -46,7 +59,7 @@ As a presentation proposal, keep ordinary activity readable and calm. Use a cons
 
 ## Early art work - agreed approach, proposed assets
 
-An art reference board is a small collection of labelled pictures showing candidate character proportions, prison interiors, lighting, colours, and interface treatment. Each reference should state what we want to borrow from its appearance and link to its source. It supports a visual decision; it is not a set of finished game assets or permission to copy another game's artwork. The [reference board](art-reference-board.md) now contains five images, including two contrasting prison interiors. Character direction, surface-detail level, and occasional dramatic lighting are agreed above; ART-01 still awaits the everyday-interior choice. Specific designs and interface styling remain proposed.
+An art reference board is a small collection of labelled pictures showing candidate character proportions, prison interiors, lighting, colours, and interface treatment. Each reference should state what we want to borrow from its appearance and link to its source. It supports a visual decision; it is not a set of finished game assets or permission to copy another game's artwork. The [reference board](art-reference-board.md) contains five images. Its broad character, surface-detail, lighting-mood, and combined-interior direction is now agreed; ART-01 is complete. Specific designs, materials, colours, and interface styling still require review in the sample.
 
 The user accepted developing a small art study alongside the playable prototype, followed by a polished integrated sample and broader production. Proposed initial assets are one inmate design, a cell corner, a few props, and a sample of the interface. Test proportions, materials, lighting, and readability from the actual first-person camera in the engine. A reusable wall section, door, bunk, table, and character body can establish the direction before producing many variations.
 

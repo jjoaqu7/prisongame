@@ -55,6 +55,8 @@ Done when the loop can be repeated and the player understands what applies, why,
 
 ### 5. Develop a small art sample alongside the prototype
 
+Current next step: the broad reference-board direction is agreed. Test the usual "eerily cozy/comfy" atmosphere in a small cell/corridor area with a view into the open common area, then develop one original funny/cute inmate. [Art and tone](art-and-tone.md#first-atmosphere-test---proposed-execution) owns the proposed test brief; [Progress](progress.md) tracks ART-02/03. Earning-loop work remains deferred at the user's request.
+
 - Collect a small set of visual references and choose provisional proportions, colors, and material treatment.
 - Create one inmate design and a few reusable cell pieces, such as a wall, door, bunk, table, and shelf.
 - Import them into the playable scene and test lighting, scale, animation needs, and visibility at normal gameplay distance.

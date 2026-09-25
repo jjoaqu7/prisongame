@@ -78,7 +78,7 @@ Agreed: retain these as future evaluation tasks. Adding or running the agents is
 | AGENT-04 | Interface reviewer | To do | Orders, deadlines, or suspicion indicators exist | Check that cause, timing, progress, and consequences are understandable; retain user playtesting. |
 | AGENT-05 | Performance specialist | To do | A representative prison scene can be measured | Define performance targets, collect measurements, and assess whether specialist investigation is useful. |
 | AGENT-06 | Networking specialist | To do | Planning the release 2 co-op feasibility test | Review shared item ownership, simultaneous interactions, and state boundaries; evaluation deferred, no networking agent running. |
-| AGENT-07 | Research specialist | Adopted September 25 | Research recurs (HUD, prison rules, combat; later escape, gang AI, Steam) | User chose a reusable research agent. Conventions in the [research README](research/README.md); Claude Code agents `game-researcher` and `research-writer` in `.claude/agents/`. Not yet used for a new topic. |
+| AGENT-07 | Research specialist | Adopted September 25 | Research recurs (HUD, prison rules, combat; later escape, gang AI, Steam) | User chose a reusable research agent that works in any tool. One `game-research` skill in the open Agent Skills format (`.agents/skills/game-research/`), with thin pointers for Claude Code (`.claude/skills/`, `.claude/agents/`) and Codex (`.codex/agents/`). See the [research README](research/README.md). Not yet used for a new topic; Codex agent files are checked against the docs but not run. |
 
 For each evaluation, record whether to adopt, defer, or decline the role and why. A decision to defer or decline completes the evaluation without implying an agent was installed or run. Additional roles can be added when a concrete need appears.
 
@@ -86,7 +86,7 @@ Patterns to consider borrowing: Unity's [inspect/change/run/verify workflow](htt
 
 ## Session handoff
 
-- **September 25:** user agreed release 1 scope, real combat, and the combat decisions for ENCOUNTER-01 (weapon adds damage, downed then separate kill, reload on loss), plus shoving as a general action; recorded in Gameplay, Factions/events and the development plan. User approved the six review items. Tracker split (TRACK-02). RESEARCH-01 finished; research moved to `docs/research/<topic>/` with conventions and two Claude Code research agents (AGENT-07). No game code, scenes or builds changed.
+- **September 25:** user agreed release 1 scope, real combat, and the combat decisions for ENCOUNTER-01 (weapon adds damage, downed then separate kill, reload on loss), plus shoving as a general action; recorded in Gameplay, Factions/events and the development plan. User approved the six review items. Tracker split (TRACK-02). RESEARCH-01 finished; research moved to `docs/research/<topic>/`; a tool-independent research skill with Claude Code and Codex agents (AGENT-07). No game code, scenes or builds changed.
 - **Next:** plan ENCOUNTER-01 from the [combat report](research/combat/report.md) build order, proposing defaults for its remaining open decisions (**High**).
 - **Open user decisions:** remaining combat decisions (controls, block and stamina, death presentation, tone, weapon traits, feedback, view, aftermath, code organization, animation sourcing); what "critical" damage and injuries mean; which save a loss reloads; release 1 quantities (wings, gangs, escape routes).
 - **Publication:** see Current state.

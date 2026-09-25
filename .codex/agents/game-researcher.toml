@@ -1,0 +1,11 @@
+name = "game_researcher"
+description = "Researches one bounded subtopic for the prison game and writes a sourced notes file under docs/research/<topic>/notes/. Spawn one per subtopic for the researcher role of the game-research skill."
+sandbox_mode = "workspace-write"
+web_search = "live"
+
+developer_instructions = """
+You are a researcher for the prison game. Read .agents/skills/game-research/references/researcher.md and follow it exactly; it is the shared definition of this role for every tool. Then read the formats file it links. The coordinator's brief follows in your task.
+"""
+
+[sandbox_workspace_write]
+network_access = true

@@ -14,8 +14,8 @@ The [development plan](development-plan.md) owns milestone scope and sequencing.
 
 ## Current state
 
-- **Milestone:** closing the prototype chain with ENCOUNTER-01, the neighboring-cell fight. Real combat is agreed; combat research (RESEARCH-01) comes first. Release 1's broad scope is agreed: [Release 1 scope](development-plan.md#release-1-scope---agreed-september-25).
-- **Next action:** finish RESEARCH-01, propose a first combat design from it for the user to choose, then plan ENCOUNTER-01 (**High**). After that, REL1-01: the release 1 milestone list (**High**).
+- **Milestone:** closing the prototype chain with ENCOUNTER-01, the neighboring-cell fight. Real combat is agreed. Combat research is done: [report](research/reports/Unity%20first%20person%20melee%20combat.md). Release 1's broad scope is agreed: [Release 1 scope](development-plan.md#release-1-scope---agreed-september-25).
+- **Next action:** the user settles the report's open decisions, at least 1 (what a weapon changes), 4 (what zero health does to the inmate) and 5 (what happens when the player loses). Record them in Gameplay, then plan ENCOUNTER-01 (**High**). After that, REL1-01: the release 1 milestone list (**High**).
 - **Blockers:** none for development. Publishing: local commits are not on GitHub yet; the last recorded push attempt failed on GitHub authentication.
 - **Latest builds** (ignored by Git): `PrisonGame/Builds/WindowsLaundry/PrisonGame.exe` has laundry duty, HUD, inventory and the neighboring cell (scene `Duty01_Laundry`). `PrisonGame/Builds/WindowsSample/PrisonGame.exe` has the combined earning sample with sound (scene `Save01_Progress`).
 
@@ -68,8 +68,8 @@ Details for each row are in the [progress log](progress-log.md). Rows without th
 | INV-01 | Six-slot inventory and Dex-to-Harris key | Needs your review | 41 rule/save, 79 Editor and 79 executable checks. [Log](progress-log.md#inv-01---functional-inventory-and-officer-secret) |
 | CELL-01 | Immediate dialogue, Harris's secret, neighboring cell | Needs your review | 22 new, 106 Editor and 106 executable checks. [Log](progress-log.md#cell-01---dialogue-correction-and-harriss-neighboring-cell-key) |
 | PLAYTEST-01 | Uncoached new-player test | To do | Milestone 6 exit test: a new player tries the sample without coaching; note confusion, repetition and interest. **Medium**. |
-| RESEARCH-01 | Combat research | In progress | Design references, Unity implementation, NPC fighting AI, code organization/testing/co-op readiness, production and Steam. Output: [report](research/reports/Unity%20first%20person%20melee%20combat.md). Findings are not decisions. |
-| ENCOUNTER-01 | Neighboring-cell fight | To do | Real combat agreed September 25: fists, the inmate fights back, nearby objects as weapons. Waits on RESEARCH-01 and the combat design choice. Done when the fight, death, saved outcome and completion work through the full Rue/Dex/Harris chain. [Gameplay](gameplay.md#neighboring-cell-inmate-encounter---agreed-purpose-and-real-combat-details-open) |
+| RESEARCH-01 | Combat research | Done | [Report](research/reports/Unity%20first%20person%20melee%20combat.md) with a proposed approach, build order and 13 open decisions; findings are not decisions. [Log](progress-log.md#research-01-combat-research---september-25) |
+| ENCOUNTER-01 | Neighboring-cell fight | Blocked | Real combat agreed September 25: fists, the inmate fights back, nearby objects as weapons. Waits on the user's answers to the report's open decisions (at least 1, 4 and 5). Done when the fight, death, saved outcome and completion work through the full Rue/Dex/Harris chain. [Gameplay](gameplay.md#neighboring-cell-inmate-encounter---agreed-purpose-and-real-combat-details-open) |
 | REL1-01 | Release 1 milestone list | To do | Derive from the agreed [scope](development-plan.md#release-1-scope---agreed-september-25): detailed for the next milestones, broad later, with proposed quantities (wings, gangs, escape routes) for the user to decide. **High**. |
 
 ## Later tasks: evaluate additional agent roles
@@ -92,7 +92,7 @@ Patterns to consider borrowing: Unity's [inspect/change/run/verify workflow](htt
 
 ## Session handoff
 
-- **September 25:** user agreed release 1 scope (escape, gangs/factions, several wings, real combat, Steam) and real combat for ENCOUNTER-01; recorded in the development plan, Gameplay, Prison world and Factions/events. Tracker split (TRACK-02). Checkpoint commit `3b97bcf` holds all earlier uncommitted prototype work. RESEARCH-01 is running. No game code, scenes or builds changed.
-- **Next:** RESEARCH-01 report, then the combat design choice and ENCOUNTER-01 plan (**High**).
-- **Open user decisions:** what an improvised weapon changes in the fight ([Gameplay](gameplay.md#neighboring-cell-inmate-encounter---agreed-purpose-and-real-combat-details-open)); release 1 quantities (wings, gangs, escape routes, combat depth); the review items above.
+- **September 25:** user agreed release 1 scope (escape, gangs/factions, several wings, real combat, Steam) and real combat for ENCOUNTER-01; recorded in the development plan, Gameplay, Prison world and Factions/events. Tracker split (TRACK-02). Checkpoint commit `3b97bcf` holds all earlier uncommitted prototype work. RESEARCH-01 finished with a combat report. No game code, scenes or builds changed.
+- **Next:** the user answers the report's open decisions (at least 1, 4 and 5), then plan ENCOUNTER-01 (**High**).
+- **Open user decisions:** the 13 combat decisions at the end of the [report](research/reports/Unity%20first%20person%20melee%20combat.md), including what an improvised weapon changes; release 1 quantities (wings, gangs, escape routes, combat depth); the review items above.
 - **Publication:** no push attempted this session; GitHub authentication must work before pushing.

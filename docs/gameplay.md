@@ -206,7 +206,7 @@ New pickups and key rewards cannot exceed capacity. Supply batches are checked b
 
 **Agreed follow-up:** Harris's key opens a newly added neighboring cell. Use E on its door/control to unlock and open it. **Provisional implementation:** the key is retained, and the door stays unlocked; unlock and slide position are shared world state included in manual saves. The previous generic officer-key save flags now represent Harris's key, preserving earned progress. Old saves without room state start the new door closed and locked.
 
-**Agreed subsequent purpose:** another inmate occupies the neighboring cell, and the player kills him to close this prototype's progression loop. See the encounter scope below. The current build still contains only furnishings. **Open:** the inmate's identity, the player's motivation, combat details (real combat is agreed; see below), consequences of killing/blackmail, and confirmation of slot/stack interpretation.
+**Agreed subsequent purpose:** another inmate occupies the neighboring cell, and the player kills him to close this prototype's progression loop. See the encounter scope below. The current build still contains only furnishings. **Open:** consequences of killing/blackmail, and confirmation of slot/stack interpretation. Combat details and the no-story decision are recorded below.
 
 
 ### Immediate centered dialogue - user-requested correction
@@ -215,24 +215,48 @@ New pickups and key rewards cannot exceed capacity. Supply batches are checked b
 
 **Implemented, approved for the prototype September 25:** conversations now use a separate centered warm panel below the crosshair. The complete line appears immediately; another conversation replaces it immediately. Item/payment notices remain separate and resume after dialogue. Guard return warnings remain visible above. Walking, looking and duty work continue during dialogue; Escape still pauses. Dialogue clears on load and has a reading timer, with no typewriter delay or forced wait before talking again. Applies to Rue, Dex, Vale, Harris and M5 in Duty01. Exact panel placement/read durations remain tunable.
 
-### Neighboring-cell inmate encounter - agreed purpose and real combat, details open
+### Neighboring-cell inmate encounter - agreed purpose and real combat
 
 **Agreed:** the user selected another inmate in the neighboring cell whom the player kills, closing the current progression loop: laundry access -> Rue's favor -> Dex's information -> blackmail Harris -> obtain key -> enter neighboring cell -> kill the inmate. This replaces the earlier open-ended suggestion of a discovery, contact or storage reward in that room.
 
 **Agreed September 25 - real combat:** the encounter uses real combat; the user declined a staged interaction. The player fist-fights the inmate and the inmate fights back. The player can pick up nearby objects, such as a book or a rod, and use them as weapons. Real combat is also agreed for release 1 as a whole; see [Release 1 scope](development-plan.md#release-1-scope---agreed-september-25).
 
-**Agreed September 25 - what a weapon changes:** a weapon means more critical damage. The inmate can still fight back, but the armed player does more damage and can harm, injure or kill him. This replaces the earlier reading that an armed player stops the inmate fighting back. **Open details:** whether "critical" means a chance of extra-damage hits or a flat increase, and whether injuries are a lasting state separate from health.
+**Agreed September 25 - what a weapon changes:** a weapon means more damage. The inmate can still fight back, but the armed player does more damage and can harm, injure or kill him. This replaces the earlier reading that an armed player stops the inmate fighting back. The user later ruled out critical hits, so "more critical damage" means weapons simply do more damage.
 
-**Agreed September 25 - zero health:** at zero health the inmate goes down; killing him is a separate, deliberate action. **Open:** whether he yields or flees at low health first (proposed in the research), and how the kill action is presented.
-
-**Agreed September 25 - losing:** if the player loses the fight, the game reloads. **Open detail:** saving is currently manual only, so whether this reloads the last manual save or an automatic checkpoint taken before the fight. Later fights may use a different outcome, such as a knockout.
+**Agreed September 25 - zero health:** at zero health the inmate goes down; killing him is a separate, deliberate action. **Losing:** if the player loses the fight, the game reloads. Later fights may use a different outcome, such as a knockout. The detailed rules are below.
 
 **Superseded proposal:** the earlier recommended first implementation (one deliberate labelled interaction and a simple death response) was a staged approach and is no longer planned. A saved alive/dead state and an explicit completion outcome are still needed. The concern it addressed, that a fight should not start from an accidental talk or door press, remains relevant to combat input.
 
-**Open decisions:** attack controls; block and stamina; death presentation and blood; the tone of the kill; the weapon list and each weapon's traits; on-screen fight feedback; view and field of view; the aftermath (witness/guard response, punishment or reward, body persistence, saving mid-fight); how the objective/motivation is introduced; and the inmate's identity. Selecting this encounter does not imply that killing is consequence-free in the final game. [Combat research](research/combat/report.md) collects design and implementation references and proposes an option for each (completed September 25; its recommendations are proposals, not decisions). Its decisions 1, 4 and 5 are answered above. No combat, death or encounter completion is implemented in the current build.
+**Agreed September 25 - no story yet:** the inmate has no identity or motivation in this prototype; the encounter only closes the progression loop, and story is not being implemented yet. The objective line after Harris's key is plain: "Deal with the man in the neighboring cell". **Open:** how guards and witnesses respond to a killing in the full game is also open; this prototype has no response. Selecting this encounter does not imply that killing is consequence-free in the final game. [Combat research](research/combat/report.md) collects design and implementation references (completed September 25; its recommendations are proposals, not decisions). No combat, death or encounter completion is implemented in the current build.
 
-### Shoving - agreed direction, implementation timing open
+### Neighboring-cell fight rules - agreed September 25
+
+The ENCOUNTER-01 plan proposed a default for each open fight decision. On September 25 the user changed four and accepted the rest: add a ragdoll ("it would be funny"), no critical hits, no items breaking, and left mouse to hit with right mouse to block. The user then chose ragdoll when he goes down and "funny drop, quiet kill". Combat research decision numbers are in brackets. Build steps and code structure are in the [development plan](development-plan.md#encounter-01-build-plan---september-25).
+
+| Rule | Agreed | Notes |
+| --- | --- | --- |
+| Attacking (2) | Left mouse. Tap for a quick punch; hold and release for a charged punch with more damage and stagger and a longer recovery. Pressing pulls the fist or weapon back at once. No combos or lock-on. | The pull-back on press keeps the response within the research's 100 ms target, although the swing fires on release. |
+| Blocking and stamina (3) | Hold right mouse to block; a blocked hit does a quarter of its damage. Raising the block within about 0.25 s before his punch lands is a timed block: no damage, and he staggers. No stamina. | Add stamina only if playtests show spamming wins. |
+| Shove | F pushes the neighbor about a metre back and briefly staggers him. On anyone else it plays the shove with no push or reaction until SHOVE-01. | Inside the Tab view F still holds the selected item; the view already blocks world actions. |
+| Critical hits | None. Weapons and charged punches simply do more damage. | User decision. |
+| Weapons (8) | Two objects in his cell. The book: fast, a little more damage than fists. A loose bunk rod: slower, longer reach, about double fist damage, strong stagger. Neither breaks. Both use the existing single held item. No throwing yet. He fights barehanded and never picks them up. | No breaking: user decision. |
+| Injuries | No lasting injuries in this fight. Below about a third of his health he is visibly hurt: hunched, slower wind-ups, easier to stagger. The player's health refills when a fight ends. | Losing reloads, so a lasting player injury would have nothing to affect. |
+| Yield or flee | Neither, in this fight. | The cell is small, the loop requires the kill, and the downed state already gives a deliberate moment. Kept as an idea for gang fights. |
+| How the fight starts | He is idle in his cell and E talks to him. The first hit or shove starts the fight. | E never starts a fight. |
+| Leaving mid-fight | He stays in his cell. If the player stays outside it for 10 s, the fight ends and both return to full health. | Prevents recovering outside while he stays hurt. |
+| Losing | The game returns to an automatic checkpoint taken when the fight started, kept in memory, after a fade. The manual save slot is untouched. | Matches the laundry rule that failure keeps unrelated progress. |
+| Going down (6) | At zero health he goes limp as a ragdoll, and the final hit's push sends him flopping, played for laughs. He then lies there breathing and stays down. Bloodless. | |
+| Kill | Looking at him shows "Hold E - Kill"; holding E for about 1.5 s kills him. Attacks do not hurt a downed inmate. | |
+| Kill tone (7) | Quiet: his breathing stops and room sound dips for a few seconds; no joke or music sting. | The funny drop and the quiet kill are meant to contrast. |
+| Fight feedback (9) | The player's health bar appears only during a fight and briefly after. No bar for him; his state shows through reactions and the hurt pose. Small screen shake on hits, on by default, with an off setting. | If players cannot tell how hurt he is, add a bar. |
+| View (10) | 70-degree vertical field of view, fixed while fight animation is built. Placeholder arms and fists first; better arms at step 8. A field-of-view slider comes with later settings work. | Arkane had to redo every character animation after widening the field of view. |
+| Aftermath (11) | His body stays in the cell and is saved. No saving during a fight. No guard or witness response in this prototype. | A prototype simplification, not the final rule. |
+| Animation (13) | Keep M5's code-built Generic rig and author the fight clips by script. Consider converting to Humanoid for Mixamo or store clips only if these are not good enough at step 8. | |
+
+**Starting values for tuning, not decisions:** both fighters have 100 health. A quick fist punch does 10 and a full charge 22. The book multiplies damage by 1.3, and the rod by 2 with 1.6 m reach against the fists' 1.1 m. His punch does 12 after a 0.7 s wind-up, with 2 to 3 s between attacks. Unarmed, the player needs about 10 quick punches; he needs 9 unblocked punches.
+
+### Shoving - agreed direction and key, reactions open
 
 **Agreed September 25:** the player can shove anyone, whenever they want, not only during a fight. What happens depends on who is shoved; for example, shoving a prisoner starts a fight. The combat research proposed a shove as one of the fight actions; the user extended it to a general action.
 
-**Open:** when to implement general shoving, and the reactions of other kinds of characters (guards, gang members, contacts, staff). **Proposed:** ENCOUNTER-01 builds the shove as a fight action that reports who shoved whom; each kind of character adds its own reaction later, when guards and gangs are developed. Fight and guard consequences belong in [Factions and events](factions-and-events.md).
+**Agreed September 25 (with the fight rules):** F shoves. ENCOUNTER-01 builds the shove as a fight action that reports who shoved whom; only the neighboring inmate reacts. **Open:** the reactions of other kinds of characters (guards, gang members, contacts, staff), which SHOVE-01 adds when guards and gangs are developed. Fight and guard consequences belong in [Factions and events](factions-and-events.md).

@@ -1,0 +1,31 @@
+﻿ENCOUNTER-01 step 1 edit-mode tests (category Combat), run 2026-09-25 16:32 in the open Editor via the Test Runner API.
+Total 28, passed 28, failed 0, skipped 0; 4.33 s.
+
+PASSED: PrisonGame.Combat.Tests.FighterStateMachineTests.AttackRunsWindUpActiveRecoveryThenIdle
+PASSED: PrisonGame.Combat.Tests.FighterStateMachineTests.BlockHoldsUntilReleased
+PASSED: PrisonGame.Combat.Tests.FighterStateMachineTests.CannotStartAnotherAttackUntilIdle
+PASSED: PrisonGame.Combat.Tests.FighterStateMachineTests.DownedAndDeadFightersCannotActOrBeStaggered
+PASSED: PrisonGame.Combat.Tests.FighterStateMachineTests.InvalidInputsAreRejected
+PASSED: PrisonGame.Combat.Tests.FighterStateMachineTests.LeftoverTimeCarriesIntoTheNextPhase
+PASSED: PrisonGame.Combat.Tests.FighterStateMachineTests.LongTickReportsEveryPhaseInOrder
+PASSED: PrisonGame.Combat.Tests.FighterStateMachineTests.RecoverReturnsADownedFighterToIdle
+PASSED: PrisonGame.Combat.Tests.FighterStateMachineTests.StaggerInterruptsAWindUpAndThenReturnsToIdle
+PASSED: PrisonGame.Combat.Tests.FighterStateMachineTests.StartsIdle
+PASSED: PrisonGame.Combat.Tests.FighterStateMachineTests.ZeroWindUpOpensTheHitWindowOnTheNextTick
+PASSED: PrisonGame.Combat.Tests.HealthTests.AttacksDoNotHurtADownedFighter
+PASSED: PrisonGame.Combat.Tests.HealthTests.DamageReducesHealthAndReportsAppliedAmount
+PASSED: PrisonGame.Combat.Tests.HealthTests.InvalidDamageIsRejected(-1.0f)
+PASSED: PrisonGame.Combat.Tests.HealthTests.InvalidDamageIsRejected(float.NaN)
+PASSED: PrisonGame.Combat.Tests.HealthTests.InvalidDamageIsRejected(float.PositiveInfinity)
+PASSED: PrisonGame.Combat.Tests.HealthTests.InvalidMaximumIsRejected(0.0f)
+PASSED: PrisonGame.Combat.Tests.HealthTests.InvalidMaximumIsRejected(-5.0f)
+PASSED: PrisonGame.Combat.Tests.HealthTests.InvalidMaximumIsRejected(float.NaN)
+PASSED: PrisonGame.Combat.Tests.HealthTests.InvalidMaximumIsRejected(float.PositiveInfinity)
+PASSED: PrisonGame.Combat.Tests.HealthTests.KillOnlyWorksOnADownedFighterAndOnlyOnce
+PASSED: PrisonGame.Combat.Tests.HealthTests.RestoreFullRecoversAliveOrDownedButNotDead
+PASSED: PrisonGame.Combat.Tests.HealthTests.StartsFullAndAlive
+PASSED: PrisonGame.Combat.Tests.HealthTests.ZeroDamageIsAllowedAndChangesNothing
+PASSED: PrisonGame.Combat.Tests.HealthTests.ZeroHealthLeavesFighterDownedNotDead
+PASSED: PrisonGame.Combat.Tests.StableIdTests.DefaultIsInvalidAndEmptyIsRejected
+PASSED: PrisonGame.Combat.Tests.StableIdTests.EqualityIsByValue
+PASSED: PrisonGame.Combat.Tests.StableIdTests.NewIdsAreValidAndUnique

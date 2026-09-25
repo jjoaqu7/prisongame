@@ -1,0 +1,16 @@
+{
+    "name": "PrisonGame.Combat",
+    "rootNamespace": "PrisonGame.Combat",
+    "references": [
+        "PrisonGame.Core"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

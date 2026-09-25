@@ -1,0 +1,21 @@
+PASS: Invalid and off-level destinations are rejected
+PASS: Level destination accepted
+PASS: Inmate walks 1.2 m and arrives without overshoot
+PASS: Actual traveling soles stay planted within 1 mm per sampled frame and above the floor
+PASS: Arrival returns animation to idle
+INFO: moving contact samples=104; max per-frame world-space drift=0.0095 mm; penetration=0.0000 mm
+PASS: Matched travel speed at 30 FPS
+PASS: Matched travel speed at 60 FPS
+PASS: Matched travel speed at 144 FPS
+PASS: Solid obstacle stops inmate and walking animation input
+PASS: Removing obstacle resumes the retained destination
+PASS: Player capsule blocks inmate movement without overlap (travel=0.330, overlap=0.00000)
+PASS: Missing floor support stops movement before a ledge
+PASS: Talk receives the acting player and starts shared talking state
+PASS: Talking plays gesture and pauses actual travel
+PASS: Repeated talk restarts the gesture
+PASS: Gesture plays once, then idle holds for the rest of the dialogue
+PASS: Inmate stays in place throughout dialogue hold
+PASS: After talking, inmate turns back and completes the interrupted walk
+PASS: Completed walk settles to idle
+PASS: Behavior keeps one gameplay collider

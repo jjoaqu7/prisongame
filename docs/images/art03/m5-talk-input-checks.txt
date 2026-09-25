@@ -1,0 +1,4 @@
+PASS: E with settings open does not start a gesture
+PASS: E on the inmate starts the gesture through the real player interaction path
+PASS: E-triggered gesture reaches the actual Animator state
+PASS: E still presents the inmate response

@@ -8,8 +8,12 @@ namespace PrisonGame.Prototype
     public sealed class FirstPersonController : MonoBehaviour
     {
         private const string SensitivityKey = "PrisonGame.MouseSensitivity";
+        private const string FrameLimitKey = "PrisonGame.FrameLimit";
+        private static readonly string[] FrameLimitLabels = { "60 FPS", "120 FPS", "Unlimited" };
+        private int frameLimit = 60;
+        public int FrameLimit => frameLimit;
 
-        [SerializeField, Min(0.1f)] private float walkSpeed = 3f;
+        [SerializeField, Min(0.1f)] private float walkSpeed = 3.02f;
         [SerializeField, Range(0.03f, 0.4f)] private float mouseSensitivity = 0.12f;
         [SerializeField] private Camera playerCamera;
 
@@ -41,6 +45,9 @@ namespace PrisonGame.Prototype
             spawnPosition = transform.position;
             spawnRotation = transform.rotation;
             mouseSensitivity = Mathf.Clamp(PlayerPrefs.GetFloat(SensitivityKey, mouseSensitivity), 0.03f, 0.4f);
+            // Local display preference only; simulation continues to use elapsed time.
+            frameLimit = ValidFrameLimit(PlayerPrefs.GetInt(FrameLimitKey, 60));
+            if (!Application.isEditor) Application.targetFrameRate = frameLimit;
             moveAction = new InputAction("Walk", InputActionType.Value);
             moveAction.AddCompositeBinding("2DVector")
                 .With("Up", "<Keyboard>/w").With("Down", "<Keyboard>/s")
@@ -53,6 +60,18 @@ namespace PrisonGame.Prototype
             moveAction?.Enable();
             lookAction?.Enable();
             SetCursorCaptured(false);
+        }
+
+        private static int ValidFrameLimit(int value) => value == 120 || value == -1 ? value : 60;
+        internal void SetFrameLimit(int value, bool persist = true)
+        {
+            frameLimit = ValidFrameLimit(value);
+            if (!Application.isEditor) Application.targetFrameRate = frameLimit;
+            if (persist)
+            {
+                PlayerPrefs.SetInt(FrameLimitKey, frameLimit);
+                PlayerPrefs.Save();
+            }
         }
 
         private void OnDisable()
@@ -126,6 +145,17 @@ namespace PrisonGame.Prototype
             Cursor.visible = !captured;
         }
 
+        internal float SavedPitch => pitch;
+        internal void RestorePose(Vector3 position, float yaw, float savedPitch)
+        {
+            SetCursorCaptured(false);
+            controller.enabled = false;
+            transform.SetPositionAndRotation(position, Quaternion.Euler(0, yaw, 0));
+            controller.enabled = true;
+            verticalSpeed = 0; pitch = savedPitch;
+            playerCamera.transform.localRotation = Quaternion.Euler(pitch, 0, 0);
+        }
+
         private void OnGUI()
         {
             if (playerCamera == null) return;
@@ -144,14 +174,18 @@ namespace PrisonGame.Prototype
             if (cursorCaptured)
             {
                 GUI.Label(new Rect(viewWidth / 2f - 12, viewHeight / 2f - 12, 24, 24), "+", hintStyle);
+                if(GetComponent<LaundryHud>()==null || !GetComponent<LaundryHud>().Focused) {
                 GUI.Box(new Rect(viewWidth / 2f - 300, viewHeight - 42, 600, 32), GUIContent.none);
                 GUI.Label(new Rect(viewWidth / 2f - 300, viewHeight - 42, 600, 32), "WASD: walk   E: interact   Q: put down   Esc: settings", hintStyle);
+                }
                 GUI.matrix = previousMatrix;
                 return;
             }
 
             float width = Mathf.Min(440, viewWidth - 20);
-            float panelHeight = Application.isEditor ? 270 : 320;
+            var saves = GetComponent<SampleSaveGame>();
+            var audio = GetComponent<SampleAudio>();
+            float panelHeight = (Application.isEditor ? 270 : 382) + (saves != null ? 155 : 0) + (audio != null ? 110 : 0);
             Rect panel = new Rect((viewWidth - width) / 2f, Mathf.Max(10, (viewHeight - panelHeight) / 2f), width, panelHeight);
             GUI.Box(panel, "Prison prototype - settings");
             GUILayout.BeginArea(new Rect(panel.x + 20, panel.y + 30, panel.width - 40, panel.height - 40));
@@ -159,6 +193,14 @@ namespace PrisonGame.Prototype
             GUILayout.Label("E interacts. Q puts down a carried item.", labelStyle);
             GUILayout.Label("Escape releases the mouse and opens these settings.", labelStyle);
             GUILayout.Space(10);
+            if (!Application.isEditor)
+            {
+                GUILayout.Label("Frame limit", labelStyle);
+                int selected = frameLimit == 60 ? 0 : frameLimit == 120 ? 1 : 2;
+                int choice = GUILayout.Toolbar(selected, FrameLimitLabels, GUILayout.Height(30));
+                if (choice != selected) SetFrameLimit(choice == 0 ? 60 : choice == 1 ? 120 : -1);
+                GUILayout.Space(8);
+            }
             GUILayout.Label("Mouse sensitivity: " + mouseSensitivity.ToString("0.00"), labelStyle);
             float sensitivity = GUILayout.HorizontalSlider(mouseSensitivity, 0.03f, 0.4f);
             if (!Mathf.Approximately(sensitivity, mouseSensitivity))
@@ -167,6 +209,8 @@ namespace PrisonGame.Prototype
                 PlayerPrefs.SetFloat(SensitivityKey, sensitivity);
                 PlayerPrefs.Save();
             }
+            if (audio != null) audio.DrawMenu(labelStyle);
+            if (saves != null) saves.DrawMenu(labelStyle, buttonStyle);
             GUILayout.Space(12);
             if (GUILayout.Button("Resume walking", buttonStyle, GUILayout.Height(40))) SetCursorCaptured(true);
             if (!Application.isEditor && GUILayout.Button("Quit game", buttonStyle, GUILayout.Height(36))) Application.Quit();

@@ -1,0 +1,163 @@
+{
+    "status": "FAILED",
+    "unity": "6000.3.24f1",
+    "scene": "Save01_Progress",
+    "cpu": "Intel(R) Core(TM) i9-14900HX",
+    "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "graphics": "Direct3D12",
+    "os": "Windows 11  (10.0.26200)",
+    "method": "Hidden-window Development Player; full-resolution offscreen world render plus normal HUD/menu CPU. Uncapped existing settings. Eight-second warmup, 20s walking, 20s accelerated action loop, 16s alternating save/load in settings, 20s post-load walking. Helper queues keyboard input and overrides focus pause. Inspection is advanced once to allow repeat crafting. Save fixture is isolated. Editor remains open. Not visible presentation latency, shipping-build certification or a long leak soak.",
+    "width": 1280,
+    "height": 720,
+    "systemRamMB": 32475,
+    "vramMB": 7948,
+    "cpuThreads": 32,
+    "vSync": 0,
+    "targetFrameRate": -1,
+    "sales": 11,
+    "footsteps": 0,
+    "soundCues": 54,
+    "walkCorners": 0,
+    "walkedMetres": 1.3952378010289977,
+    "frameTimingEnabled": true,
+    "gcRecorderValid": true,
+    "drawRecorderValid": true,
+    "phases": [
+        {
+            "phase": "walking",
+            "frames": 81576,
+            "over16ms": 0,
+            "over33ms": 0,
+            "over50ms": 0,
+            "averageMs": 0.2450086544920493,
+            "p50Ms": 0.23629535280633719,
+            "p95Ms": 0.34669783781282606,
+            "p99Ms": 0.43830074719153347,
+            "maxMs": 1.7720946343615652,
+            "averageFps": 4081.488476695629,
+            "averageAllocationBytes": 112.0005884083554,
+            "averageDrawCalls": 0.0,
+            "cpuP95Ms": 0.3466,
+            "gpuP95Ms": -1.0,
+            "timingSamples": 0
+        },
+        {
+            "phase": "activity",
+            "frames": 92006,
+            "over16ms": 0,
+            "over33ms": 0,
+            "over50ms": 0,
+            "averageMs": 0.2173742049459703,
+            "p50Ms": 0.20680272427853198,
+            "p95Ms": 0.3116992593277246,
+            "p99Ms": 0.39670494152233007,
+            "maxMs": 10.959700681269169,
+            "averageFps": 4600.361851805536,
+            "averageAllocationBytes": 180.52811773145229,
+            "averageDrawCalls": 0.0,
+            "cpuP95Ms": 0.3116,
+            "gpuP95Ms": -1.0,
+            "timingSamples": 0
+        },
+        {
+            "phase": "save_load",
+            "frames": 90357,
+            "over16ms": 0,
+            "over33ms": 0,
+            "over50ms": 0,
+            "averageMs": 0.17706817627879435,
+            "p50Ms": 0.16309523198287935,
+            "p95Ms": 0.2567956398706883,
+            "p99Ms": 0.3463010070845485,
+            "maxMs": 13.527799397706986,
+            "averageFps": 5647.542212359476,
+            "averageAllocationBytes": 215.53316289828127,
+            "averageDrawCalls": 0.0,
+            "cpuP95Ms": 0.2563,
+            "gpuP95Ms": -1.0,
+            "timingSamples": 0
+        },
+        {
+            "phase": "post_load_walking",
+            "frames": 85157,
+            "over16ms": 0,
+            "over33ms": 0,
+            "over50ms": 0,
+            "averageMs": 0.234856743404422,
+            "p50Ms": 0.22290249762590975,
+            "p95Ms": 0.33000283292494717,
+            "p99Ms": 0.4229024925734848,
+            "maxMs": 10.052799247205258,
+            "averageFps": 4257.914784580001,
+            "averageAllocationBytes": 112.0,
+            "averageDrawCalls": 0.0,
+            "cpuP95Ms": 0.3298,
+            "gpuP95Ms": -1.0,
+            "timingSamples": 0
+        }
+    ],
+    "memory": [
+        {
+            "phase": "warmup",
+            "unityAllocated": 83263372,
+            "unityReserved": 242470912,
+            "monoUsed": 7749632,
+            "processWorkingSet": 0,
+            "gen0": 36
+        },
+        {
+            "phase": "walking",
+            "unityAllocated": 83198415,
+            "unityReserved": 242470912,
+            "monoUsed": 7806976,
+            "processWorkingSet": 0,
+            "gen0": 57
+        },
+        {
+            "phase": "activity",
+            "unityAllocated": 83300553,
+            "unityReserved": 242470912,
+            "monoUsed": 12599296,
+            "processWorkingSet": 0,
+            "gen0": 69
+        },
+        {
+            "phase": "save_load",
+            "unityAllocated": 83376102,
+            "unityReserved": 242470912,
+            "monoUsed": 31887360,
+            "processWorkingSet": 0,
+            "gen0": 70
+        },
+        {
+            "phase": "post_load_walking",
+            "unityAllocated": 83898578,
+            "unityReserved": 242470912,
+            "monoUsed": 22908928,
+            "processWorkingSet": 0,
+            "gen0": 79
+        }
+    ],
+    "saveMilliseconds": [
+        10.6249,
+        12.5862,
+        4.9331000000000009,
+        11.7943,
+        12.103800000000002,
+        12.2324,
+        12.784600000000001,
+        4.9763
+    ],
+    "loadMilliseconds": [
+        5.9123,
+        0.4919,
+        0.45780000000000006,
+        0.43770000000000006,
+        0.5397000000000001,
+        0.47740000000000007,
+        0.5301
+    ],
+    "errors": [
+        "Benchmark scenario coverage insufficient"
+    ]
+}

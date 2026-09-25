@@ -1,0 +1,2 @@
+PASS: Natural frame updates detected entry and raised suspicion to 100; inside=True, seen=True
+PASS: Natural frame updates after leaving the marked area reduced suspicion to zero and resolved the episode.

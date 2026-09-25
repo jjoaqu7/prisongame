@@ -1,0 +1,14 @@
+if(EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isCompiling) throw new System.Exception("Editor must be idle.");
+for(int i=0;i<UnityEngine.SceneManagement.SceneManager.sceneCount;i++) if(UnityEngine.SceneManagement.SceneManager.GetSceneAt(i).isDirty) throw new System.Exception("Save pending edits first.");
+const string path="Assets/Scenes/Supply01_Inspection.unity";
+if(System.IO.File.Exists(path)) throw new System.Exception("Supply study already exists; edit saved scene.");
+var scene=UnityEditor.SceneManagement.EditorSceneManager.OpenScene("Assets/Scenes/Guard01_Suspicion.unity");
+var player=GameObject.Find("Player");var box=UnityEngine.Object.FindFirstObjectByType<PrisonGame.Prototype.SnackSupplyBox>();
+var inspection=box.gameObject.AddComponent<PrisonGame.Prototype.SupplyInspection>();
+var sign=new GameObject("Supply inspection notice");sign.transform.SetParent(box.transform.parent,false);
+var board=GameObject.CreatePrimitive(PrimitiveType.Cube);board.name="Inspection notice board";board.transform.SetParent(sign.transform);board.transform.position=new Vector3(4.165f,1.025f,3.8f);board.transform.localScale=new Vector3(.01f,.22f,.44f);UnityEngine.Object.DestroyImmediate(board.GetComponent<Collider>());board.GetComponent<Renderer>().sharedMaterial=AssetDatabase.LoadAssetAtPath<Material>("Assets/Prototype/Guard01/Staff boundary.mat");
+var label=new GameObject("Inspection label");label.transform.SetParent(sign.transform);label.transform.SetPositionAndRotation(new Vector3(4.155f,1.025f,3.8f),Quaternion.Euler(0,90,0));var text=label.AddComponent<TextMesh>();text.text="INSPECTION\nCLOSED";text.fontSize=48;text.characterSize=.011f;text.anchor=TextAnchor.MiddleCenter;text.alignment=TextAlignment.Center;text.color=new Color(.12f,.15f,.17f);sign.SetActive(false);
+var so=new SerializedObject(inspection);so.FindProperty("clock").objectReferenceValue=UnityEngine.Object.FindFirstObjectByType<PrisonGame.Prototype.PrisonClock>();so.FindProperty("observedPlayer").objectReferenceValue=player.GetComponent<PrisonGame.Prototype.PlayerInteraction>();so.FindProperty("closedSign").objectReferenceValue=sign;so.ApplyModifiedPropertiesWithoutUndo();
+so=new SerializedObject(box);so.FindProperty("inspection").objectReferenceValue=inspection;so.ApplyModifiedPropertiesWithoutUndo();
+var status=player.AddComponent<PrisonGame.Prototype.RequestSupplyStatus>();so=new SerializedObject(status);so.FindProperty("inspection").objectReferenceValue=inspection;so.FindProperty("assembly").objectReferenceValue=UnityEngine.Object.FindFirstObjectByType<PrisonGame.Prototype.SnackAssembly>();so.ApplyModifiedPropertiesWithoutUndo();
+UnityEditor.SceneManagement.EditorSceneManager.SaveScene(scene,path);AssetDatabase.SaveAssets();return "Saved Supply01_Inspection: first-sale stock inspection, ten-game-minute shared closure, request dependency feedback and visible notice. Guard and deadline retained.";

@@ -1,0 +1,36 @@
+PASS: Laundry uses its own manual slot
+PASS: Wrong actor cannot start duty
+PASS: Reporting starts assigned duty
+PASS: Reporting twice cannot reset active shift
+PASS: Nearby work advances the exact real-second counters
+PASS: Conversation accepts favor while work continues
+PASS: Paused duty does not advance
+PASS: Other actor cannot advance duty
+PASS: Supply wall blocks guard line of sight
+PASS: Unseen absence pauses work without erasing it
+PASS: Requested tool can be pocketed in the supply room
+PASS: Tool cannot be collected twice
+PASS: Delivery consumes pocketed tool and earns introduction
+PASS: Repeated dialogue does not respawn delivered tool
+PASS: Introduction unlocks second contact
+PASS: Dex contact remains locked before favor
+PASS: Tool requires the favor first
+PASS: Guard sees a nearby player in its facing direction
+PASS: Brief visibility below threshold does not warn
+PASS: Observed absence gives first warning and eight seconds
+PASS: Returning clears order but preserves warning history
+PASS: Second observed absence fails the shift
+PASS: Ignoring warning fails after return deadline
+PASS: Board can restart a failed shift
+PASS: Work quota does not end shift early
+PASS: Full shift with quota completes
+PASS: Missing quota fails at shift end
+PASS: Active duty saves to isolated fixture
+PASS: Duty fixture loads
+PASS: Load restores progress, warning and pocketed tool
+PASS: Load restores guard attention instead of resetting it
+PASS: Load remains paused
+PASS: Invalid duty save rejected without replacing state
+PASS: Original two-minute work progress remains loadable
+PASS: Older work progress clamps to the one-minute quota
+PASS: Translated and rotated module retains local work zone

@@ -1,0 +1,2 @@
+65-degree isolated bend maximum edge stretch: knee 1.531 -> 1.332; elbow 1.350 -> 1.248
+Saved 60 Hz foot-targeted walk, softened gesture and explicit rest positions in all clips. Original assets archived outside Assets. No runtime IK or movement added.

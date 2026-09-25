@@ -1,0 +1,72 @@
+PASS: Room light transforms, colors, intensity, ranges, shadows and ambient settings match the original study
+PASS: Original inmate interaction retained
+PASS: Only the root gameplay collider is active
+PASS: Saved refined prefab instance is connected
+PASS: Left_Shoe is a saved mesh asset
+PASS: Left_Shoe has vertex normals
+PASS: Left_Sole is a saved mesh asset
+PASS: Left_Sole has vertex normals
+PASS: Right_Shoe is a saved mesh asset
+PASS: Right_Shoe has vertex normals
+PASS: Right_Sole is a saved mesh asset
+PASS: Right_Sole has vertex normals
+PASS: Left_Eye is a saved mesh asset
+PASS: Left_Eye has vertex normals
+PASS: Left_Pupil is a saved mesh asset
+PASS: Left_Pupil has vertex normals
+PASS: Right_Eye is a saved mesh asset
+PASS: Right_Eye has vertex normals
+PASS: Right_Pupil is a saved mesh asset
+PASS: Right_Pupil has vertex normals
+PASS: ConnectedBrow is a saved mesh asset
+PASS: ConnectedBrow has vertex normals
+PASS: JoinedShirt is a saved mesh asset
+PASS: JoinedShirt has vertex normals
+PASS: JoinedTrousers is a saved mesh asset
+PASS: JoinedTrousers has vertex normals
+PASS: JoinedHeadNeck is a saved mesh asset
+PASS: JoinedHeadNeck has vertex normals
+PASS: LeftJoinedArmHand is a saved mesh asset
+PASS: LeftJoinedArmHand has vertex normals
+PASS: RightJoinedArmHand is a saved mesh asset
+PASS: RightJoinedArmHand has vertex normals
+PASS: SmoothHairCap is a saved mesh asset
+PASS: SmoothHairCap has vertex normals
+PASS: SimpleMouth is a saved mesh asset
+PASS: SimpleMouth has vertex normals
+PASS: Left_Shoe has a valid shader/material
+PASS: Left_Shoe does not contribute baked light
+PASS: Left_Sole has a valid shader/material
+PASS: Left_Sole does not contribute baked light
+PASS: Right_Shoe has a valid shader/material
+PASS: Right_Shoe does not contribute baked light
+PASS: Right_Sole has a valid shader/material
+PASS: Right_Sole does not contribute baked light
+PASS: Left_Eye has a valid shader/material
+PASS: Left_Eye does not contribute baked light
+PASS: Left_Pupil has a valid shader/material
+PASS: Left_Pupil does not contribute baked light
+PASS: Right_Eye has a valid shader/material
+PASS: Right_Eye does not contribute baked light
+PASS: Right_Pupil has a valid shader/material
+PASS: Right_Pupil does not contribute baked light
+PASS: ConnectedBrow has a valid shader/material
+PASS: ConnectedBrow does not contribute baked light
+PASS: JoinedShirt has a valid shader/material
+PASS: JoinedShirt does not contribute baked light
+PASS: JoinedTrousers has a valid shader/material
+PASS: JoinedTrousers does not contribute baked light
+PASS: JoinedHeadNeck has a valid shader/material
+PASS: JoinedHeadNeck does not contribute baked light
+PASS: LeftJoinedArmHand has a valid shader/material
+PASS: LeftJoinedArmHand does not contribute baked light
+PASS: RightJoinedArmHand has a valid shader/material
+PASS: RightJoinedArmHand does not contribute baked light
+PASS: SmoothHairCap has a valid shader/material
+PASS: SmoothHairCap does not contribute baked light
+PASS: SimpleMouth has a valid shader/material
+PASS: SimpleMouth does not contribute baked light
+PASS: Character material fill persists after saving and scene reload
+PASS: Visual head remains within interaction collider height
+PASS: M5 remains within the original narrow size envelope
+INFO: triangles=57948; renderers=16; bounds=(0.41, 1.96, 0.21)

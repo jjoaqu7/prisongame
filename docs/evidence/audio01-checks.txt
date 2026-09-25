@@ -1,0 +1,37 @@
+PASS: One audio presenter uses eight reusable voices
+PASS: Scene has one audio listener
+PASS: Settings pause the looping ambience
+PASS: Decoded non-silent unclipped clip: crackers
+PASS: Decoded non-silent unclipped clip: door
+PASS: Decoded non-silent unclipped clip: footstep_1
+PASS: Decoded non-silent unclipped clip: footstep_2
+PASS: Decoded non-silent unclipped clip: footstep_3
+PASS: Decoded non-silent unclipped clip: footstep_4
+PASS: Decoded non-silent unclipped clip: fruit
+PASS: Decoded non-silent unclipped clip: pickup
+PASS: Decoded non-silent unclipped clip: place
+PASS: Decoded non-silent unclipped clip: restock
+PASS: Decoded non-silent unclipped clip: room_tone
+PASS: Decoded non-silent unclipped clip: sale
+PASS: Decoded non-silent unclipped clip: shelf
+PASS: Decoded non-silent unclipped clip: wrap
+PASS: All fourteen licensed clips imported
+PASS: Resume starts the room ambience
+PASS: Missing ingredients do not play successful assembly audio
+PASS: Successful starter collection plays one restock cue
+PASS: Three assembly stages each play once; wrapping does not double-play pickup
+PASS: Full hands do not play a pickup cue
+PASS: Successful sale plays one confirmation
+PASS: Inspection-blocked collection stays silent
+PASS: Door interaction plays a muted metal cue
+PASS: World sound stays at its source when the player moves
+PASS: Standing or pushing without movement produces no footsteps
+PASS: Grounded travelled distance produces a footstep
+PASS: Teleport and airborne motion do not produce footsteps
+PASS: Pause stops ambience and active voices
+PASS: Paused world cues are ignored
+PASS: Loading is silent and clears pre-load sounds
+PASS: Both volume controls can mute their channels
+PASS: Disabled presenter unsubscribes from cues
+PASS: Re-enabled presenter restores ambience without duplicate subscriptions
+PASS: World sources have bounded distance and no doppler pitch jumps

@@ -1,0 +1,13 @@
+if(EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isCompiling) throw new System.Exception("Editor must be idle.");
+for(int i=0;i<UnityEngine.SceneManagement.SceneManager.sceneCount;i++) if(UnityEngine.SceneManagement.SceneManager.GetSceneAt(i).isDirty) throw new System.Exception("Save pending scene edits first.");
+const string path="Assets/Scenes/Earn03_Deadline.unity";
+if(System.IO.File.Exists(path)) throw new System.Exception("Deadline scene already exists; edit normally.");
+var scene=UnityEditor.SceneManagement.EditorSceneManager.OpenScene("Assets/Scenes/Earn02_Requests.unity");
+var player=GameObject.Find("Player");
+var clock=new GameObject("Prison clock").AddComponent<PrisonGame.Prototype.PrisonClock>();
+var request=player.GetComponent<PrisonGame.Prototype.SnackRequest>();
+var so=new SerializedObject(request);so.FindProperty("clock").objectReferenceValue=clock;so.ApplyModifiedPropertiesWithoutUndo();
+var driver=player.AddComponent<PrisonGame.Prototype.SoloClockDriver>();
+so=new SerializedObject(driver);so.FindProperty("clock").objectReferenceValue=clock;so.ApplyModifiedPropertiesWithoutUndo();
+UnityEditor.SceneManagement.EditorSceneManager.SaveScene(scene,path);AssetDatabase.SaveAssets();
+return "Saved Earn03_Deadline: shared prison clock, solo pause driver, one-hour request, $2 late deliveries. Older earning scenes retained.";

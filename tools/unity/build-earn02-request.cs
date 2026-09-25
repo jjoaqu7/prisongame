@@ -1,0 +1,13 @@
+if(EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isCompiling) throw new System.Exception("Editor must be idle.");
+for(int i=0;i<UnityEngine.SceneManagement.SceneManager.sceneCount;i++) if(UnityEngine.SceneManagement.SceneManager.GetSceneAt(i).isDirty) throw new System.Exception("Save pending scene edits first.");
+const string path="Assets/Scenes/Earn02_Requests.unity";
+if(System.IO.File.Exists(path)) throw new System.Exception("Request scene already exists; edit normally.");
+var scene=UnityEditor.SceneManagement.EditorSceneManager.OpenScene("Assets/Scenes/Earn01_SnackPacks.unity");
+var player=GameObject.Find("Player");
+var request=player.AddComponent<PrisonGame.Prototype.SnackRequest>();
+var so=new SerializedObject(request);
+so.FindProperty("customer").objectReferenceValue=UnityEngine.Object.FindFirstObjectByType<PrisonGame.Prototype.SnackPackBuyer>();
+so.ApplyModifiedPropertiesWithoutUndo();
+UnityEditor.SceneManagement.EditorSceneManager.SaveScene(scene,path);
+AssetDatabase.SaveAssets();
+return "Saved Earn02_Requests: personal three-pack request bound to M5, explicit acceptance, per-delivery payment and no deadline. Original Earn01 scene retained.";

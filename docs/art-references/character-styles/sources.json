@@ -1,0 +1,100 @@
+[
+  {
+    "game": "Totally Accurate Battle Simulator",
+    "developer": [
+      "Landfall"
+    ],
+    "publisher": [
+      "Landfall"
+    ],
+    "store_url": "https://store.steampowered.com/app/508440/",
+    "screenshots": [
+      {
+        "file": "tabs-0.jpg",
+        "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/508440/ss_e502c3d72a454d8792fced42d241158d964af359.1920x1080.jpg?t=1730715415"
+      },
+      {
+        "file": "tabs-1.jpg",
+        "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/508440/ss_585351cc5907cb0549a86b47edde9b7925d3e89f.1920x1080.jpg?t=1730715415"
+      },
+      {
+        "file": "tabs-2.jpg",
+        "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/508440/ss_6b5c293eb66949679ab2698b05859fb932306849.1920x1080.jpg?t=1730715415"
+      },
+      {
+        "file": "tabs-3.jpg",
+        "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/508440/ss_202aea2c755d22cdf0f5a26788391de803b1737d.1920x1080.jpg?t=1730715415"
+      }
+    ]
+  },
+  {
+    "game": "PEAK",
+    "developer": [
+      "Team PEAK"
+    ],
+    "publisher": [
+      "Aggro Crab",
+      "Evil Landfall?"
+    ],
+    "store_url": "https://store.steampowered.com/app/3527290/",
+    "screenshots": [
+      {
+        "file": "peak-0.jpg",
+        "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3527290/aa39b41b105aac51f2312a92979a3b9cb9909a46/ss_aa39b41b105aac51f2312a92979a3b9cb9909a46.1920x1080.jpg?t=1786470571"
+      },
+      {
+        "file": "peak-1.jpg",
+        "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3527290/9c500124c060f162f111afa679bf5d3a32b3fb40/ss_9c500124c060f162f111afa679bf5d3a32b3fb40.1920x1080.jpg?t=1786470571"
+      },
+      {
+        "file": "peak-2.jpg",
+        "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3527290/bac7b90dffb456afecc4517a3e1d69362b95d15b/ss_bac7b90dffb456afecc4517a3e1d69362b95d15b.1920x1080.jpg?t=1786470571"
+      },
+      {
+        "file": "peak-3.jpg",
+        "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3527290/e5ba2eae76c253832acfcf4b73bc966a7e8b8984/ss_e5ba2eae76c253832acfcf4b73bc966a7e8b8984.1920x1080.jpg?t=1786470571"
+      }
+    ]
+  },
+  {
+    "game": "Human Fall Flat",
+    "developer": [
+      "No Brakes Games"
+    ],
+    "publisher": [
+      "Curve Games"
+    ],
+    "store_url": "https://store.steampowered.com/app/477160/",
+    "screenshots": [
+      {
+        "file": "human-fall-flat-0.jpg",
+        "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/477160/777d3ec5b37dc1f3eea73a794d9308db3f381cf8/ss_777d3ec5b37dc1f3eea73a794d9308db3f381cf8.1920x1080.jpg?t=1789479416"
+      },
+      {
+        "file": "human-fall-flat-1.jpg",
+        "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/477160/0d1bd829d870d64e987fb473f495b34b79260f64/ss_0d1bd829d870d64e987fb473f495b34b79260f64.1920x1080.jpg?t=1789479416"
+      }
+    ]
+  },
+  {
+    "game": "Gang Beasts",
+    "developer": [
+      "Boneloaf",
+      "Rocket Science"
+    ],
+    "publisher": [
+      "Boneloaf"
+    ],
+    "store_url": "https://store.steampowered.com/app/285900/",
+    "screenshots": [
+      {
+        "file": "gang-beasts-0.jpg",
+        "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/285900/ss_0476d6b0403313cb4fa727fd99146762eb80f611.1920x1080.jpg?t=1780410654"
+      },
+      {
+        "file": "gang-beasts-1.jpg",
+        "image_url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/285900/ss_0e7190e5cee562fa851f23bfeb65b336550a6d18.1920x1080.jpg?t=1780410654"
+      }
+    ]
+  }
+]

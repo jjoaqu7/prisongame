@@ -61,11 +61,11 @@ try {
         Place(new Vector3(-.5f,.05f,-5),0); Walk(Vector2.up,rates[i],1f/rates[i]);
         distances[i]=player.transform.position.z+5;
     }
-    Check(System.Linq.Enumerable.All(distances,d=>Mathf.Abs(d-3)<.02f),"Walk speed is 3m/s at 30, 60, 144 FPS");
+    Check(System.Linq.Enumerable.All(distances,d=>Mathf.Abs(d-3.02f)<.005f),"Walk speed is 3.02m/s at 30, 60, 144 FPS");
     Place(new Vector3(6.5f,.05f,4),0);
     Walk(new Vector2(1,1),15,1f/60);
     var offset=player.transform.position-new Vector3(6.5f,0,4); offset.y=0;
-    Check(Mathf.Abs(offset.magnitude-.75f)<.03f,"Diagonal movement has no speed bonus");
+    Check(Mathf.Abs(offset.magnitude-.755f)<.005f,"Diagonal movement has no speed bonus");
 
     Place(new Vector3(-.5f,.05f,-4),0);
     type.GetField("pitch",flags).SetValue(script,0f);

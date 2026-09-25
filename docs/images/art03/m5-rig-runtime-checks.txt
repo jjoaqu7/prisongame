@@ -1,0 +1,9 @@
+PASS: Animator runs Idle state in Play mode
+PASS: Idle produces small actual skinned movement
+PASS: Preview parameter switches to WalkPreview
+PASS: Preview parameter switches to GesturePreview
+PASS: Preview parameter switches to Idle
+PASS: Preview clips do not move gameplay position or collider
+PASS: Root motion is disabled for the study
+PASS: Only the skinned visual is active inside the rig
+INFO: maximum idle vertex displacement over one second=0.01059 m

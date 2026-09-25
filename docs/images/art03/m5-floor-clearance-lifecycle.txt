@@ -1,0 +1,1 @@
+PASS: Natural LateUpdate while held in a transition keeps geometry above floor. Minimum=0.000028 m; visual lift=0.007503 m. Background updates were temporarily enabled because the unfocused Editor had stopped game frames; restored afterward.

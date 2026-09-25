@@ -1,0 +1,28 @@
+PASS: HUD begins with zero money and starter-supply objective
+PASS: Insufficient funds do not install or charge for the shelf
+PASS: Starter supplies claimed once; unaffordable restock changes nothing
+PASS: Objective advances to assembly after collecting supplies
+PASS: Finished physical pack is tracked and objective directs the player to M5
+PASS: E sells one physical pack once, clears hands and credits $3
+PASS: Repeated E with empty hands cannot duplicate a sale
+PASS: Sale triggers M5's existing dialogue/gesture state
+PASS: Two starter packs produce $6 without negative ingredients
+PASS: Objective directs depleted stock to paid restocking
+PASS: Restocking costs $1 for exactly one complete recipe
+PASS: Third sale reaches the $8 shelf objective
+PASS: Buying the shelf deducts $8 and completes the visible objective
+PASS: Purchased shelf has visible boards and physical storage support
+PASS: Using an installed shelf cannot charge a second purchase
+PASS: No-stock/no-money recovery supplies let the loop continue after buying the shelf
+PASS: E stores a carried pack on the new shelf
+PASS: Stored pack is physically on the cell shelf
+PASS: A stored unsold pack prevents farming free recovery supplies
+PASS: Recovery is refused while an unsold pack remains in the world
+PASS: Stored pack can be picked up through the normal E target
+PASS: A retrieved stored pack sells normally
+PASS: Three paid refills are charged once each
+PASS: Full shelf keeps the carried item instead of losing or overlapping it
+PASS: Settings-open E does not trigger a transaction
+PASS: Invalid or unaffordable spending cannot create money or go negative
+PASS: M5 does not consume or pay for a non-snack parcel
+INFO: Complete supply/assemble/carry/sell/restock/upgrade/storage loop exercised with synthetic E input through real target checks. State intentionally remains for visual inspection; stop Play to reset.

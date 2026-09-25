@@ -1,0 +1,8 @@
+PASS: 289 walk samples keep deformed soles within 1 mm of the neutral floor or above
+PASS: Both feet hold level contact throughout sampled stance intervals
+PASS: Contact drift below 0.1 mm per 240 Hz sample with matched 0.433333 m/s virtual forward travel
+PASS: Both swinging shoes clear the floor by at least 6 cm
+PASS: Walking knees remain bent without locking straight or exceeding 65 degrees
+INFO: max sole penetration=0.0200 mm; contact height error=0.0195 mm; per-sample matched-travel drift=0.0146 mm
+INFO: swing clearance L/R=0.0650 / 0.0650 m; knee range=16.04 to 56.07 degrees; neutral sole height=0.00000 m
+LIMIT: Level-ground clip checks with virtual matched travel; no terrain adaptation, navigation, or actual root movement. In-place preview intentionally moves contact feet backward.

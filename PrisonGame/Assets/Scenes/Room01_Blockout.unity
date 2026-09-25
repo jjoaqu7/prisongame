@@ -3208,7 +3208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14750f47d9b05de459944d53ff43a795, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PrisonGame.Prototype.FirstPersonController
-  walkSpeed: 3
+  walkSpeed: 3.02
   mouseSensitivity: 0.12
   playerCamera: {fileID: 21641984}
 --- !u!143 &650217058

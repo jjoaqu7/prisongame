@@ -21,11 +21,13 @@ Players should understand which areas are reachable, which are temporarily restr
 | Home block and cell | Storage, cellmate, nearby contacts, personal improvements |
 | Cafeteria | Meetings, trading opportunities, shared routine |
 | Yard | Social groups, recreation, visible tension |
-| One job area | Hands-on work, resources, staff contacts |
+| One job area | Assigned duties, resources, contacts and opportunities; see [duty discussion](gameplay.md#duty-direction---user-priority-proposed-mechanics-september-25) |
 | Corridors and checkpoints | Connections, supervision, access restrictions |
 | Later wings | New communities, jobs, and opportunities when developed |
 
 ## Access - proposed rules
+
+September 25 clarification: the user wants various rooms and several new characters and has now approved trying the laundry-duty scenario with an adjacent supply room, inmate contact and supervising guard. The broader room/cast count remains open. A connecting corridor and the agreed second inmate contact support this test. **Proposed construction approach:** reusable room prefabs (saved groups of room objects), consistent doorway connections, and room-relative interaction/patrol markers. Start with rough connected spaces and a small cast to test the duty opportunities before finishing many interiors. Duty01 now implements a connected laundry/supply prefab with room-relative work zones and guard markers. Its three named people are placeholder variants; broader room and character expansion remains open. The existing prototype/save data includes world positions; relocating rooms requires checking routes, doors, sightlines, lighting and saved positions rather than assuming everything follows automatically.
 
 See the temporary prototype dimensions below for the current scene; the wider layout above remains proposed.
 
@@ -59,3 +61,8 @@ Walls are 0.2 m thick and 3.2 m high, centred on the footprint boundaries; clear
 A bunk, desk, stool, shared table, and benches provide static scale references. The top is open to inspect the layout; there is no finished ceiling, lighting design, or artwork. The player spawn marker is at (-3.4, 0, -0.5), facing the cell exit. ROOM-02 adds a player at 0.05 m above that marker, with a 1.8 m tall, 0.6 m wide collision capsule and camera 1.7 m above the player's feet. Gravity settles the player onto the floor.
 
 The Game camera is now first-person; the Scene view can still be used to inspect the whole layout. Open the scene from `Assets/Scenes`; [saved ROOM-01 overview](../PrisonGame/Assets/Screenshots/room01-overview.png). Completion evidence, controls, and next work live in [Progress](progress.md).
+
+
+## Neighboring cell - agreed addition, September 25
+
+User selected a new cell beside the player's, opened with the key obtained by blackmailing Harris. Duty01 now contains a 4 x 5 m prototype cell immediately north of the existing cell: X -6 to -2, Z 2 to 7, sharing the existing dividing wall at Z=2. Its entrance opens from the same corridor at X=-2, Z=4.5. Reuses the current warm lighting, bunk/desk furnishings and barred-door style. The user subsequently selected another inmate here whom the player kills to close the prototype loop; the inmate and encounter are not yet implemented. Encounter mechanics and consequences remain open in [Gameplay](gameplay.md#neighboring-cell-inmate-encounter---agreed-purpose-mechanics-open). The cell is grouped in a reusable NeighboringCell prefab. Unlock and door position are saved; access rules live in [Gameplay](gameplay.md#six-item-inventory-and-dexs-secret---september-25).

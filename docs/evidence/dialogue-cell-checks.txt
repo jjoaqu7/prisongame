@@ -1,0 +1,22 @@
+PASS: Dialogue appears immediately despite notification backlog
+PASS: New speaker immediately replaces dialogue without erasing pickup notices
+PASS: Conversation and active return warning coexist
+PASS: Load cleanup removes dialogue and notices
+PASS: Neighbor cell refuses entry without key
+PASS: Locked door physically blocks the character
+PASS: Dex identifies Harris and the neighboring cell
+PASS: Laundry officer retains only his own dialogue
+PASS: Harris gives the key with immediate dialogue
+PASS: Inventory names Harris's key and its destination
+PASS: Key unlocks door permanently without being consumed
+PASS: Partially open neighboring cell saves to isolated fixture
+PASS: Load restores unlock and partial slide position
+PASS: Loaded door finishes opening
+PASS: Character can walk from corridor into unlocked cell
+PASS: Interior furniture leaves a usable walking route
+PASS: Character reaches center of doorway for obstruction check
+PASS: Door refuses to close on player in doorway
+PASS: Player can exit and close the unlocked door
+PASS: Invalid neighbor door position rejected without losing unlock
+PASS: Old save without room state loads closed while retaining earned key
+PASS: Previously earned officer key opens the new room

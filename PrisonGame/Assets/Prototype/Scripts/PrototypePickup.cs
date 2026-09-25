@@ -9,6 +9,7 @@ namespace PrisonGame.Prototype
         private Rigidbody body;
         private BoxCollider itemCollider;
         public string ItemName => itemName;
+        public PlayerInteraction PocketOwner { get; private set; }
         public Vector3 HalfSize => Vector3.Scale(GetComponent<BoxCollider>().size, transform.lossyScale) * .5f;
 
         private void Awake() { body = GetComponent<Rigidbody>(); itemCollider = GetComponent<BoxCollider>(); }
@@ -17,6 +18,8 @@ namespace PrisonGame.Prototype
 
         public void Attach(Transform camera)
         {
+            PocketOwner = null;
+            SetVisible(true);
             body.isKinematic = true;
             itemCollider.enabled = false;
             transform.SetParent(camera, true);
@@ -26,6 +29,8 @@ namespace PrisonGame.Prototype
 
         public void Place(Vector3 position)
         {
+            PocketOwner = null;
+            SetVisible(true);
             transform.SetParent(null, true);
             transform.SetPositionAndRotation(position, Quaternion.identity);
             itemCollider.enabled = true;
@@ -35,5 +40,17 @@ namespace PrisonGame.Prototype
             body.linearVelocity = Vector3.zero;
             body.angularVelocity = Vector3.zero;
         }
+
+        internal void Pocket(PlayerInteraction owner)
+        {
+            PocketOwner = owner;
+            body.isKinematic = true;
+            itemCollider.enabled = false;
+            transform.SetParent(owner.transform, false);
+            transform.localPosition = Vector3.up;
+            SetVisible(false);
+        }
+        void SetVisible(bool visible)
+        { foreach (var renderer in GetComponentsInChildren<Renderer>()) renderer.enabled = visible; }
     }
 }

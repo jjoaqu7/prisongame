@@ -1,0 +1,3 @@
+INFO: maximum sole penetration through crossfades=0.000 mm; idle return sole offset=0.000 mm; largest visual lift=7.804 mm
+PASS: All six directed clip transitions at four starting phases complete; 576 sampled poses stay finite and inside rendering bounds.
+PASS: Sole penetration stays below 1 mm during crossfades; returning to idle restores neutral foot positions within 0.1 mm; gameplay root position/rotation unchanged.

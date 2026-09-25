@@ -1,0 +1,18 @@
+Use case: stylized-concept / style-transfer.
+Input image 1 is the user's V2 character sheet. It is the visual starting reference. The user clarifies that by "animation type" they mean CARTOON VISUAL STYLE, not movement or poses. They want genuinely different style alternatives, not different-sized characters in the same style.
+Deliver ONE polished, clearly labelled 2x2 style comparison board on a neutral light-grey background. Each quadrant contains a large head-and-shoulders portrait and a smaller complete full-body view, side by side, with equal scale across quadrants. Use the SAME original adult male inmate from the LEFT column A of the reference in every quadrant. Maintain recognisable identity: short dark brown hair, broad head, rounded prominent nose, asymmetrical eyebrows, mild amused smile, average broad adult build. Same height, body proportions, head-to-body ratio, 3/4 camera, relaxed standing pose with hands down, same plain ochre short-sleeve shirt and trousers, grey shoes, same skin tone in ALL FOUR. No props or extra characters. No names or background narrative.
+Only change the artistic treatment of forms, edges, materials and shading. Make the four treatments OBVIOUSLY DIFFERENT even at thumbnail size. The first should stay fairly close to the V2 starting point, other panels should explore substantially different styles. These are concept drawings for a 3D game, not movement sequences.
+
+A — "SOFT 3D"
+A restrained modification of V2: softly rounded surfaces instead of faceted planes, simple solid hair clumps, clean modest diffuse 3D shading, low surface detail, plain smooth skin. No Pixar skin realism, no pores. The recognisable V2 character rendered with softened forms.
+
+B — "GRAPHIC CEL"
+Bold ink-like outlines, distinctly flat two-tone cel shading, hard graphic shadow shapes, angular but clean facial planes, flat blocked-in hair and stylized clothes. Looks like an expressive comic rendered as a 3D game. No painterly textures or gradients. Same character and proportions.
+
+C — "CLAY-LIKE"
+Clearly stylized stop-motion/clay appearance: softened hand-shaped forms, gently uneven edges, a subtle matte clay finish with only a few broad shallow handmade impressions. Simple hair cap and formed eyebrows. Soft broad studio shadows. No realistic skin or intricate detail. Preserve the exact same adult build and head size, not a chibi or baby. Evidently a different material and modelling style from A.
+
+D — "MINIMAL SHAPES"
+Strongly simplified modern cartoon 3D: head built from a few broad smooth shapes, eyes simple white oval shapes with black pupils, eyebrows two solid shapes, mouth a short line, nose one rounded simple form, hair a single solid mass. Plain clothes have no buttons, pockets, seams or creases. Very restrained shading and flat colour blocks; toy-like visual clarity. Keep the SAME adult body build and overall proportions rather than making this character stick-thin or shorter. No outlines in D.
+
+Layout: equal-size quadrants, thin dividing lines, generous blank margins. Consistent neutral lighting direction except shading treatment. Clear readable heading "INMATE STYLE ALTERNATIVES"; subheading "Same character - different visual styles". Exact quadrant labels "A  SOFT 3D", "B  GRAPHIC CEL", "C  CLAY-LIKE", "D  MINIMAL SHAPES". Small footer "Proposed visual directions". All feet visible; clean layout; styles should not bleed between panels. No motion arrows, no animation claims, no gesture variations, no hair/skin/clothing colour changes. Aim for very distinct artistic styles while leaving character identity, pose, and dimensions controlled.

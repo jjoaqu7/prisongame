@@ -1,0 +1,22 @@
+{
+  "folder": "docs\\evidence\\performance-visible-60",
+  "status": "COMPLETE",
+  "frameCount": 4554,
+  "framesOver33ms": 0,
+  "framesOver50ms": 0,
+  "maximumFrameMs": 20.5524,
+  "uniqueTimingSamples": 4554,
+  "validGpuSamples": 4551,
+  "gpuP95Ms": 2.5047,
+  "gpuP99Ms": 3.0003,
+  "slowCpuTimingSamples": 0,
+  "slowCpuSamplesOver75PercentPresentWait": 0,
+  "maximumMarkerMs": {
+    "loop_ns": 21.3529,
+    "scripts_ns": 18.6633,
+    "gui_ns": 10.1559,
+    "gc_ns": 5.7361,
+    "present_ns": 0.1236,
+    "render_wait_ns": 0.0
+  }
+}

@@ -1,0 +1,32 @@
+PASS: Fresh study begins with an open box and no inspection notice
+PASS: Starter stock covers two of three requested packs and identifies one missing recipe
+PASS: Crackers already on the tray still count toward a finishable pack
+PASS: Fruit already on the tray is not double-counted or lost from supply progress
+PASS: Finished pack moves from craftable to ready without changing the shortage
+PASS: First actual sale starts one ten-game-minute inspection and activates its physical notice
+PASS: Inspection preserves sale payment, delivered count and original deadline
+PASS: Request explicitly links its missing recipe to the closure and continuing deadline
+PASS: Guidance uses available stock while the closure panel states cause and reopening time
+PASS: Closure announcement does not repeat every frame
+PASS: Repeated real E at the closed box neither charges money nor adds ingredients
+PASS: Prompt explains closure and repeated triggers cannot extend it
+PASS: Shared closure also blocks another actor's free starter collection
+PASS: Another actor cannot reset the controlled inspection trigger
+PASS: Existing physical stock that covers the order removes the shortage warning during closure
+PASS: Removing ready stock automatically restores the actual shortage warning
+PASS: An unfinished pack during closure remains accounted for correctly
+PASS: A stored pack remains usable and guidance retrieves it instead of waiting for supplies
+PASS: Second delivery works during closure without restarting the inspection
+PASS: With all usable stock exhausted, guidance gives the reopening time
+PASS: Pause freezes the inspection and request countdown together
+PASS: Guard suspicion, supply closure and a running request deadline can coexist
+PASS: Supply access remains blocked immediately before the reopening boundary
+PASS: At the exact reopening boundary access returns and the physical closed notice disappears
+PASS: Reopening clears the blocked-request status and directs normal restocking
+PASS: Reopening announcement is not repeated every frame
+PASS: Normal $1 restock resumes and updates the request's supply coverage
+PASS: Request can finish on time after the interruption, with normal earnings
+PASS: The full interrupted loop still reaches the shelf reward
+PASS: Later sales do not repeat the one-off inspection; normal trading continues
+PASS: Reopening restores supply access for the other actor too
+INFO: Real E targeting, assembly, sale and placement; controlled game-clock boundary advances. One extra physical pack fixture tests sufficient pre-existing stock; no extra supplies granted in the saved scene. Stop Play resets test state.

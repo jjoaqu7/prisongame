@@ -42,10 +42,34 @@ Guard differences can affect routines, enforcement, and risky activities. Show a
 
 Guard memory should persist across shifts. Suspicion should follow something witnessed, reported, or discovered, with enough feedback for the player to understand the consequence.
 
+## Guard suspicion test - implemented, provisional rules
+
+The user authorized the first guard-suspicion implementation on September 24. `Guard01_Suspicion` adds one controlled scenario to the timed snack-request scene. The following choices are provisional for review; they do not establish final guard enforcement or character design.
+
+- A marked staff-only corner occupies the far right/back of the common room. Officer Harris is a temporary guard using the existing M5 rig with a navy uniform and cap, not a new approved character design. The sign and HUD identify him and the boundary.
+- Suspicion rises only when Harris sees the player inside the corner. The test uses a six-metre sight range, a 120-degree field of view and solid-geometry occlusion. Ordinary common-area activity does not raise suspicion.
+- Suspicion rises by 12.5 points per gameplay second, warns at 40, and caps at 100 after eight visible seconds. At 100 Harris orders the player to leave. The HUD names him, explains what he saw, shows whether suspicion is rising or falling, and tells the player how to respond.
+- Leaving the marked area or breaking his view lowers suspicion by 20 points per gameplay second. At zero, a message announces resolution. Re-entering in view starts a new episode; warnings are not repeated every frame.
+- Suspicion is personal to the player and this guard; it is not a prison-wide alert. The guard's position and restricted boundary are world state. Settings/focus pause freezes suspicion with the prison clock. An active snack deadline otherwise continues, and both statuses remain visible.
+
+This tests detection, escalation feedback and resolution. Harris is stationary and does not pursue, search, arrest, confiscate items or impose a lasting penalty; behavior beyond the order to leave remains open. Guard memory across shifts, rotations, multiple-guard coordination and saving are not implemented. These limits do not remove those proposals from the design. Actual captures: [marked corner](images/guard01-overview.png), [active order to leave](images/guard01-alert.png). Verification and next work live in [Progress](progress.md).
+
+## Supply interruption test - implemented, provisional rules
+
+The user authorized continuing with the next planned disruption test on September 24. `Supply01_Inspection` extends Guard01 with a controlled stock inspection. The trigger and duration below are provisional playtest choices, not final event rules.
+
+- The first successful snack-pack sale closes the common-table supply box for ten game minutes (50 unpaused real seconds). This happens once per play session. Later sales cannot restart or extend it.
+- The box refuses all collections and purchases during inspection without charging money. Existing ingredients, unfinished work and finished packs remain usable. A physical closed notice and the HUD identify the cause and reopening time.
+- The request deadline continues. Its panel reports how many remaining packs require more supplies, accounting for raw ingredients, finishable work and carried/stored packs. If existing stock covers the request, the panel says so instead of marking it blocked.
+- At the reopening time, the notice disappears, restocking resumes and the blocked-request message clears automatically. Reopening does not extend the request or undo late pricing. Settings/focus pause freezes the inspection with the existing prison clock.
+- Closure is shared world state; its controlled trigger observes the solo player's first sale. Supply coverage and request progress are personal. This is not multiplayer support.
+
+This tests an interruption and its consequences, without an animated inspection, fight simulation, route closure, alternative supplier, recurring event schedule or saving. The stationary guard scenario remains available alongside it. Actual captures: [closed](images/supply01-closed.png), [reopened](images/supply01-reopened.png). [Gameplay](gameplay.md#request-feedback-during-supply-interruption---implemented-provisional) owns the player guidance; [Progress](progress.md) records verification and review status.
+
 ## Open decisions
 
 - How often major fights should happen and how dangerous they should be to uninvolved players.
 - Whether the player can join, lead, or create a gang, and at what stage.
-- Whether personal combat belongs in the first playable version.
+- The neighboring-cell killing is now selected as the prototype loop's endpoint; whether it uses a staged interaction or personal combat, and how guards/witnesses respond, remain open. See [encounter scope](gameplay.md#neighboring-cell-inmate-encounter---agreed-purpose-mechanics-open).
 - Whether initial relationships are fixed or randomized between playthroughs.
 - How much influence the player has over reconciliation and guard assignments.

@@ -1,0 +1,33 @@
+PASS
+PASS: Laundry startup scene
+PASS: Startup is paused
+PASS: All scene materials supported
+PASS: Ray targets Board
+PASS: E starts shift
+PASS: CharacterController route reaches (0.50, 0.05, -0.80)
+PASS: CharacterController route reaches (0.50, 0.05, 3.80)
+PASS: CharacterController route reaches (4.50, 0.05, 3.80)
+PASS: CharacterController route reaches (4.50, 0.05, 5.20)
+PASS: Ray targets Rue
+PASS: E conversation and nearby work coexist
+PASS: CharacterController route reaches (5.40, 0.05, 4.50)
+PASS: CharacterController route reaches (8.00, 0.05, 4.50)
+PASS: CharacterController route reaches (8.00, 0.05, 3.50)
+PASS: CharacterController route reaches (10.80, 0.05, 3.50)
+PASS: CharacterController route reaches (11.40, 0.05, 4.30)
+PASS: Ray targets Tool
+PASS: E pockets supply-room tool
+PASS: Isolated active duty saves
+PASS: Disk load restores tool and work
+PASS: Ray targets Rue
+PASS: E delivers favor
+PASS: Ray targets Dex
+PASS: E completes introduction
+PASS: Modern HUD exists
+PASS: Delivered key disappears from inventory view
+PASS: Warm notification receives messages
+PASS: Load cleanup clears transient notices
+PASS: Tab reveals inventory
+PASS: Inventory view blocks world interaction targeting
+PASS: Releasing Tab hides inventory
+PASS: Full shift completes in executable

@@ -1,0 +1,16 @@
+Left_Shoe|0|546
+Left_Sole|546|546
+Right_Shoe|1092|546
+Right_Sole|1638|546
+Left_Eye|2184|546
+Left_Pupil|2730|546
+Right_Eye|3276|546
+Right_Pupil|3822|546
+ConnectedBrow|4368|68
+JoinedShirt|4436|3846
+JoinedTrousers|8282|5090
+JoinedHeadNeck|13372|8764
+LeftJoinedArmHand|22136|2714
+RightJoinedArmHand|24850|2704
+SmoothHairCap|27554|1345
+SimpleMouth|28899|138

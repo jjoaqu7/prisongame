@@ -43,19 +43,22 @@ The release decision is recorded. Apply these implementation boundaries as each 
 
 ### 4. Build one earning loop with its feedback
 
-- Choose one temporary prototype activity. Assembling and selling snack packs remains a candidate, not a final commitment.
+- First prototype activity selected September 24: assemble and sell snack packs. The supply/assembly/sale/restock/shelf loop is implemented and technically checked, awaiting user playtesting. Money is the announced prototype assumption following "proceed" with the recommended option; the final exchange system and prices remain open. See [Gameplay](gameplay.md#snack-pack-earning-test---implemented-awaiting-review).
 - Implement obtaining supplies, carrying out the activity, making one sale, and buying one visible cell improvement.
 - Add inventory, money or barter, and objective progress only as needed for that loop, with immediate visible updates.
 - Introduce one timed request with a due time, remaining time, progress, and stated consequence.
+  - Earn02_Requests retains the untimed comparison. Earn03_Deadline implements the selected clock, one-hour deadline, warnings, pause behavior and $2 late deliveries. Technical checks pass; user review of pacing and clarity remains. See [Gameplay](gameplay.md#timed-request-and-prison-clock---agreed-prototype-rules-awaiting-play-review).
 - Add one guard whose suspicion has a visible source, cause, changing state, and resolution.
+  - Guard01_Suspicion implements one stationary guard watching a marked staff-only corner, with sight checks, warnings, an order to leave and cooldown feedback. Technical checks pass; the user still needs to review clarity and pacing. Further enforcement remains open.
 - Trigger one supply interruption deliberately; update the affected order and explain the cause automatically.
+  - Supply01_Inspection implements a temporary stock inspection after the first sale, with reopening time, usable-stock guidance and affected-request feedback. Closure/reopening, late-delivery overlap and guard/earning regressions pass. Trigger and duration are provisional; combined user playtesting remains.
 - Play each condition separately, then together, to check whether the player can choose what to do next without consulting several screens.
 
 Done when the loop can be repeated and the player understands what applies, why, what can wait, and what needs action. Revise confusing feedback or uninteresting actions before adding more content.
 
 ### 5. Develop a small art sample alongside the prototype
 
-Current next step: the broad reference-board direction is agreed. Test the usual "eerily cozy/comfy" atmosphere in a small cell/corridor area with a view into the open common area, then develop one original funny/cute inmate. [Art and tone](art-and-tone.md#first-atmosphere-test---proposed-execution) owns the proposed test brief; [Progress](progress.md) tracks ART-02/03. Earning-loop work remains deferred at the user's request.
+Current status: M5's integrated sample is accepted at 0.52 m/s; the player walks at 3.02 m/s. The combined Windows prototype, including saving/loading, has passed technical checks and the user reported "it all works" in the combined playtest. A first licensed cozy sound pass is now implemented and technically verified; listening review and mix tuning are next (**Medium**), alongside performance follow-up and an uncoached new-player test. Visible profiling identified presentation waiting as the dominant recurring stall; a configurable frame limit now mitigates it. Longer-session and other-PC verification remain. [Progress](progress.md) owns task status. Final art approval remains separate; the temporary guard is not a newly approved art direction.
 
 - Collect a small set of visual references and choose provisional proportions, colors, and material treatment.
 - Create one inmate design and a few reusable cell pieces, such as a wall, door, bunk, table, and shelf.
@@ -65,6 +68,9 @@ Current next step: the broad reference-board direction is agreed. Test the usual
 Done when one character and one cell corner establish a coherent, repeatable style. This milestone can progress alongside milestones 3 and 4; the full prison and cast come later.
 
 ### 6. Finish a small integrated playable sample
+
+
+Current status: combined gameplay, save/load and the Windows executable are implemented and functionally accepted by the user. Basic sound is now implemented: footsteps, door, handling, assembly/sale and shelf cues plus quiet room ambience. Its cozy/umami direction is user-requested; the specific sounds and mix await listening review. Visible performance has been measured and a frame-limit mitigation implemented; an isolated pause and longer-session performance remain follow-up checks. Further presentation polish and an uncoached new-player test remain. No new mechanics are selected by this proposal.
 
 - Combine the tested interactions, interface, representative art, basic sound, and essential animation.
 - Add save/load for the sample's possessions, progress, cell upgrade, and active conditions.
@@ -172,7 +178,7 @@ The release-order decision is settled. The next networking decisions are the sec
 
 The broad concept is sufficient to begin focused experience design. Draft a session that might take roughly 10-15 minutes at an ordinary pace; this is a planning estimate. Define its actions, rewards, small layout, and the feedback for any timed obligations or threats. Then build it using simple placeholder geometry and characters.
 
-The following is one provisional session to evaluate. Snack packs, money, and the shelf are test candidates, not settled choices for the final game.
+The following is one provisional session to evaluate. Snack packs are selected for the first prototype, and its basic earning loop now uses temporary cash prices. The final money/barter choice, shelf and exact mechanics remain provisional, not settled final-game rules.
 
 | Moment | Player action | Feedback or purpose |
 | --- | --- | --- |
@@ -189,7 +195,7 @@ Provide enough starting supplies to complete the first sale and an accessible wa
 
 For this earliest test, connect a cell, shared landing, and small common room with the table and supplier. A few placeholder characters suffice. This precedes the larger first playable prison day below. It does not require a functioning whole prison, combat, a gang simulation, or finished artwork.
 
-Unity and the release order are selected. Use the implementation boundaries above when the earning loop resumes. The user deferred earning-loop work on September 23; its snack-pack activity remains a proposal.
+Unity and the release order are selected. Use the implementation boundaries above as the earning loop develops. The user deferred earning-loop work on September 23 and resumed it on September 24 by selecting snack packs. Earn01_SnackPacks contains the earning/shelf loop; Earn02_Requests adds an untimed request; Earn03_Deadline adds the selected clock, deadline and late-payment consequence; Guard01_Suspicion adds guard observation and escalation/resolution feedback; Supply01_Inspection adds the controlled disruption and affected-request feedback. Milestone 4's functional scenarios are implemented and technically checked together, but its clarity/enjoyment criteria still require user playtesting. Save01_Progress now adds manual save/load following the user's authorization to proceed; see [saving behavior](gameplay.md#saving-the-sample---implemented-provisional-controls) and [verification](progress.md#save-01-manual-sample-persistence---september-24). The user subsequently confirmed that the combined sample works; its functional playtest is accepted. The combined Windows sample is now built and verified under [CHECK-02](progress.md#check-02-combined-windows-sample---september-24), including save/load across separate executable launches. The first sound pass is now implemented and verified; next is listening review/mix tuning (**Medium**), alongside an uncoached new-player test and longer-session performance observation. PERF-02 records the measured frame-limit mitigation and remaining isolated pause. Final polish remains.
 
 After playing the test, ask:
 
@@ -232,11 +238,15 @@ Candidates include more jobs, deeper favors, cellmates, recruited traders, gang 
 
 The larger prison can be sketched now; only the spaces needed for the current playable version need full interiors and functioning systems.
 
+## Local display settings - implemented provisional default
+
+The Windows sample now offers 60 FPS, 120 FPS and Unlimited under Escape. It starts at 60 FPS when no valid saved choice exists, based on the measured reduction in presentation stalls on the test laptop. The choice is local and persistent; it does not change prison-clock or simulation rules. This default is a provisional technical implementation, not a user-approved final performance target or minimum specification. [Progress](progress.md#perf-02-visible-profiling-and-frame-limit---september-25) owns evidence and outstanding checks.
+
 ## Decisions still needed
 
-1. What hands-on job activity should be enjoyable in its own right?
+1. Laundry is selected for the first supervised-duty prototype. The two-minute shift/one-minute work requirement, first warning and tool-for-introduction favor are selected for testing. Free looking, nearby conversation and observation during work are agreed; ignoring the warning or being caught away again fails only this shift, preserving unrelated progress. Remaining details stay provisional in [Gameplay](gameplay.md#duty-direction---user-priority-proposed-mechanics-september-25).
 2. Does everyday trade primarily use money, goods, or both?
-3. How should time advance, including during menus, waiting, and sleep, and how should remaining time be displayed?
+3. Final day pacing and later waiting/sleep/time skipping remain open. The current prototype's clock rate, deadline and pause rules were selected September 24; see [Gameplay](gameplay.md#timed-request-and-prison-clock---agreed-prototype-rules-awaiting-play-review).
 4. Which conditions impose deadlines, suspicion, or penalties, and how does the interface communicate their onset, cause, progress, and resolution?
 5. How do the earlier labor quotas, multipliers, and global upgrades fit the sandbox?
 6. What does gang progression allow, and can it support a long-term goal beyond escape?
@@ -244,3 +254,20 @@ The larger prison can be sketched now; only the spaces needed for the current pl
 8. For release 2 co-op, what player count, hosting model, shared/personal progression, and save compatibility should be supported? Release 1 single-player / release 2 co-op is already agreed.
 
 The immediate development milestone is a rough Unity room with movement, interaction, a small earning loop, and understandable feedback for a deadline and rising guard suspicion. A small visual study can proceed alongside that work. A full prison day follows once those interactions are enjoyable and clear.
+
+
+## Near-term sequence after the laundry prototype - proposed
+
+1. Implement the selected Minimal text HUD and consistent contextual notifications; test warning priority and readability in play (**Medium**).
+2. Add a small inventory using existing objects, with pocket/held distinctions, storage and save compatibility. Decide capacity and stacking before changing carrying rules (**High**).
+3. Provide a compact on-demand view of tasks and known contacts, building on existing favor/request state (**Medium**).
+4. Connect one short repeatable prison-day sequence: assigned duty, free time and an existing contact's useful service. Scheduling, service/reward and any additional room are proposals requiring selection (**High**).
+
+Judge this small sequence in play before adding many rooms, characters or unrelated systems. Existing broader ideas remain recorded, not discarded.
+
+
+### Next step after the Harris/cell chain - proposed
+
+HUD, notifications, a six-slot inventory, Dex's secret, Harris's key and a neighboring cell are now implemented in the prototype (technical results in Progress; user review remains). The user has selected the cell's purpose: another inmate is there, and the player kills him to close this progression loop. The next concrete scope decision is a staged interaction versus combat, with motivation and aftermath still open; [Gameplay](gameplay.md#neighboring-cell-inmate-encounter---agreed-purpose-mechanics-open) owns those decisions. Recommended reasoning: **High**, because this introduces death, persistent character state and encounter completion.
+
+**Proposed milestone order:** finish that bounded encounter and play the whole chain from its objective through its outcome; then put it inside a short duty/free-time/return-to-cell day sequence. Add a compact on-demand task/contact journal when tracking the chain needs it (**Medium**), as supporting interface work rather than the main progression milestone. A full day/night simulation and general combat system are not automatically required to test this first complete chain. Broader rooms, cast, factions and release 2 co-op remain later milestones.

@@ -1,0 +1,32 @@
+PASS: Fresh paused game saves to an isolated fixture
+PASS: A different acting player cannot save
+PASS: Fixture uses a real sale, closure and partially assembled second pack
+PASS: In-progress state replaces the existing save
+PASS: Replacing a save retains the previous file as a backup
+PASS: Restoring fresh state clears newer progression
+PASS: Disk round trip succeeds
+PASS: Money, sale count and consumed ingredients restore exactly
+PASS: Request delivery, payment and original deadline restore
+PASS: Unfinished tray restores its working player
+PASS: Carried parcel restores attachment and disabled collision
+PASS: Player position and yaw restore
+PASS: Camera pitch restores
+PASS: Suspicion and active closure restore
+PASS: Loading stays paused with mouse released
+PASS: Loaded unfinished tray can produce a usable pack
+PASS: Stored pack restores world position and ready-pack count
+PASS: Item velocity and partially opened door restore
+PASS: Repeated load neither duplicates held packs nor loses their owner
+PASS: Restored carried pack sells exactly once
+PASS: Loaded loop remains completable through shelf purchase
+PASS: Completion, actual payment and purchased shelf restore
+PASS: Overdue load retains reduced price and earlier mixed payment
+PASS: Unsupported version is rejected without changing progress
+PASS: Malformed JSON is rejected without changing progress
+PASS: Invalid economy data is rejected
+PASS: Another scene's save is rejected
+PASS: Missing save reports failure
+PASS: Unwritable destination reports failure
+PASS: Failed file operations preserve current progress
+PASS: Save and load refuse unpaused simulation
+PASS: Last good save remains loadable after failures

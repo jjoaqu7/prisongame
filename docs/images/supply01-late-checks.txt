@@ -1,0 +1,9 @@
+PASS: A first delivery near the deadline starts inspection and still pays $3
+PASS: Deadline can expire while the supply box remains closed
+PASS: Request feedback shows late payment and supply shortage together
+PASS: Existing finished packs remain deliverable during closure at the late price
+PASS: Closed box does not charge even after the order is overdue
+PASS: Reopening never extends the request deadline or restores the on-time price
+PASS: Only the resolved supply problem clears; the overdue status remains
+PASS: The interrupted late request completes with the actual mixed $7 total and $1 refill cost
+PASS: Completion and reopened-supply feedback both reflect final state

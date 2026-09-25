@@ -1,0 +1,80 @@
+PASS
+PASS: Laundry startup scene
+PASS: Startup is paused
+PASS: All scene materials supported
+PASS: Ray targets Board
+PASS: E starts shift
+PASS: CharacterController route reaches (0.50, 0.05, -0.80)
+PASS: CharacterController route reaches (0.50, 0.05, 3.80)
+PASS: CharacterController route reaches (4.50, 0.05, 3.80)
+PASS: CharacterController route reaches (4.50, 0.05, 5.20)
+PASS: Ray targets Rue
+PASS: E conversation and nearby work coexist
+PASS: CharacterController route reaches (5.40, 0.05, 4.50)
+PASS: CharacterController route reaches (8.00, 0.05, 4.50)
+PASS: CharacterController route reaches (8.00, 0.05, 3.50)
+PASS: CharacterController route reaches (10.80, 0.05, 3.50)
+PASS: CharacterController route reaches (11.40, 0.05, 4.30)
+PASS: Ray targets Tool
+PASS: E pockets supply-room tool
+PASS: Isolated active duty saves
+PASS: Disk load restores tool and work
+PASS: Ray targets Rue
+PASS: E delivers favor
+PASS: Ray targets Dex
+PASS: E completes introduction
+PASS: Dex conversation reveals the poker secret
+PASS: Ray targets Guard
+PASS: E blackmail obtains officer key
+PASS: Modern HUD exists
+PASS: Delivered key disappears from inventory view
+PASS: Warm notification receives messages
+PASS: Load cleanup clears transient notices
+PASS: Tab reveals inventory
+PASS: Inventory view blocks world interaction targeting
+PASS: Releasing Tab hides inventory
+PASS: Full shift completes in executable
+PASS: Inventory starts empty
+PASS: Officer key locked before learning secret
+PASS: Secret requires Rue introduction
+PASS: Dex reveals poker secret after favor
+PASS: Different actor cannot claim officer key
+PASS: Paused blackmail cannot grant key
+PASS: Pocket pack 1
+PASS: Pocket pack 2
+PASS: Pocket pack 3
+PASS: Pocket pack 4
+PASS: Pocket pack 5
+PASS: Pocket pack 6
+PASS: Six pocketed packs fill all slots
+PASS: Seventh object stays in world
+PASS: Full inventory preserves starter allocation
+PASS: Full inventory keeps key reward available
+PASS: Inventory rejects different acting player
+PASS: Holding a pocketed pack uses the same slot
+PASS: Pocketed pack can be held and sold once
+PASS: Repeated sale cannot duplicate payment
+PASS: Freed slot permits officer key reward
+PASS: Officer key cannot be claimed twice
+PASS: Pocketed packs and officer key save to isolated fixture
+PASS: Repeated inventory load succeeds
+PASS: Load restores exact pockets, secret and key
+PASS: Pocketed and loose packs remain available stock after load
+PASS: Loaded pocketed objects have no visible mesh or collision
+PASS: Invalid dual held-pocketed ownership rejected atomically
+PASS: Over-capacity save rejected without replacing progress
+PASS: Shift failure retains secret and key
+PASS: Shift retry retains key
+PASS: Starter ingredient quantities occupy three slots
+PASS: Ingredient stacks and physical items share six-slot budget
+PASS: Restocking existing stacks at capacity charges exactly once
+PASS: Full inventory does not consume wrapper or spawn an uncarried pack
+PASS: Last wrapper frees a slot for the finished pack
+PASS: Existing parcel can be pocketed
+PASS: Unsupported drop preserves pocket ownership
+PASS: Holding restores object visibility
+PASS: Clear physical placement frees its slot
+PASS: Older save without new fields still loads
+PASS: R input pockets held parcel
+PASS: Tab plus selection and F input holds selected item
+PASS: Q input places object and frees slot

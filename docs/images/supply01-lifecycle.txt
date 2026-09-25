@@ -1,0 +1,9 @@
+Natural-frame follow-up after capture staging; no manual clock advance in this run.
+Play=True; Scene=Supply01_Inspection; Started=True; Closed=False; Time=530.388090719998; ReopensAt=490; SignActive=False
+Request: Delivered: 1 / 3 to M5
+Ready packs: 0 (carried or stored)
+Still to deliver: 2
+Due: Day 1 09:00:00
+Left: 9m 37s (game time)
+$3 each; late packs pay $2.
+Supply: Stock inspection finished. The supply box is open again.

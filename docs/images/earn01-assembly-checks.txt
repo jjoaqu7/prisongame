@@ -1,0 +1,14 @@
+PASS: Assembly refuses missing ingredients
+PASS: Supply box reachable from the open table end
+PASS: Starter supply contains two complete recipes
+PASS: Starter collection cannot be repeated
+PASS: Assembly tray reachable from the open table end
+PASS: First action places and consumes crackers
+PASS: Another actor cannot take over an occupied tray
+PASS: Second action places and consumes dried fruit
+PASS: Wrapping produces a physical held snack pack and clears the tray
+PASS: One finished pack consumes exactly one recipe
+PASS: Full hands block starting another pack without consuming supplies
+PASS: Finished pack can be placed on a clear table surface
+PASS: Placed pack restores physical collision
+PASS: Placed pack can be picked up again

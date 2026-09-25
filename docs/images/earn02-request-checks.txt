@@ -1,0 +1,24 @@
+PASS: Fresh scene offers a request without automatically accepting it
+PASS: Acceptance prompt states quantity, payment and no deadline
+PASS: Persistent offer states the full request and total payment
+PASS: Assembling a pack increases ready stock without delivering it
+PASS: Cannot deliver or receive request payment before acceptance
+PASS: E explicitly accepts the request without consuming the carried pack or paying
+PASS: Repeated acceptance cannot reset request progress
+PASS: Settings-open E cannot deliver a held pack
+PASS: Another actor cannot accept or advance this player's request
+PASS: Delivery to a different customer cannot advance or consume this request
+PASS: First real E delivery consumes one pack, credits $3 and updates request stock/progress
+PASS: HUD tracks remaining quantity and delivery retains M5's talking behavior
+PASS: Repeated empty-handed E cannot duplicate progress or payment
+PASS: Placed physical packs remain ready stock without counting as delivered
+PASS: Depleted ingredients with a stored pack direct the player to retrieve it
+PASS: Retrieved pack advances to 2/3 and next action directs paid restocking
+PASS: A non-snack item is retained and earns no request credit
+PASS: Third delivery completes the request with exactly $9 earned minus $1 restock
+PASS: Completion remains visible and guidance returns to the affordable shelf
+PASS: Completed request cannot restart or pay again on empty-handed input
+PASS: Request earnings purchase the existing shelf without blocking completion guidance
+PASS: A pack stored on the purchased shelf stays in the ready-stock count
+PASS: Ordinary sales continue after completion without overcounting the request
+INFO: Synthetic E input, real targeting/assembly/placement/economy. Temporary second actor verifies local state isolation only, not networking. Stop Play to reset.

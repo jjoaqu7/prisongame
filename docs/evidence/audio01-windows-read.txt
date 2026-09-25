@@ -1,0 +1,24 @@
+PASS - combined Windows sample read
+Unity: 6000.3.24f1
+Graphics: Direct3D12
+PASS: Combined sample is the startup scene
+PASS: Combined gameplay and save components included
+PASS: Startup settings pause controls and simulation
+PASS: Ordinary startup does not automatically load progress
+PASS: All 122 rendered materials supported
+PASS: A second executable process loads the first process's save
+PASS: Money and partial ingredients survive process restart
+PASS: Request progress and deadline survive process restart
+PASS: Partial tray ownership and suspicion survive restart
+PASS: Saved player position survives restart
+PASS: Offline time does not advance timers and load remains paused
+PASS: Restored partial tray produces a deliverable pack
+PASS: Delivery after loading pays exactly once
+PASS: Leaving clears suspicion and the inspection reopens on time
+PASS: Reopened box restores paid restocking
+PASS: Loaded session completes the request with correct earnings
+PASS: Real E purchases the earned cell shelf
+PASS: Completed progress replaces the save and retains a backup
+PASS: Completed shelf and request load correctly
+PASS: Malformed save cannot replace live progress
+PASS: Audio listener produces non-silent unclipped mixed output; peak=0.0611826

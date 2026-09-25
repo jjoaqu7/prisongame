@@ -18,6 +18,7 @@ First-person prison sandbox game. The rough room, first-person controller, and b
 2. Explain when needed, in plain terms for someone new to game dev and Unity (I'm an engineer). No analogies. Comparisons to other games are fine.
 3. Don't agree to be agreeable. Correct me when I'm wrong and give the reason.
 4. Use my vocabulary. Introduce a new term only if it's shorter, and define it once.
+   When suggesting a next step, include a recommended reasoning mode (for example Medium, High, or Extra High), with a brief reason when useful. This is a recommendation, not a claim that the setting was changed.
 5. Explain what you are doing as you work. Before starting, state the immediate action and its purpose. During work, give brief plain-language updates at meaningful steps and at least about once a minute during sustained work, including findings, blockers, and changes of direction. Finish with what changed, what was verified, and what comes next. Do not leave all explanation until the final response. Pass this rule to delegated agents; the primary agent keeps user-facing updates coordinated.
 
 # Version control

@@ -1,0 +1,33 @@
+PASS: Visible character facing matches the guard sight direction
+PASS: Ordinary common-room space starts without suspicion
+PASS: Guard can see a player on the normal side of the boundary
+PASS: Being visible outside the restricted area does not raise suspicion
+PASS: Player can physically cross the marked boundary without hidden collision
+PASS: Being seen inside the staff area raises suspicion at 12.5 per second
+PASS: Sight detection includes the player's Ignore Raycast layer
+PASS: HUD names the cause and a concrete way to reduce suspicion
+PASS: Solid geometry blocks the guard's view even inside the restricted area
+PASS: Breaking sight lowers suspicion and explains why
+PASS: Guard cannot see a player behind his facing direction
+PASS: Disabled guard cannot raise suspicion
+PASS: Disabled restricted area does not produce trespass suspicion
+PASS: Player beyond six metres is outside guard sight range
+PASS: Suspicion reaches 50 after four visible seconds at 30 FPS
+PASS: Suspicion reaches 50 after four visible seconds at 60 FPS
+PASS: Suspicion reaches 50 after four visible seconds at 144 FPS
+PASS: Invalid elapsed time cannot corrupt suspicion
+PASS: Warning threshold produces a guard warning
+PASS: Warning does not repeat every frame
+PASS: Paused prison time freezes suspicion despite elapsed time
+PASS: Suspicion caps at 100 and produces a persistent order to leave
+PASS: An order to leave is not overwritten by a lower-level warning next frame
+PASS: Real E targeting reaches the guard and explains how to comply
+PASS: Each actor has separate suspicion with the same guard
+PASS: Leaving the area lowers suspicion at 20 per second and changes its explanation
+PASS: Suspicion reaches zero and announces resolution once
+PASS: Clear notification does not repeat every frame
+PASS: Re-entering after resolution starts a new observed episode
+PASS: Snack request acceptance, assembly and delivery still work in the guard scene
+PASS: Deadline continues while suspicion is active during gameplay
+PASS: Focus pause freezes both deadline and suspicion together
+INFO: Real physics sight/capsule movement and synthetic E targeting used. Controlled Step durations test rates and transitions. Temporary second actor checks state separation, not networking. Stop Play resets test state.

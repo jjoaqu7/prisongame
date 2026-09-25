@@ -1,0 +1,1 @@
+PASS: Natural Update/Animator/LateUpdate completed a 1.2 m commanded walk and returned to idle; actual distance=1.19918 m.

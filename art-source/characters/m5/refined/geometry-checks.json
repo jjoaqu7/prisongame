@@ -1,0 +1,89 @@
+[
+  {
+    "mesh": "JoinedShirt",
+    "vertices": 3846,
+    "triangles": 7688,
+    "closed": true,
+    "bounds_min": [
+      -0.19179469347000122,
+      0.940000057220459,
+      -0.07491988688707352
+    ],
+    "bounds_max": [
+      0.19178377091884613,
+      1.3970009088516235,
+      0.07491987943649292
+    ]
+  },
+  {
+    "mesh": "JoinedTrousers",
+    "vertices": 5090,
+    "triangles": 10176,
+    "closed": true,
+    "bounds_min": [
+      -0.11689407378435135,
+      0.09200020879507065,
+      -0.06471966207027435
+    ],
+    "bounds_max": [
+      0.11690007150173187,
+      0.9601624011993408,
+      0.06473695486783981
+    ]
+  },
+  {
+    "mesh": "JoinedHeadNeck",
+    "vertices": 8764,
+    "triangles": 17524,
+    "closed": true,
+    "bounds_min": [
+      -0.11587823182344437,
+      1.3690000772476196,
+      -0.0969308540225029
+    ],
+    "bounds_max": [
+      0.11587823927402496,
+      1.9541950225830078,
+      0.09693092852830887
+    ]
+  },
+  {
+    "mesh": "LeftJoinedArmHand",
+    "vertices": 2714,
+    "triangles": 5424,
+    "closed": true,
+    "bounds_min": [
+      -0.20404936373233795,
+      0.749871551990509,
+      -0.034611012786626816
+    ],
+    "bounds_max": [
+      -0.12110493332147598,
+      1.2400014400482178,
+      0.025738537311553955
+    ]
+  },
+  {
+    "mesh": "RightJoinedArmHand",
+    "vertices": 2704,
+    "triangles": 5404,
+    "closed": true,
+    "bounds_min": [
+      0.12120457738637924,
+      0.7500113844871521,
+      -0.0345868282020092
+    ],
+    "bounds_max": [
+      0.2040107697248459,
+      1.2400014400482178,
+      0.025661058723926544
+    ]
+  },
+  {
+    "mesh": "SmoothHairCap",
+    "vertices": 1345,
+    "triangles": 2624,
+    "closed": false,
+    "note": "Scalp shell with intentional open lower boundary"
+  }
+]

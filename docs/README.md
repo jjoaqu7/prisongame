@@ -1,6 +1,6 @@
 # Prison game - design notes
 
-Last updated: September 23, 2026.
+Last updated: September 25, 2026.
 
 ## Agreed direction
 
@@ -9,7 +9,7 @@ A first-person game where the player walks around and builds a life inside a pri
 - Stylized, slightly grimy visuals, dark humor, and eccentric characters.
 - Lighting and interiors usually feel "eerily cozy/comfy" while retaining the prison setting; open common areas connect to more enclosed corridors. Detailed visual decisions live in [Art and tone](art-and-tone.md).
 - An approachable experience with clear, simple management of potentially complex systems. The game handles tracking and bookkeeping so the player can concentrate on current actions and decisions.
-- Daily routines affect access to people and places.
+- Daily routines affect access to people and places. Assigned duties should create contacts, tools and exploration opportunities; free looking, nearby conversation and observation remain possible while work progresses. Laundry is the selected first test; detailed rules live in [Gameplay](gameplay.md#duty-direction---user-priority-proposed-mechanics-september-25).
 - Trading, favors, prison jobs, relationships, and cell improvements create progression.
 - Gangs and changing rivalries affect prison life. Unpredictable gang fights can substantially change the playing dynamic.
 - Guard assignments should vary while retaining some consistency. The exact rules are open.
@@ -37,6 +37,7 @@ The agreed tracking workflow makes the primary development agent responsible for
 | [Prison world](prison-world.md) | Layout, movement, restricted areas, and expansion |
 | [Factions and events](factions-and-events.md) | Gangs, rivalries, fights, guards, and consequences |
 | [Art and tone](art-and-tone.md) | Visual style, character presentation, and humor |
+| [Asset register](asset-register.md) | Sources, licenses and edits for imported production candidates |
 | [Art reference board](art-reference-board.md) | Labelled reference pictures and proposed visual choices for review |
 | [Development plan](development-plan.md) | Next design step, a proposed short session, first playable version, and unresolved decisions |
 | [Progress and next tasks](progress.md) | Current work, task status, evidence, blockers, and session handoff |

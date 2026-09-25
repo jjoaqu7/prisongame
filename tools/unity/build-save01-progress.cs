@@ -1,0 +1,16 @@
+if(EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isCompiling) throw new System.Exception("Editor must be idle.");
+for(int i=0;i<UnityEngine.SceneManagement.SceneManager.sceneCount;i++) if(UnityEngine.SceneManagement.SceneManager.GetSceneAt(i).isDirty) throw new System.Exception("Save pending edits first.");
+const string path="Assets/Scenes/Save01_Progress.unity";
+if(System.IO.File.Exists(path)) throw new System.Exception("Save study already exists.");
+var scene=UnityEditor.SceneManagement.EditorSceneManager.OpenScene("Assets/Scenes/Supply01_Inspection.unity");
+var saver=GameObject.Find("Player").AddComponent<PrisonGame.Prototype.SampleSaveGame>();
+var so=new SerializedObject(saver);
+so.FindProperty("assembly").objectReferenceValue=UnityEngine.Object.FindFirstObjectByType<PrisonGame.Prototype.SnackAssembly>();
+so.FindProperty("shelf").objectReferenceValue=UnityEngine.Object.FindFirstObjectByType<PrisonGame.Prototype.SnackShelf>();
+so.FindProperty("inspection").objectReferenceValue=UnityEngine.Object.FindFirstObjectByType<PrisonGame.Prototype.SupplyInspection>();
+var parcels=UnityEngine.Object.FindObjectsByType<PrisonGame.Prototype.PrototypePickup>(FindObjectsSortMode.None);
+var a=so.FindProperty("parcels");a.arraySize=parcels.Length;for(int i=0;i<parcels.Length;i++)a.GetArrayElementAtIndex(i).objectReferenceValue=parcels[i];
+var doors=UnityEngine.Object.FindObjectsByType<PrisonGame.Prototype.PrototypeDoor>(FindObjectsSortMode.None);
+a=so.FindProperty("doors");a.arraySize=doors.Length;for(int i=0;i<doors.Length;i++)a.GetArrayElementAtIndex(i).objectReferenceValue=doors[i];
+so.ApplyModifiedPropertiesWithoutUndo();
+UnityEditor.SceneManagement.EditorSceneManager.SaveScene(scene,path);AssetDatabase.SaveAssets();return "Saved Save01_Progress with explicit static item/door references.";

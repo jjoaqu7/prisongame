@@ -1,0 +1,2 @@
+PASS: Natural frame clock progression: 24.4419542000032 real seconds -> 4.88839084000114 game minutes at 5 seconds/minute. Pause was false; timescale=1.
+PASS: Across natural paused frames, game time remained exactly 492.606133199999 and timescale remained zero.

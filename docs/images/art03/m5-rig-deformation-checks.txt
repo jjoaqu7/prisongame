@@ -1,0 +1,24 @@
+PASS: 17-bone skeleton and matching bind poses saved
+PASS: One skinned renderer retains eight material slots
+PASS: Every vertex has normalized nonnegative weights and valid bone references
+PASS: Binding preserves refined geometry within 0.1 mm
+PASS: Arm-raise sample 0 keeps lower shirt stable
+PASS: Head-turn sample 0 preserves facial spacing
+PASS: Arm-raise sample 0.25 keeps lower shirt stable
+PASS: Head-turn sample 0.25 preserves facial spacing
+PASS: Arm-raise sample 0.5 keeps lower shirt stable
+PASS: Head-turn sample 0.5 preserves facial spacing
+PASS: Arm-raise sample 0.75 keeps lower shirt stable
+PASS: Head-turn sample 0.75 preserves facial spacing
+PASS: Arm-raise sample 1 keeps lower shirt stable
+PASS: Head-turn sample 1 preserves facial spacing
+PASS: Saved looping clip M5_Idle
+PASS: M5_Idle closes without a geometry jump
+PASS: Saved looping clip M5_WalkPreview
+PASS: M5_WalkPreview closes without a geometry jump
+PASS: Saved looping clip M5_GesturePreview
+PASS: M5_GesturePreview closes without a geometry jump
+PASS: 45 deformed samples have finite vertices within culling bounds
+PASS: Idle keeps shoes planted; facial feature spacing survives head rotation
+INFO: maximum sampled edge stretch ratio=2.379; neutral maximum error=0.0000001 m
+INFO: 29037 vertices, 57948 triangles retained; no production topology reduction claimed

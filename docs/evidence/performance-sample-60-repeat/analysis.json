@@ -1,0 +1,22 @@
+{
+  "folder": "docs\\evidence\\performance-sample-60-repeat",
+  "status": "COMPLETE",
+  "frameCount": 4556,
+  "framesOver33ms": 1,
+  "framesOver50ms": 0,
+  "maximumFrameMs": 35.6268,
+  "uniqueTimingSamples": 4556,
+  "validGpuSamples": 4554,
+  "gpuP95Ms": 2.4494,
+  "gpuP99Ms": 2.7259,
+  "slowCpuTimingSamples": 1,
+  "slowCpuSamplesOver75PercentPresentWait": 1,
+  "maximumMarkerMs": {
+    "loop_ns": 35.6216,
+    "scripts_ns": 16.1143,
+    "gui_ns": 6.0158,
+    "gc_ns": 1.5631,
+    "present_ns": 0.0535,
+    "render_wait_ns": 0.0
+  }
+}

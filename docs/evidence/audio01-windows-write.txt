@@ -1,0 +1,19 @@
+PASS - combined Windows sample write
+Unity: 6000.3.24f1
+Graphics: Direct3D12
+PASS: Combined sample is the startup scene
+PASS: Combined gameplay and save components included
+PASS: Startup settings pause controls and simulation
+PASS: Ordinary startup does not automatically load progress
+PASS: All 122 rendered materials supported
+PASS: Real E accepts the one-hour request
+PASS: Real E collects starter stock
+PASS: Real E assembles and carries a pack
+PASS: First sale pays and starts supply inspection
+PASS: Closed supply box refuses collection without charging
+PASS: Second pack's unfinished work consumes its cracker
+PASS: Observed trespass raises suspicion in the executable
+PASS: Request and inspection share the advancing prison clock
+PASS: Executable writes isolated progress to disk
+PASS: Saved snapshot contains guard and unfinished work
+PASS: Audio listener produces non-silent unclipped mixed output; peak=0.0611826

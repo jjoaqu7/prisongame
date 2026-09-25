@@ -1,0 +1,259 @@
+{
+  "sources": {
+    "impact": {
+      "creator": "Kenney",
+      "title": "Impact Sounds 1.0",
+      "page": "https://kenney.nl/assets/impact-sounds",
+      "file": "impact.zip",
+      "license": "CC0 1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "029d734af1582474edf3a694d1b0cebc97c1c152f2f39fa34d4c2bafc5de77f8",
+      "download_url": "https://kenney.nl/media/pages/assets/impact-sounds/87b4ddecda-1677589768/kenney_impact-sounds.zip",
+      "format_note": "Original creator ZIP archive"
+    },
+    "interface": {
+      "creator": "Kenney",
+      "title": "Interface Sounds 1.0",
+      "page": "https://kenney.nl/assets/interface-sounds",
+      "file": "interface.zip",
+      "license": "CC0 1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "f2193d072726d6758a5f7871b2dcc54dcce0d5c35c6f0a62f92549b327c81232",
+      "download_url": "https://kenney.nl/media/pages/assets/interface-sounds/fa43c1dd4d-1677589452/kenney_interface-sounds.zip",
+      "format_note": "Original creator ZIP archive"
+    },
+    "paper": {
+      "creator": "alec_mackay",
+      "title": "paper shuffle.wav",
+      "page": "https://freesound.org/people/alec_mackay/sounds/463682/",
+      "file": "paper.mp3",
+      "license": "CC0 1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "876c9644d5bda57c410934c945216129799ccf3614cfa4c6c9ca696fde45a70b",
+      "download_url": "https://cdn.freesound.org/previews/463/463682_6551032-hq.mp3",
+      "format_note": "Public high-quality MP3 preview, not original WAV"
+    },
+    "room": {
+      "creator": "leonelmail",
+      "title": "Room Tone In An Apartment Living Room 2",
+      "page": "https://freesound.org/people/leonelmail/sounds/329533/",
+      "file": "room.mp3",
+      "license": "CC0 1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "efdd7c2df3d15ae60e1ac37852c9ad8bfdadf920f3185a24e32e2e8b03965d3c",
+      "download_url": "https://cdn.freesound.org/previews/329/329533_4437257-hq.mp3",
+      "format_note": "Public high-quality MP3 preview, not original WAV"
+    }
+  },
+  "outputs": [
+    {
+      "file": "PrisonGame/Assets/Prototype/Audio01/footstep_1.wav",
+      "sources": [
+        {
+          "source": "impact",
+          "member": "Audio/footstep_concrete_000.ogg"
+        }
+      ],
+      "processing": "Mono; remove DC/rumble; low-pass 3 kHz; soft saturation; peak 0.42; 8 ms edge fades",
+      "seconds": 0.106,
+      "peak": 0.134,
+      "rms": 0.01965,
+      "sha256": "a4beb106a02d7d74cd802b45672ba9324a09ce69c21bd0556daab34e7f619899"
+    },
+    {
+      "file": "PrisonGame/Assets/Prototype/Audio01/footstep_2.wav",
+      "sources": [
+        {
+          "source": "impact",
+          "member": "Audio/footstep_concrete_001.ogg"
+        }
+      ],
+      "processing": "Mono; remove DC/rumble; low-pass 3 kHz; soft saturation; peak 0.42; 8 ms edge fades",
+      "seconds": 0.108,
+      "peak": 0.1208,
+      "rms": 0.01621,
+      "sha256": "5bc231c24b1664df8d6dd14fac277a92f000a2deb31b07851c986649cbb78b7e"
+    },
+    {
+      "file": "PrisonGame/Assets/Prototype/Audio01/footstep_3.wav",
+      "sources": [
+        {
+          "source": "impact",
+          "member": "Audio/footstep_concrete_002.ogg"
+        }
+      ],
+      "processing": "Mono; remove DC/rumble; low-pass 3 kHz; soft saturation; peak 0.42; 8 ms edge fades",
+      "seconds": 0.113,
+      "peak": 0.1154,
+      "rms": 0.01502,
+      "sha256": "0d5f5cc0ac4b46a91a6d9dd482edc6043f1bdada3a1a51c18be9792cbbaff4a1"
+    },
+    {
+      "file": "PrisonGame/Assets/Prototype/Audio01/footstep_4.wav",
+      "sources": [
+        {
+          "source": "impact",
+          "member": "Audio/footstep_concrete_003.ogg"
+        }
+      ],
+      "processing": "Mono; remove DC/rumble; low-pass 3 kHz; soft saturation; peak 0.42; 8 ms edge fades",
+      "seconds": 0.11,
+      "peak": 0.1318,
+      "rms": 0.01711,
+      "sha256": "0262b41d8c9facdb4a5536b1669bd021a02446050c2fbcf02b176c570bc3ec63"
+    },
+    {
+      "file": "PrisonGame/Assets/Prototype/Audio01/pickup.wav",
+      "sources": [
+        {
+          "source": "paper",
+          "segment_seconds": [
+            116.94,
+            117.54
+          ]
+        }
+      ],
+      "processing": "Mono paper excerpt; speed 1; HP 65 Hz / LP 4 kHz; soft saturation; fades; peak 0.36",
+      "seconds": 0.6,
+      "peak": 0.1054,
+      "rms": 0.00691,
+      "sha256": "85ff179077b9c77ca1ad734b841ab0b7203a3d6d3e3f24af98e421acb34cbd34"
+    },
+    {
+      "file": "PrisonGame/Assets/Prototype/Audio01/wrap.wav",
+      "sources": [
+        {
+          "source": "paper",
+          "segment_seconds": [
+            116.94,
+            117.54
+          ]
+        }
+      ],
+      "processing": "Mono paper excerpt; speed 0.85; HP 65 Hz / LP 4 kHz; soft saturation; fades; peak 0.5",
+      "seconds": 0.706,
+      "peak": 0.198,
+      "rms": 0.01055,
+      "sha256": "247882abb8af6684221672f1f812b2bdde7d50dcd26ec1befc453e91fef0f610"
+    },
+    {
+      "file": "PrisonGame/Assets/Prototype/Audio01/restock.wav",
+      "sources": [
+        {
+          "source": "paper",
+          "segment_seconds": [
+            116.94,
+            117.54
+          ]
+        }
+      ],
+      "processing": "Mono paper excerpt; speed 0.95; HP 65 Hz / LP 4 kHz; soft saturation; fades; peak 0.42",
+      "seconds": 0.632,
+      "peak": 0.1305,
+      "rms": 0.00826,
+      "sha256": "068072fe9ddd3092aa7f55df1758e0b3687bd73073b32d9efb918b716ce365d4"
+    },
+    {
+      "file": "PrisonGame/Assets/Prototype/Audio01/place.wav",
+      "sources": [
+        {
+          "source": "impact",
+          "member": "Audio/impactSoft_medium_000.ogg"
+        }
+      ],
+      "processing": "Mono; speed 1; HP 65 Hz / LP 3200 Hz; soft saturation; edge fades; peak 0.45",
+      "seconds": 0.118,
+      "peak": 0.4447,
+      "rms": 0.09855,
+      "sha256": "490e72566356212c3c25599059f386042fb507ac1ebc582094ed7bf63bda68ed"
+    },
+    {
+      "file": "PrisonGame/Assets/Prototype/Audio01/crackers.wav",
+      "sources": [
+        {
+          "source": "impact",
+          "member": "Audio/impactWood_light_001.ogg"
+        }
+      ],
+      "processing": "Mono; speed 1; HP 65 Hz / LP 4000 Hz; soft saturation; edge fades; peak 0.4",
+      "seconds": 0.266,
+      "peak": 0.1404,
+      "rms": 0.01798,
+      "sha256": "b27c31fdf8a2881782fece7851ae0c4cf031934af614b98876f646d35d4d4b21"
+    },
+    {
+      "file": "PrisonGame/Assets/Prototype/Audio01/fruit.wav",
+      "sources": [
+        {
+          "source": "impact",
+          "member": "Audio/impactSoft_medium_001.ogg"
+        }
+      ],
+      "processing": "Mono; speed 1; HP 65 Hz / LP 3500 Hz; soft saturation; edge fades; peak 0.4",
+      "seconds": 0.183,
+      "peak": 0.3571,
+      "rms": 0.08496,
+      "sha256": "821f92b50bc47d2f21f71b6e07f7fb764e8435db77b7b6d2213b6fe8dd644ab4"
+    },
+    {
+      "file": "PrisonGame/Assets/Prototype/Audio01/door.wav",
+      "sources": [
+        {
+          "source": "impact",
+          "member": "Audio/impactMetal_medium_000.ogg"
+        }
+      ],
+      "processing": "Mono; speed 0.85; HP 65 Hz / LP 2400 Hz; soft saturation; edge fades; peak 0.5",
+      "seconds": 0.32,
+      "peak": 0.3342,
+      "rms": 0.04965,
+      "sha256": "e31924e026869c2734800ec504b9952c37e7ecec51846a007d1019544069575d"
+    },
+    {
+      "file": "PrisonGame/Assets/Prototype/Audio01/shelf.wav",
+      "sources": [
+        {
+          "source": "impact",
+          "member": "Audio/impactWood_medium_000.ogg"
+        }
+      ],
+      "processing": "Mono; speed 1; HP 65 Hz / LP 3500 Hz; soft saturation; edge fades; peak 0.5",
+      "seconds": 0.333,
+      "peak": 0.3251,
+      "rms": 0.03871,
+      "sha256": "0dcbef4a25703752225aabc91ab009d4dfc5d8ef85dcb9a6620a1639ef16d35f"
+    },
+    {
+      "file": "PrisonGame/Assets/Prototype/Audio01/sale.wav",
+      "sources": [
+        {
+          "source": "interface",
+          "member": "Audio/pluck_001.ogg"
+        }
+      ],
+      "processing": "Mono; speed 0.85; HP 65 Hz / LP 3200 Hz; soft saturation; edge fades; peak 0.38",
+      "seconds": 0.121,
+      "peak": 0.2273,
+      "rms": 0.03344,
+      "sha256": "a7b487c27bf88f335a59f708ca0f8e48a37d11a42a9e07f0069a5bc2a190004d"
+    },
+    {
+      "file": "PrisonGame/Assets/Prototype/Audio01/room_tone.wav",
+      "sources": [
+        {
+          "source": "room",
+          "segment_seconds": [
+            2,
+            16
+          ]
+        }
+      ],
+      "processing": "Mono room recording; 80-1600 Hz bandpass; 750 ms loop overlap; RMS capped 0.07 and peak 0.35",
+      "seconds": 13.25,
+      "peak": 0.35,
+      "rms": 0.06285,
+      "sha256": "f14945417d924b51b23f94b471061c15d633d8d6e38c9c3ec22fa731d53d68e5"
+    }
+  ],
+  "retrieved_utc": "2026-09-25T03:28:59.173683+00:00"
+}

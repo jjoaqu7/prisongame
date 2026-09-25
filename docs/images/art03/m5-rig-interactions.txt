@@ -1,0 +1,27 @@
+Art03_M5_Rig: verify-room03.cs, Editor Play mode, September 24 2026.
+PASS: Door target and open prompt available at spawn
+PASS: Closed door has open prompt
+PASS: Closed door physically blocks passage
+PASS: Door slides fully open
+PASS: Open door permits controller passage
+PASS: Hall button remains reachable when door is open
+PASS: Hall button closes door
+PASS: Cell button can reopen door
+PASS: Door refuses to close on player
+PASS: Entering during closing reopens door
+PASS: Parcel target on desk
+PASS: Pickup attaches parcel without carried collision
+PASS: Full hands retain the existing item
+PASS: Parcel can be placed back on desk
+PASS: Placed parcel restores physics and clears hands
+PASS: Placed parcel can be targeted again
+PASS: Drop across a wall is refused without losing parcel
+PASS: Parcel can be placed on clear corridor floor
+PASS: Solid wall blocks inmate interaction
+PASS: Inmate beyond reach cannot be targeted
+PASS: Nearby inmate can be targeted
+PASS: Talking produces visible dialogue text
+PASS: E does not interact while settings are open
+PASS: E keyboard event picks up targeted parcel
+PASS: Q does not drop while settings are open
+PASS: Q keyboard event puts parcel down

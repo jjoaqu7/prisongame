@@ -1,0 +1,14 @@
+PASS: Cross cell doorway using controller
+PASS: Walk and turn in corridor
+PASS: Cross common-area entrance
+PASS: Solid wall stops sustained movement
+PASS: Gravity settles on floor
+PASS: Walk speed is 3.02m/s at 30, 60, 144 FPS
+PASS: Diagonal movement has no speed bonus
+PASS: Look up is clamped
+PASS: Look down is clamped
+PASS: Accidental fall returns to spawn
+PASS: W binding produces forward input
+PASS: A binding produces left input
+PASS: Focus loss releases cursor
+PASS: Escape releases cursor

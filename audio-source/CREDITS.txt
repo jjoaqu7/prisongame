@@ -1,0 +1,21 @@
+Sound sources for PrisonGame prototype
+All selected sources: Creative Commons CC0 1.0 Universal
+https://creativecommons.org/publicdomain/zero/1.0/
+
+Attribution is not required by CC0; creators credited voluntarily.
+
+Impact Sounds 1.0 - Kenney
+https://kenney.nl/assets/impact-sounds
+
+Interface Sounds 1.0 - Kenney
+https://kenney.nl/assets/interface-sounds
+
+paper shuffle.wav - alec_mackay
+https://freesound.org/people/alec_mackay/sounds/463682/
+
+Room Tone In An Apartment Living Room 2 - leonelmail
+https://freesound.org/people/leonelmail/sounds/329533/
+
+Edited for this prototype: selected excerpts, softened frequency balance,
+level matching, minor speed changes, mono conversion and ambience loop crossfade.
+Source snapshots, file hashes and exact edits: docs/asset-register.md and audio-source/manifest.json.

@@ -1,0 +1,4 @@
+Mode: built-in imagegen edit.
+Input: initial sheet 1 generation (exec-0468f359-d043-4625-8fc8-9ea83221fd40.png).
+
+Edit this character style sheet only to improve presentation. Preserve all four character designs and both views of every character exactly. Replace the dark brown vignetted background with a clean even light-grey studio backdrop and brighten the illumination so the colors remain clear and neutral. Remove all dark vignette. Make labels solid black and clearly legible: top left M1 Bent geometry, top right M2 Solid silhouette, bottom left M3 Crooked cartoon, bottom right M4 Graphic mask. Preserve the clean 2x2 composition, full bodies, matching face studies, and all character features. Do not add detail or redesign them.

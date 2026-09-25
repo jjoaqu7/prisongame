@@ -1,0 +1,8 @@
+Mode: built-in imagegen edit.
+Reference/edit target: art03-mixtures-2.png.
+
+Use case: precise-object-edit.
+Input image: edit target, the four-panel M5-M8 concept sheet. The bottom-left M7 character is also the facial-style reference.
+Edit ONLY the facial features of M5 (top left) and M6 (top right), in BOTH their full-body views and enlarged head studies. Give each M7's facial construction: a thick dark brown horizontal connected brow bar, two visible white eyes with black pupils tucked under that brow with the same half-lidded mildly stern sideways glance, and a small simple downturned mouth line. Keep the face noseless like M7. Adapt the width and placement of these features to each existing head instead of copying M7's head shape.
+Preserve M5's exact elongated pebble-shaped narrow head, smooth hair cap, long slender body, proportions and pose. Preserve M6's exact bald oval head, short neck, soft column-shaped body, proportions and pose. Do NOT make either head square, do NOT broaden their shoulders, do NOT replace their bodies with M7's.
+Keep M7 and M8 unchanged as comparison references. Preserve all four panel labels and names verbatim, the 2x2 layout, full-body views and enlarged head views, clothing, shoes, colors, soft matte 3D rendering, bright light-grey backdrop, and even studio lighting. No extra details, objects, panels or text.

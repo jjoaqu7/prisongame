@@ -1,0 +1,22 @@
+{
+  "folder": "docs\\evidence\\performance-visible-uncapped",
+  "status": "COMPLETE",
+  "frameCount": 21218,
+  "framesOver33ms": 16,
+  "framesOver50ms": 2,
+  "maximumFrameMs": 60.1241,
+  "uniqueTimingSamples": 21218,
+  "validGpuSamples": 15897,
+  "gpuP95Ms": 1.8033,
+  "gpuP99Ms": 2.517,
+  "slowCpuTimingSamples": 16,
+  "slowCpuSamplesOver75PercentPresentWait": 15,
+  "maximumMarkerMs": {
+    "loop_ns": 55.2777,
+    "scripts_ns": 20.0659,
+    "gui_ns": 20.253,
+    "gc_ns": 3.0831,
+    "present_ns": 32.9593,
+    "render_wait_ns": 0.0
+  }
+}

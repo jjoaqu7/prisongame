@@ -1,0 +1,101 @@
+{
+    "version": 1,
+    "scene": "Duty01_Laundry",
+    "player": {
+        "position": {
+            "x": 9.399999618530274,
+            "y": 0.05000000074505806,
+            "z": 13.300000190734864
+        },
+        "yaw": 0.0,
+        "pitch": 0.0,
+        "suspicion": 0.0,
+        "money": 0,
+        "sales": 0,
+        "crackers": 0,
+        "fruit": 0,
+        "wrappers": 0,
+        "delivered": 0,
+        "paid": 0,
+        "starter": false,
+        "accepted": false,
+        "completedLate": false,
+        "dueAt": 0.0,
+        "laundry": {
+            "phase": 1,
+            "remaining": 100.0,
+            "worked": 20.0,
+            "seen": 0.0,
+            "grace": 0.0,
+            "warned": false,
+            "favorAsked": true,
+            "hasTool": true,
+            "favorDone": false,
+            "contactMet": false,
+            "pokerSecret": false,
+            "officerKeyGiven": false,
+            "hasOfficerKey": false,
+            "outcome": ""
+        }
+    },
+    "world": {
+        "minutes": 480.0,
+        "reopensAt": 0.0,
+        "inspectionStarted": false,
+        "shelfInstalled": false,
+        "trayStage": 0,
+        "parcels": [
+            {
+                "position": {
+                    "x": -3.0999999046325685,
+                    "y": 0.9399999976158142,
+                    "z": 1.5
+                },
+                "velocity": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "angularVelocity": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                },
+                "held": false,
+                "pocketed": false
+            }
+        ],
+        "packs": [],
+        "doors": [
+            {
+                "position": {
+                    "x": -2.0,
+                    "y": 1.100000023841858,
+                    "z": -0.5
+                },
+                "opening": false,
+                "unlocked": false
+            }
+        ],
+        "neighboringCell": {
+            "position": {
+                "x": -2.0,
+                "y": 1.100000023841858,
+                "z": 4.5
+            },
+            "opening": false,
+            "unlocked": false
+        },
+        "laundryRoom": {
+            "segment": 0,
+            "elapsed": 0.019999992102384568,
+            "yaw": 252.47442626953126
+        }
+    }
+}

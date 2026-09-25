@@ -1,0 +1,34 @@
+PASS: Fresh timed scene starts paused in settings without an accepted request
+PASS: Settings pause both the world simulation and prison clock
+PASS: First resumed frame discards the paused interval instead of charging it
+PASS: Resuming focused gameplay restores world simulation and clock
+PASS: Focus loss immediately freezes the clock and world simulation
+PASS: Returning focus alone does not dismiss settings or resume time
+PASS: Escape pauses before the next timed-request input is processed
+PASS: Invalid elapsed times cannot reverse or corrupt the clock
+PASS: Five real minutes advances one game hour at 30 FPS
+PASS: Five real minutes advances one game hour at 60 FPS
+PASS: Five real minutes advances one game hour at 144 FPS
+PASS: Clock labels handle midnight and never show a negative countdown
+PASS: Offer states duration and late-payment consequence before acceptance
+PASS: Acceptance fixes a one-game-hour deadline without paying or consuming anything
+PASS: Repeated talking cannot extend the accepted deadline
+PASS: Final ten game minutes trigger a warning while retaining on-time payment
+PASS: Approaching deadline produces a clear reminder
+PASS: Due-soon reminder is not repeated every frame
+PASS: Pausing near the deadline preserves remaining time and blocks a delivery
+PASS: Delivery immediately before the deadline pays the full $3
+PASS: At the deadline boundary the request becomes overdue and price drops to $2
+PASS: Existing earnings stay intact and prompt/HUD agree on the late price
+PASS: Crossing the deadline produces an explicit consequence notification
+PASS: Overdue notification is not repeated every frame
+PASS: Late delivery pays $2 without altering the earlier $3 payment
+PASS: Repeated late delivery input cannot duplicate payment or progress
+PASS: Mixed on-time and late deliveries complete with the actual $7 total minus $1 restock
+PASS: Completion reports actual earnings and late status instead of promising $9
+PASS: Time and repeated talk after completion cannot alter earnings or restart the request
+PASS: Regular $3 sales resume after completion and can still fund the shelf
+PASS: Late completion still permits earning and purchasing the existing shelf
+PASS: All-on-time completion pays exactly $9
+PASS: Passing the deadline after on-time completion does not retroactively penalize the request
+INFO: Clock boundary advances are controlled; interaction uses synthetic E through actual targets. Pause/focus drivers exercised directly. On-time fixture replaces personal request only at test end. Stop Play resets all test state.

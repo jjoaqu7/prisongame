@@ -1,0 +1,1 @@
+FAIL: Mixed output sampled across 43 Editor frames; peak=0. Probe forced active playback to avoid external-tool focus pausing.

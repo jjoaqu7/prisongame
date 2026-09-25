@@ -16,7 +16,7 @@ The [development plan](development-plan.md) owns milestone scope and sequencing.
 
 - **Milestone:** closing the prototype chain with ENCOUNTER-01, the neighboring-cell fight. Real combat is agreed. Combat research is done: [report](research/combat/report.md). Release 1's broad scope is agreed: [Release 1 scope](development-plan.md#release-1-scope---agreed-september-25).
 - **Next action:** plan ENCOUNTER-01 (**High**). The blocking combat decisions are made: a weapon adds damage but the inmate still fights back; he goes down at zero health and killing is a separate action; losing reloads. The plan proposes defaults for the report's remaining open decisions for the user to confirm. After that, REL1-01: the release 1 milestone list (**High**).
-- **Blockers:** none for development. Publishing: local commits are not on GitHub yet. GitHub sign-in now works, but push protection rejects checkpoint commit `3b97bcf`: three saved Freesound pages in `audio-source/` (paper, room, steps `-source.html`) contain Freesound's public Mapbox map token. Fix needs the user's choice: allow rewriting the unpushed commits to redact it, or allow the token through GitHub's unblock link.
+- **Blockers:** none. `main` is pushed to GitHub (`origin`) after redacting Freesound's public map token from three saved source pages.
 - **Latest builds** (ignored by Git): `PrisonGame/Builds/WindowsLaundry/PrisonGame.exe` has laundry duty, HUD, inventory and the neighboring cell (scene `Duty01_Laundry`). `PrisonGame/Builds/WindowsSample/PrisonGame.exe` has the combined earning sample with sound (scene `Save01_Progress`).
 
 ## Awaiting your review
@@ -89,4 +89,4 @@ Patterns to consider borrowing: Unity's [inspect/change/run/verify workflow](htt
 - **September 25:** user agreed release 1 scope, real combat, and the combat decisions for ENCOUNTER-01 (weapon adds damage, downed then separate kill, reload on loss), plus shoving as a general action; recorded in Gameplay, Factions/events and the development plan. User approved the six review items. Tracker split (TRACK-02). RESEARCH-01 finished; research moved to `docs/research/<topic>/`; a tool-independent research skill with Claude Code and Codex agents (AGENT-07). No game code, scenes or builds changed.
 - **Next:** plan ENCOUNTER-01 from the [combat report](research/combat/report.md) build order, proposing defaults for its remaining open decisions (**High**).
 - **Open user decisions:** remaining combat decisions (controls, block and stamina, death presentation, tone, weapon traits, feedback, view, aftermath, code organization, animation sourcing); what "critical" damage and injuries mean; which save a loss reloads; release 1 quantities (wings, gangs, escape routes).
-- **Publication:** see Current state.
+- **Publication:** pushed September 25; see Current state.

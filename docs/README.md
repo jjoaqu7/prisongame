@@ -25,7 +25,7 @@ The user accepted the development sequence: establish the basics, build a rough 
 
 The current project uses Unity 6.3 LTS and URP. Agreed on September 23: release 1 is single-player, with co-op planned for release 2. Develop the solo systems with later co-op in mind; this reduces avoidable rework but does not remove later networking work. Reasons, boundaries, and remaining choices are recorded in [Development plan](development-plan.md).
 
-Start each work session at [Progress and next tasks](progress.md). It owns task status and verified results; the [development plan](development-plan.md#execution-checklist) owns the long-term milestones and completion criteria.
+Start each work session at [Progress and next tasks](progress.md). It owns current task status; the [progress log](progress-log.md) keeps each task's verification details and history. The [development plan](development-plan.md#execution-checklist) owns the long-term milestones and completion criteria.
 
 The agreed tracking workflow makes the primary development agent responsible for keeping progress current. Temporary reviewers or specialists can be used for bounded work when needed; a continuously running tracking agent is not required. Operational rules are in `AGENTS.md`.
 
@@ -40,8 +40,9 @@ The agreed tracking workflow makes the primary development agent responsible for
 | [Asset register](asset-register.md) | Sources, licenses and edits for imported production candidates |
 | [Art reference board](art-reference-board.md) | Labelled reference pictures and proposed visual choices for review |
 | [Development plan](development-plan.md) | Next design step, a proposed short session, first playable version, and unresolved decisions |
-| [Progress and next tasks](progress.md) | Current work, task status, evidence, blockers, and session handoff |
-
+| [Progress and next tasks](progress.md) | Current state, task status, items awaiting review, blockers, and session handoff |
+| [Progress log](progress-log.md) | Dated history: each task's verification details, evidence links and handoff notes |
+| [Research](research/reports/) | Sourced research reports used as references for decisions; findings are not decisions |
 | [Original ideas](history/original-ideas.md) | History. The user's original ideas in their own wording; some are still open |
 | [First conversation](history/first-conversation.md) | History. Raw early chat log; its suggestions are not decisions |
 

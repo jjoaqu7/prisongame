@@ -62,7 +62,7 @@ Implemented September 24 for comparison. The user selected A's warm amber for th
 
 In Unity, open `Assets/Scenes/Art02_A_Amber.unity` or `Art02_B_SoftCool.unity`, press Play, select Game, and click **Resume walking**. WASD/mouse move and look; E operates the door/pickup/inmate; Q places the parcel; Escape releases the mouse. Stop Play before opening the other scene. The existing Windows executable still contains the original room.
 
-Open `Assets/Scenes/Art02_Combined.unity` to review the selected combination. Its movement and interaction checks passed; review the transition and visibility of doors, parcel, inmate, and prompts while walking. The placeholder inmate has no finished face; face readability needs another review during ART-03. Technical evidence lives in [Progress](progress.md#art-02-atmosphere-comparison--september-24).
+Open `Assets/Scenes/Art02_Combined.unity` to review the selected combination. Its movement and interaction checks passed; review the transition and visibility of doors, parcel, inmate, and prompts while walking. The placeholder inmate has no finished face; face readability needs another review during ART-03. Technical evidence lives in [Progress](progress-log.md#art-02-atmosphere-comparison--september-24).
 
 ### ART-03 production workflow - proposed
 
@@ -94,7 +94,7 @@ The left figure is neutral; the centre tests shoulder/elbow bends and head rotat
 
 `Assets/Prototype/Art03Rig/M5_Rigged.prefab` uses a 17-bone skeleton and one skinned renderer with eight material slots. Face pieces follow the head without changing their spacing. The Animator defaults to a quiet four-second idle; a 1.2-second walk and 2.4-second nod/arm gesture are separate previews. The existing interaction and capsule collider remain on the parent inmate object.
 
-**Initial rig-pass limits, before the polish below:** the walk ran in place and needed foot-contact polish before driving movement. The gesture was not triggered by talking. This custom generic rig has no lip sync, facial rig, navigation, root motion, humanoid retargeting or verified Blender export workflow. Geometry remains 29,037 vertices / 57,948 triangles, with no production retopology or UV layout. Joint deformation at larger angles still needs visual review. [Progress](progress.md#art-03-m5-rig-and-motion-previews--september-24) records that pass's verification.
+**Initial rig-pass limits, before the polish below:** the walk ran in place and needed foot-contact polish before driving movement. The gesture was not triggered by talking. This custom generic rig has no lip sync, facial rig, navigation, root motion, humanoid retargeting or verified Blender export workflow. Geometry remains 29,037 vertices / 57,948 triangles, with no production retopology or UV layout. Joint deformation at larger angles still needs visual review. [Progress](progress-log.md#art-03-m5-rig-and-motion-previews--september-24) records that pass's verification.
 
 #### M5 walk and talk integration - reviewed prototype
 
@@ -109,7 +109,7 @@ For the movement test, press Escape to release the mouse and open **Prison Game 
 | Moving walk | [Walking](images/art03/m5-behavior-walking.png) |
 | Talk-triggered gesture | [Talking](images/art03/m5-behavior-talking.png) |
 
-The current movement follows a straight line on level ground. It cannot find a route around furniture or handle stairs/slopes. Turning is a simple stationary pivot without a turn animation. There is no daily routine, lip sync, persistence or economy. The study keeps movement/talking state separate from local player input and animation presentation; co-op is still unimplemented. [Progress](progress.md#art-03-m5-walk-and-talk-integration--september-24) owns verification and the next task.
+The current movement follows a straight line on level ground. It cannot find a route around furniture or handle stairs/slopes. Turning is a simple stationary pivot without a turn animation. There is no daily routine, lip sync, persistence or economy. The study keeps movement/talking state separate from local player input and animation presentation; co-op is still unimplemented. [Progress](progress-log.md#art-03-m5-walk-and-talk-integration--september-24) owns verification and the next task.
 
 This supersedes the unconnected-walk/gesture limits in the earlier stages below. Their scenes remain available for isolated comparisons.
 
@@ -123,7 +123,7 @@ From left: walking at 0%, 25% and 50% of the cycle, then the gesture midpoint. T
 
 This supersedes the initial foot-contact limitation above: level-ground contact is now baked and verified, including between animation keys. The clip is designed for **0.43 m/s** forward travel at its normal playback speed. It still plays in place in the study, so contact feet move backward relative to the room. A moving character must match travel speed and playback to avoid sliding.
 
-A small correction on the visual rig keeps soles above the floor during blends between clips; the largest measured lift was 7.8 mm. It leaves the parent inmate and collision unchanged. This supports the current flat study floor, not slopes, stairs or independent foot locking. The gesture still is not connected to E/talking; navigation, lip sync, retargeting and production topology remain unimplemented. [Progress and verification](progress.md#art-03-m5-motion-polish--september-24) own the checks. Proposed next step: connect the existing talk interaction to the gesture, then test the walk with matched actual travel; recommended reasoning mode **High**.
+A small correction on the visual rig keeps soles above the floor during blends between clips; the largest measured lift was 7.8 mm. It leaves the parent inmate and collision unchanged. This supports the current flat study floor, not slopes, stairs or independent foot locking. The gesture still is not connected to E/talking; navigation, lip sync, retargeting and production topology remain unimplemented. [Progress and verification](progress-log.md#art-03-m5-motion-polish--september-24) own the checks. Proposed next step: connect the existing talk interaction to the gesture, then test the walk with matched actual travel; recommended reasoning mode **High**.
 
 #### M5 refined static model - implemented, appearance awaiting review
 

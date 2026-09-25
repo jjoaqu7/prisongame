@@ -30,8 +30,11 @@ First-person prison sandbox game. The rough room, first-person controller, and b
 Windows. Use `python`, not `python3`.
 
 # Progress tracking - agreed workflow
-- The primary development agent owns `docs/progress.md`; no always-running tracker agent is required.
-- Before work, read the tracker and relevant design documents. After meaningful work, update task status, verification evidence, blockers, and the next action. Leave a clear handoff before ending a session.
+- The primary development agent owns `docs/progress.md` and `docs/progress-log.md`; no always-running tracker agent is required.
+- `docs/progress.md` holds current state only: current state, items awaiting review, one short row per task, and the handoff. Keep it under about 150 lines; replace outdated status instead of stacking new "latest" paragraphs.
+- `docs/progress-log.md` holds history. Append each task's verification details, evidence links and handoff as a dated entry at the end, and link the task row to it. Read the log only when a task's history is needed; search it by task ID.
+- Before work, read the tracker and relevant design documents. After meaningful work, update task status, blockers, and the next action in the tracker, and add the verification evidence to the log. Leave a clear handoff before ending a session.
+- Research results go in `docs/research/`. They are references for decisions, not decisions.
 - Keep task status in the tracker, long-term milestones in `docs/development-plan.md`, and design decisions in their owning documents. Link instead of duplicating details.
 - Distinguish implemented, verified, and awaiting user review. Do not mark subjective approval complete on the user's behalf.
 - At milestone completion, reconcile the tracker and docs against the actual project. Record failed or incomplete checks honestly.

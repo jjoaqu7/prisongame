@@ -2,9 +2,21 @@
 
 ## Status
 
-The user accepted the broad development sequence on September 23, 2026. The current project uses Unity 6.3 LTS (6000.3.24f1) and URP. Release 1 is single-player; co-op is planned for release 2. Player count, hosting, schedule, and detailed prototype content remain open. Documentation does not mean a feature is implemented. Current task status and verification evidence live in [Progress](progress.md).
+The user accepted the broad development sequence on September 23, 2026. The current project uses Unity 6.3 LTS (6000.3.24f1) and URP. Release 1 is single-player; co-op is planned for release 2. Player count, hosting, schedule, and detailed prototype content remain open. Release 1's broad scope is agreed; see [Release 1 scope](#release-1-scope---agreed-september-25). Documentation does not mean a feature is implemented. Current task status and verification evidence live in [Progress](progress.md).
 
 The agreed experience allows complex systems, deadlines, suspicion, and disruptions. The game handles bookkeeping and clearly communicates what applies to the player, so the player can focus on actions and decisions. Evaluate the clarity of those systems in the prototype, alongside whether the core activity feels enjoyable.
+
+## Release 1 scope - agreed September 25
+
+The user answered the release 1 scope questions on September 25. Release 1 (single-player, Windows PC) includes:
+
+- **Escape.** Escaping is part of release 1. Milestone 7's order still applies: escape paths are developed after prison life is compelling, and are required before release 1 ships.
+- **Gangs/factions** with conflicts.
+- **Several prison wings.**
+- **Real combat.** Fist fighting in which opponents fight back, plus improvised weapons picked up nearby. The first case is the [neighboring-cell encounter](gameplay.md#neighboring-cell-inmate-encounter---agreed-purpose-and-real-combat-details-open).
+- **Distribution on Steam.**
+
+**Open:** how many wings, gangs and escape routes; combat depth (controls, weapons, lethal and non-lethal outcomes, guard response); Steam features such as achievements, cloud saves and Steam Deck support; price, store-page timing and release date. These quantities determine most of the remaining size. [First playable version](#first-playable-version), [faction behavior](#then-expand-disruption-into-faction-behavior) and [Expand after the loop works](#expand-after-the-loop-works) remain the source material. Deriving a release 1 milestone list from them is the next planning task (REL1-01 in [Progress](progress.md)).
 
 ## Execution checklist
 
@@ -195,7 +207,7 @@ Provide enough starting supplies to complete the first sale and an accessible wa
 
 For this earliest test, connect a cell, shared landing, and small common room with the table and supplier. A few placeholder characters suffice. This precedes the larger first playable prison day below. It does not require a functioning whole prison, combat, a gang simulation, or finished artwork.
 
-Unity and the release order are selected. Use the implementation boundaries above as the earning loop develops. The user deferred earning-loop work on September 23 and resumed it on September 24 by selecting snack packs. Earn01_SnackPacks contains the earning/shelf loop; Earn02_Requests adds an untimed request; Earn03_Deadline adds the selected clock, deadline and late-payment consequence; Guard01_Suspicion adds guard observation and escalation/resolution feedback; Supply01_Inspection adds the controlled disruption and affected-request feedback. Milestone 4's functional scenarios are implemented and technically checked together, but its clarity/enjoyment criteria still require user playtesting. Save01_Progress now adds manual save/load following the user's authorization to proceed; see [saving behavior](gameplay.md#saving-the-sample---implemented-provisional-controls) and [verification](progress.md#save-01-manual-sample-persistence---september-24). The user subsequently confirmed that the combined sample works; its functional playtest is accepted. The combined Windows sample is now built and verified under [CHECK-02](progress.md#check-02-combined-windows-sample---september-24), including save/load across separate executable launches. The first sound pass is now implemented and verified; next is listening review/mix tuning (**Medium**), alongside an uncoached new-player test and longer-session performance observation. PERF-02 records the measured frame-limit mitigation and remaining isolated pause. Final polish remains.
+Unity and the release order are selected. Use the implementation boundaries above as the earning loop develops. The user deferred earning-loop work on September 23 and resumed it on September 24 by selecting snack packs. Earn01_SnackPacks contains the earning/shelf loop; Earn02_Requests adds an untimed request; Earn03_Deadline adds the selected clock, deadline and late-payment consequence; Guard01_Suspicion adds guard observation and escalation/resolution feedback; Supply01_Inspection adds the controlled disruption and affected-request feedback. Milestone 4's functional scenarios are implemented and technically checked together, but its clarity/enjoyment criteria still require user playtesting. Save01_Progress now adds manual save/load following the user's authorization to proceed; see [saving behavior](gameplay.md#saving-the-sample---implemented-provisional-controls) and [verification](progress-log.md#save-01-manual-sample-persistence---september-24). The user subsequently confirmed that the combined sample works; its functional playtest is accepted. The combined Windows sample is now built and verified under [CHECK-02](progress-log.md#check-02-combined-windows-sample---september-24), including save/load across separate executable launches. The first sound pass is now implemented and verified; next is listening review/mix tuning (**Medium**), alongside an uncoached new-player test and longer-session performance observation. PERF-02 records the measured frame-limit mitigation and remaining isolated pause. Final polish remains.
 
 After playing the test, ask:
 
@@ -230,7 +242,7 @@ Give guards recurring assignments and one possible substitution. Test whether th
 
 Also test delaying a response: the player should understand whether this is safe, costly, or dangerous under the chosen rules. The interface must identify which objectives are affected and update them automatically. Balance the frequency and overlap of problems through playtesting.
 
-The confrontation can begin as a short staged event. Full NPC combat and player combat are separate scope decisions.
+Real player combat is agreed for release 1 ([Release 1 scope](#release-1-scope---agreed-september-25)). Whether this first gang confrontation starts as a short staged event or as simulated NPC fighting remains open.
 
 ## Expand after the loop works
 
@@ -240,7 +252,7 @@ The larger prison can be sketched now; only the spaces needed for the current pl
 
 ## Local display settings - implemented provisional default
 
-The Windows sample now offers 60 FPS, 120 FPS and Unlimited under Escape. It starts at 60 FPS when no valid saved choice exists, based on the measured reduction in presentation stalls on the test laptop. The choice is local and persistent; it does not change prison-clock or simulation rules. This default is a provisional technical implementation, not a user-approved final performance target or minimum specification. [Progress](progress.md#perf-02-visible-profiling-and-frame-limit---september-25) owns evidence and outstanding checks.
+The Windows sample now offers 60 FPS, 120 FPS and Unlimited under Escape. It starts at 60 FPS when no valid saved choice exists, based on the measured reduction in presentation stalls on the test laptop. The choice is local and persistent; it does not change prison-clock or simulation rules. This default is a provisional technical implementation, not a user-approved final performance target or minimum specification. [Progress](progress-log.md#perf-02-visible-profiling-and-frame-limit---september-25) owns evidence and outstanding checks.
 
 ## Decisions still needed
 
@@ -252,6 +264,7 @@ The Windows sample now offers 60 FPS, 120 FPS and Unlimited under Escape. It sta
 6. What does gang progression allow, and can it support a long-term goal beyond escape?
 7. Which asset tools should be selected? The current project uses Unity 6.3 LTS and URP; the asset creation workflow remains open.
 8. For release 2 co-op, what player count, hosting model, shared/personal progression, and save compatibility should be supported? Release 1 single-player / release 2 co-op is already agreed.
+9. Release 1 quantities and depth: how many wings, gangs and escape routes, and how deep combat goes. The broad scope is agreed; see [Release 1 scope](#release-1-scope---agreed-september-25).
 
 The immediate development milestone is a rough Unity room with movement, interaction, a small earning loop, and understandable feedback for a deadline and rising guard suspicion. A small visual study can proceed alongside that work. A full prison day follows once those interactions are enjoyable and clear.
 
@@ -268,6 +281,6 @@ Judge this small sequence in play before adding many rooms, characters or unrela
 
 ### Next step after the Harris/cell chain - proposed
 
-HUD, notifications, a six-slot inventory, Dex's secret, Harris's key and a neighboring cell are now implemented in the prototype (technical results in Progress; user review remains). The user has selected the cell's purpose: another inmate is there, and the player kills him to close this progression loop. The next concrete scope decision is a staged interaction versus combat, with motivation and aftermath still open; [Gameplay](gameplay.md#neighboring-cell-inmate-encounter---agreed-purpose-mechanics-open) owns those decisions. Recommended reasoning: **High**, because this introduces death, persistent character state and encounter completion.
+HUD, notifications, a six-slot inventory, Dex's secret, Harris's key and a neighboring cell are now implemented in the prototype (technical results in Progress; user review remains). The user has selected the cell's purpose: another inmate is there, and the player kills him to close this progression loop. On September 25 the user selected real combat for it: the inmate fights back and nearby objects can be picked up as weapons. Combat details, motivation and aftermath remain open; [Gameplay](gameplay.md#neighboring-cell-inmate-encounter---agreed-purpose-and-real-combat-details-open) owns those decisions, and [combat research](research/reports/Unity%20first%20person%20melee%20combat.md) is in progress. Recommended reasoning: **High**, because this introduces combat, death, persistent character state and encounter completion.
 
-**Proposed milestone order:** finish that bounded encounter and play the whole chain from its objective through its outcome; then put it inside a short duty/free-time/return-to-cell day sequence. Add a compact on-demand task/contact journal when tracking the chain needs it (**Medium**), as supporting interface work rather than the main progression milestone. A full day/night simulation and general combat system are not automatically required to test this first complete chain. Broader rooms, cast, factions and release 2 co-op remain later milestones.
+**Proposed milestone order:** finish that bounded encounter and play the whole chain from its objective through its outcome; then put it inside a short duty/free-time/return-to-cell day sequence. Add a compact on-demand task/contact journal when tracking the chain needs it (**Medium**), as supporting interface work rather than the main progression milestone. A full day/night simulation is not required to test this first complete chain; the encounter does require a first real combat implementation. Broader rooms, cast, factions and release 2 co-op remain later milestones.

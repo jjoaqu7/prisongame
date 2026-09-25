@@ -70,6 +70,6 @@ This tests an interruption and its consequences, without an animated inspection,
 
 - How often major fights should happen and how dangerous they should be to uninvolved players.
 - Whether the player can join, lead, or create a gang, and at what stage.
-- The neighboring-cell killing is now selected as the prototype loop's endpoint; whether it uses a staged interaction or personal combat, and how guards/witnesses respond, remain open. See [encounter scope](gameplay.md#neighboring-cell-inmate-encounter---agreed-purpose-mechanics-open).
+- The neighboring-cell killing is now selected as the prototype loop's endpoint. On September 25 the user selected real combat for it (not a staged interaction), with the inmate fighting back; how guards/witnesses respond remains open. See [encounter scope](gameplay.md#neighboring-cell-inmate-encounter---agreed-purpose-and-real-combat-details-open).
 - Whether initial relationships are fixed or randomized between playthroughs.
 - How much influence the player has over reconciliation and guard assignments.

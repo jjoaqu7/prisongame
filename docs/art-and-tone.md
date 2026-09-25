@@ -16,16 +16,16 @@ The usual atmosphere of the lighting and interiors should feel **"eerily cozy/co
 - **Surface detail:** the level shown in Schedule I is sufficient. Keep the production effort practical; the user does not want time spent adding extensive individual surface details.
 - **Character style selected (September 24):** after reviewing the revised M5-M8 sheet, the user said "ok lets go with this". Adopt this rounded/minimal visual direction, including M7's connected brow, white eyes with dark pupils, and small mouth applied to M5/M6. Preserve the range of head/body shapes. The user did not single out M5 versus M6 as the first inmate; that production choice remains open. This approves the concept direction, not an unseen 3D result.
 - **Lighting accents:** occasional dramatic, coloured lighting is welcome because the user finds it cozy and comfy. Preserve that feeling alongside clear interaction feedback.
-- **ART-02 lighting choice (September 24):** warm amber from A for the cell; softer cream and cool blue-grey from B for corridors and common areas. The user said each feels really good in those respective spaces. This combination is agreed and now implemented in `Art02_Combined`; user review of the combined transition and in-play readability remains. This does not approve final assets or establish an outdoor lighting treatment.
+- **ART-02 lighting choice (September 24):** warm amber from A for the cell; softer cream and cool blue-grey from B for corridors and common areas. The user said each feels really good in those respective spaces. This combination is agreed and now implemented in `Art02_Combined`; the user approved it for the prototype on September 25 and may revisit it. This does not approve final assets or establish an outdoor lighting treatment.
 - **Everyday prison interior:** the user accepted the combination: an open common area connected to more enclosed corridors, using B1/B2 in the [reference board](art-reference-board.md). Exact ceiling heights, daylight exposure, colours, and fixture placement remain to be tested; this choice does not adopt every detail of either photograph.
 
-## Sound direction - agreed mood, proposed first palette
+## Sound direction - agreed mood, first palette approved for the prototype
 
-The user authorized sourcing commercially usable sound effects and requested "comfy/cozy" and "sort of umami" sound. Working interpretation: warm, tactile and satisfying, with soft transients and restrained volume. That interpretation and the specific mix still need listening review.
+The user authorized sourcing commercially usable sound effects and requested "comfy/cozy" and "sort of umami" sound. Working interpretation: warm, tactile and satisfying, with soft transients and restrained volume. The user approved this first palette and mix for the prototype on September 25 and may revisit it.
 
 The first implemented palette uses quiet concrete steps, paper rustles for handling/wrapping, rounded ingredient/placement taps, a muted metal door clunk, a subtle sale pluck and low room tone. It does not introduce music, voice lines or alarm sounds. Gameplay rules emit successful-action cues; a local audio component renders them. Effects and ambience have separate volume sliders and pause with settings/focus loss. Loading clears old effects rather than replaying actions.
 
-Sources, permissions and exact edits are recorded in the [asset register](asset-register.md). All selected sources are CC0. Technical verification and listening-review status belong in [Progress](progress.md).
+Sources, permissions and exact edits are recorded in the [asset register](asset-register.md). All selected sources are CC0. Technical verification is in the [progress log](progress-log.md#audio-01-cozy-sound-palette).
 
 ## Visual proposals
 
@@ -82,7 +82,7 @@ The user said "OK continue please" after the recommendation to start with M5; M5
 
 No Blender MCP tool is connected. A local check found no Blender executable on PATH or under `C:/Program Files/Blender Foundation`; this does not rule out a custom installation. Blender setup and export remain unverified.
 
-#### M5 rig and motion previews - implemented, awaiting review
+#### M5 rig and motion previews - accepted for the prototype
 
 The user authorized continuing with mesh preparation and rigging. This authorizes implementation; the resulting appearance and motion are still **proposed**, pending review. The rig retains the selected M5 design and M7 face treatment.
 
@@ -113,7 +113,7 @@ The current movement follows a straight line on level ground. It cannot find a r
 
 This supersedes the unconnected-walk/gesture limits in the earlier stages below. Their scenes remain available for isolated comparisons.
 
-#### M5 motion polish - implemented, awaiting review
+#### M5 motion polish - accepted for the prototype
 
 The user authorized the next motion-polish pass. Appearance, pace and gesture remain **proposed** until reviewed. The same rig scene and preview controls now use the polished clips.
 
@@ -125,7 +125,7 @@ This supersedes the initial foot-contact limitation above: level-ground contact 
 
 A small correction on the visual rig keeps soles above the floor during blends between clips; the largest measured lift was 7.8 mm. It leaves the parent inmate and collision unchanged. This supports the current flat study floor, not slopes, stairs or independent foot locking. The gesture still is not connected to E/talking; navigation, lip sync, retargeting and production topology remain unimplemented. [Progress and verification](progress-log.md#art-03-m5-motion-polish--september-24) own the checks. Proposed next step: connect the existing talk interaction to the gesture, then test the walk with matched actual travel; recommended reasoning mode **High**.
 
-#### M5 refined static model - implemented, appearance awaiting review
+#### M5 refined static model - accepted for the prototype
 
 At the user's request to proceed with refinement, created `Assets/Prototype/Art03Refined/M5_Refined.prefab` in `Assets/Scenes/Art03_M5_Refined.unity`. The shirt/sleeves, trousers/hips, head/neck and each arm/hand now have continuous surfaces. This removes the overlapping shoulder pieces, separate neck bead and protruding hip shape of the first study. The hair follows the smoothed head and the mouth is one curved mesh. M5's size, thin silhouette and selected facial style are retained.
 
@@ -326,7 +326,7 @@ Recommend A's quiet notification with B's readable inventory backdrop, or all of
 **Agreed:** user selected B Warm panel notifications. **Delegated provisional choice:** user allowed any inventory appearance for now and asked whether it could change later; use the matching B panel. HUD 01 remains selected. Presentation reads existing item state, so future layout changes need not alter ownership or save data. This does not approve new capacity, weight, stacking or pocket-eligibility rules.
 
 
-September 25 inventory continuation: retained selected Minimal text HUD and B warm notifications. The provisional B-style inventory now shows six numbered carried slots, contextual item controls and the current favor; hold Tab to view. Capacity and item behavior are documented in Gameplay. Actual full-panel capture: [inventory01-panel.png](evidence/inventory01-panel.png). Layout remains replaceable and awaits user review.
+September 25 inventory continuation: retained selected Minimal text HUD and B warm notifications. The provisional B-style inventory now shows six numbered carried slots, contextual item controls and the current favor; hold Tab to view. Capacity and item behavior are documented in Gameplay. Actual full-panel capture: [inventory01-panel.png](evidence/inventory01-panel.png). The user approved it for the prototype on September 25; the layout remains replaceable.
 
 
-September 25 user correction: conversations should respond faster and appear nearer the center. Duty01 now uses an immediate warm dialogue panel centered below the crosshair; ordinary pickup notifications remain a separate B-style presentation. Exact placement is provisional for play review. The neighboring cell reuses existing amber lighting, materials, bunk and desk style.
+September 25 user correction: conversations should respond faster and appear nearer the center. Duty01 now uses an immediate warm dialogue panel centered below the crosshair; ordinary pickup notifications remain a separate B-style presentation. The user approved it for the prototype on September 25; exact placement remains tunable. The neighboring cell reuses existing amber lighting, materials, bunk and desk style.

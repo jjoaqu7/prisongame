@@ -42,7 +42,7 @@ The agreed tracking workflow makes the primary development agent responsible for
 | [Development plan](development-plan.md) | Next design step, a proposed short session, first playable version, and unresolved decisions |
 | [Progress and next tasks](progress.md) | Current state, task status, items awaiting review, blockers, and session handoff |
 | [Progress log](progress-log.md) | Dated history: each task's verification details, evidence links and handoff notes |
-| [Research](research/reports/) | Sourced research reports used as references for decisions; findings are not decisions |
+| [Research](research/README.md) | Sourced research by topic, and how to run it; findings are references, not decisions |
 | [Original ideas](history/original-ideas.md) | History. The user's original ideas in their own wording; some are still open |
 | [First conversation](history/first-conversation.md) | History. Raw early chat log; its suggestions are not decisions |
 

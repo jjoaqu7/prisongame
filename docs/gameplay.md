@@ -46,7 +46,7 @@ Hands-on actions could include taking items from storage, carrying a delivery, a
 
 **First prototype activity agreed (September 24):** the user selected assembling and selling snack packs. This resumes earning-loop work previously deferred. After the user said "proceed" with the exchange question pending, implementation proceeded with its recommended money option, announced as a prototype assumption. This does not settle the final money/barter economy. Recipes, quantities, prices, customer demand and upgrade details remain provisional test choices.
 
-### Snack-pack earning test - implemented, awaiting review
+### Snack-pack earning test - implemented, accepted for the prototype
 
 `Earn01_SnackPacks` now contains the complete small earning loop. These are provisional mechanics for playtesting:
 
@@ -59,7 +59,7 @@ Hands-on actions could include taking items from storage, carrying a delivery, a
 
 Money and ingredient counts are personal; the tray, physical packs and installed shelf are world state. Interactions identify the acting player. This separation is not multiplayer support. The test has one buyer with unlimited demand, fixed prices and placeholder props. There is no saving, timed request, suspicion or supply disruption yet; stopping Play resets progress. [Progress](progress.md) owns verification. Actual gameplay captures: [common table and guidance](images/earn01-table-hud.png), [purchased shelf and completion](images/earn01-shelf-hud.png).
 
-### Tracked snack request - implemented, awaiting review
+### Tracked snack request - implemented, accepted for the prototype
 
 The user authorized continuing with a tracked customer request on September 24 ("OK good, proceed"). `Earn02_Requests` extends the earning prototype; `Earn01_SnackPacks` remains available. The following are provisional test rules, not final request design:
 
@@ -71,7 +71,7 @@ The user authorized continuing with a tracked customer request on September 24 (
 
 This earlier scene retains its untimed request for comparison. The subsequent timed test and its selected time rules are described below. There is one request for one customer, no request list, cancellation, repeat-request generation or saving. Request state is personal and identifies the recipient; this is not co-op support. Actual captures: [active request](images/earn02-active.png), [completion](images/earn02-complete.png). Verification lives in [Progress](progress.md).
 
-### Timed request and prison clock - agreed prototype rules, awaiting play review
+### Timed request and prison clock - agreed prototype rules, accepted for the prototype
 
 On September 24 the user selected **1 game minute = 5 real seconds**, **1 game hour (5 real minutes)** to deliver three packs after acceptance, pausing in settings or on focus loss, and leaving sleep/time-skipping for later. The user also selected **remaining deliveries pay $2 instead of $3 after the deadline**. These selections govern the current prototype; final day pacing remains subject to playtesting.
 
@@ -139,7 +139,7 @@ The main game's choice of money, barter, or a mixture remains open; the prototyp
 
 **Proposed implementation choices:** use rough modular rooms and placeholder character variants first; exact furniture, names and appearance can be revised. Keep personal assignment/progress separate from shared guard/world state and local input/UI. Do not add speculative networking infrastructure.
 
-### Laundry implementation - provisional details awaiting play review
+### Laundry implementation - approved for the prototype, details provisional
 
 `Duty01_Laundry` extends the saved snack sample with a connected laundry/supply module. The reusable `LaundryModule` prefab contains the room geometry, work/supply areas, guard and observation markers. Player assignment and favor state live separately. The module can be moved/rotated during authoring, but connections must be rebuilt and existing world-position saves are not automatically migrated.
 
@@ -198,7 +198,7 @@ The inventory layout is provisional and can be replaced independently of item st
 
 **Provisional interpretation pending clarification:** six carried slots, including the item in hand. Each ingredient type stacks in one slot; each parcel, finished snack pack and key occupies one slot. Stack interpretation remains provisional. **Subsequent explicit decision:** the secret belongs to Officer Harris, not Vale, and his key opens a new cell next to the player's.
 
-**Implemented controls, awaiting review:** hold Tab to view six numbered slots, press 1-6 to select. F holds a selected pocketed parcel/pack; R pockets the held parcel/pack, including outside the panel; Q places the selected physical item on a clear nearby surface. Release Tab to close. One object can be held. The world keeps running while viewing. Ingredients are used directly at the assembly tray; Rue's valve key is given directly with E. Quest keys stay in pockets. Other props are not made pocketable. The warm-panel layout remains provisional.
+**Implemented controls, approved for the prototype September 25:** hold Tab to view six numbered slots, press 1-6 to select. F holds a selected pocketed parcel/pack; R pockets the held parcel/pack, including outside the panel; Q places the selected physical item on a clear nearby surface. Release Tab to close. One object can be held. The world keeps running while viewing. Ingredients are used directly at the assembly tray; Rue's valve key is given directly with E. Quest keys stay in pockets. Other props are not made pocketable. The warm-panel layout remains provisional.
 
 New pickups and key rewards cannot exceed capacity. Supply batches are checked before charging money or consuming the starter allocation. Moving an object from hand to pockets does not create another slot. A blocked drop retains the item. Finished packs in pockets continue counting as available stock; hold one before delivering to M5. Pocket ownership is saved alongside existing held/world item states; old saves default physical objects to not pocketed. Malformed over-capacity saves are rejected without replacing current progress.
 
@@ -213,7 +213,7 @@ New pickups and key rewards cannot exceed capacity. Supply batches are checked b
 
 **Agreed:** conversations should respond promptly and appear nearer the center for easier reading. The previous notification queue delayed spoken lines behind earlier messages.
 
-**Implemented, awaiting review:** conversations now use a separate centered warm panel below the crosshair. The complete line appears immediately; another conversation replaces it immediately. Item/payment notices remain separate and resume after dialogue. Guard return warnings remain visible above. Walking, looking and duty work continue during dialogue; Escape still pauses. Dialogue clears on load and has a reading timer, with no typewriter delay or forced wait before talking again. Applies to Rue, Dex, Vale, Harris and M5 in Duty01. Exact panel placement/read durations remain tunable.
+**Implemented, approved for the prototype September 25:** conversations now use a separate centered warm panel below the crosshair. The complete line appears immediately; another conversation replaces it immediately. Item/payment notices remain separate and resume after dialogue. Guard return warnings remain visible above. Walking, looking and duty work continue during dialogue; Escape still pauses. Dialogue clears on load and has a reading timer, with no typewriter delay or forced wait before talking again. Applies to Rue, Dex, Vale, Harris and M5 in Duty01. Exact panel placement/read durations remain tunable.
 
 ### Neighboring-cell inmate encounter - agreed purpose and real combat, details open
 
@@ -221,8 +221,18 @@ New pickups and key rewards cannot exceed capacity. Supply batches are checked b
 
 **Agreed September 25 - real combat:** the encounter uses real combat; the user declined a staged interaction. The player fist-fights the inmate and the inmate fights back. The player can pick up nearby objects, such as a book or a rod, and use them as weapons. Real combat is also agreed for release 1 as a whole; see [Release 1 scope](development-plan.md#release-1-scope---agreed-september-25).
 
-**Open - what a weapon changes:** the user's wording was "if I am fist fighting then they would be able to fight back unless I pick up something like a weapon like a book or rod or something nearby." Whether an armed player stops the inmate from fighting back, or only gains a strong advantage, is not yet confirmed.
+**Agreed September 25 - what a weapon changes:** a weapon means more critical damage. The inmate can still fight back, but the armed player does more damage and can harm, injure or kill him. This replaces the earlier reading that an armed player stops the inmate fighting back. **Open details:** whether "critical" means a chance of extra-damage hits or a flat increase, and whether injuries are a lasting state separate from health.
+
+**Agreed September 25 - zero health:** at zero health the inmate goes down; killing him is a separate, deliberate action. **Open:** whether he yields or flees at low health first (proposed in the research), and how the kill action is presented.
+
+**Agreed September 25 - losing:** if the player loses the fight, the game reloads. **Open detail:** saving is currently manual only, so whether this reloads the last manual save or an automatic checkpoint taken before the fight. Later fights may use a different outcome, such as a knockout.
 
 **Superseded proposal:** the earlier recommended first implementation (one deliberate labelled interaction and a simple death response) was a staged approach and is no longer planned. A saved alive/dead state and an explicit completion outcome are still needed. The concern it addressed, that a fight should not start from an accidental talk or door press, remains relevant to combat input.
 
-**Open decisions:** combat controls and rules (attacks, blocking, health, stamina, knockdown); which objects can be weapons and what each changes; how the objective/motivation is introduced; the inmate's identity; presentation; and what follows the killing, including any witness/guard response, punishment or reward. Selecting this encounter does not imply that killing is consequence-free in the final game. [Combat research](research/reports/Unity%20first%20person%20melee%20combat.md) collects design and implementation references for these choices and lists 13 open decisions (completed September 25; its recommendations are proposals, not decisions). No combat, death or encounter completion is implemented in the current build.
+**Open decisions:** attack controls; block and stamina; death presentation and blood; the tone of the kill; the weapon list and each weapon's traits; on-screen fight feedback; view and field of view; the aftermath (witness/guard response, punishment or reward, body persistence, saving mid-fight); how the objective/motivation is introduced; and the inmate's identity. Selecting this encounter does not imply that killing is consequence-free in the final game. [Combat research](research/combat/report.md) collects design and implementation references and proposes an option for each (completed September 25; its recommendations are proposals, not decisions). Its decisions 1, 4 and 5 are answered above. No combat, death or encounter completion is implemented in the current build.
+
+### Shoving - agreed direction, implementation timing open
+
+**Agreed September 25:** the player can shove anyone, whenever they want, not only during a fight. What happens depends on who is shoved; for example, shoving a prisoner starts a fight. The combat research proposed a shove as one of the fight actions; the user extended it to a general action.
+
+**Open:** when to implement general shoving, and the reactions of other kinds of characters (guards, gang members, contacts, staff). **Proposed:** ENCOUNTER-01 builds the shove as a fight action that reports who shoved whom; each kind of character adds its own reaction later, when guards and gangs are developed. Fight and guard consequences belong in [Factions and events](factions-and-events.md).

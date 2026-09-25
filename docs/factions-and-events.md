@@ -30,6 +30,8 @@ Consequences should last long enough to matter. Injured or disciplined NPCs may 
 
 Tune the frequency and overlap of incidents through playtesting. If an event interrupts a favor or delivery, automatically update its status and show whether the deadline continues, changes, or pauses under the chosen rules. Do not silently change those rules or require the player to discover every affected order manually.
 
+**Agreed September 25 - shoving:** the player can shove anyone at any time, and the reaction depends on who is shoved; for example, shoving a prisoner starts a fight. Reactions for guards, gang members and other characters remain open, as does when general shoving is implemented. The player action is described in [Gameplay](gameplay.md#shoving---agreed-direction-implementation-timing-open).
+
 How dangerous incidents are to uninvolved players, whether they can threaten belongings, and how losses work remain open. Consequences should be understandable and the player should have a recoverable path forward. Rivalries can produce lasting changes in who cooperates, what is available, and which opportunities emerge.
 
 ## Guard rotations - proposed rules
@@ -70,6 +72,6 @@ This tests an interruption and its consequences, without an animated inspection,
 
 - How often major fights should happen and how dangerous they should be to uninvolved players.
 - Whether the player can join, lead, or create a gang, and at what stage.
-- The neighboring-cell killing is now selected as the prototype loop's endpoint. On September 25 the user selected real combat for it (not a staged interaction), with the inmate fighting back; how guards/witnesses respond remains open. See [encounter scope](gameplay.md#neighboring-cell-inmate-encounter---agreed-purpose-and-real-combat-details-open).
+- The neighboring-cell killing is now selected as the prototype loop's endpoint. On September 25 the user selected real combat for it (not a staged interaction), with the inmate fighting back, going down at zero health, and a separate action to kill him; how guards/witnesses respond remains open. See [encounter scope](gameplay.md#neighboring-cell-inmate-encounter---agreed-purpose-and-real-combat-details-open).
 - Whether initial relationships are fixed or randomized between playthroughs.
 - How much influence the player has over reconciliation and guard assignments.

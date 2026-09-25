@@ -16,7 +16,7 @@ The [development plan](development-plan.md) owns milestone scope and sequencing.
 
 - **Milestone:** closing the prototype chain with ENCOUNTER-01, the neighboring-cell fight. Real combat is agreed. Combat research is done: [report](research/combat/report.md). Release 1's broad scope is agreed: [Release 1 scope](development-plan.md#release-1-scope---agreed-september-25).
 - **Next action:** plan ENCOUNTER-01 (**High**). The blocking combat decisions are made: a weapon adds damage but the inmate still fights back; he goes down at zero health and killing is a separate action; losing reloads. The plan proposes defaults for the report's remaining open decisions for the user to confirm. After that, REL1-01: the release 1 milestone list (**High**).
-- **Blockers:** none for development. Publishing: local commits are not on GitHub yet; the last recorded push attempt failed on GitHub authentication.
+- **Blockers:** none for development. Publishing: local commits are not on GitHub yet. GitHub sign-in now works, but push protection rejects checkpoint commit `3b97bcf`: three saved Freesound pages in `audio-source/` (paper, room, steps `-source.html`) contain Freesound's public Mapbox map token. Fix needs the user's choice: allow rewriting the unpushed commits to redact it, or allow the token through GitHub's unblock link.
 - **Latest builds** (ignored by Git): `PrisonGame/Builds/WindowsLaundry/PrisonGame.exe` has laundry duty, HUD, inventory and the neighboring cell (scene `Duty01_Laundry`). `PrisonGame/Builds/WindowsSample/PrisonGame.exe` has the combined earning sample with sound (scene `Save01_Progress`).
 
 ## Awaiting your review

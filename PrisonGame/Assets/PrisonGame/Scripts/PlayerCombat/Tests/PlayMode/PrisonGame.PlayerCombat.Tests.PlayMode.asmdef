@@ -1,0 +1,25 @@
+{
+    "name": "PrisonGame.PlayerCombat.Tests.PlayMode",
+    "rootNamespace": "PrisonGame.PlayerCombat.Tests.PlayMode",
+    "references": [
+        "PrisonGame.Core",
+        "PrisonGame.Combat",
+        "PrisonGame.PlayerCombat",
+        "Unity.InputSystem",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -8,6 +8,7 @@ namespace PrisonGame.Combat
     // local player, an NPC or, later, a remote co-op player; input adapters and NPC
     // decisions talk to it the same way.
     [DisallowMultipleComponent]
+    [DefaultExecutionOrder(50)]
     public sealed class Fighter : MonoBehaviour
     {
         [SerializeField]
@@ -22,6 +23,8 @@ namespace PrisonGame.Combat
         public StableId Id { get; private set; }
         public Health Health { get; private set; }
         public FighterStateMachine State { get; private set; }
+        public FighterActions Actions { get; private set; }
+        private CombatIntent _intent;
 
         private void Reset()
         {
@@ -38,14 +41,18 @@ namespace PrisonGame.Combat
             Id = new StableId(_stableId);
             Health = new Health(_maxHealth);
             State = new FighterStateMachine();
+            Actions = new FighterActions(Id, State);
             Health.WentDown += _ => State.GoDown();
             Health.Killed += _ => State.Die();
         }
 
         private void Update()
         {
-            State.Tick(Time.deltaTime);
+            Actions.Tick(Time.deltaTime, _intent);
+            _intent = default;
         }
+
+        public void SubmitIntent(CombatIntent intent) => _intent = intent;
 
         // Called by the combat rules after the attacker's hit check; a fighter never
         // decides for itself that it was hit.

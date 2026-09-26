@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="46" result="Passed" total="46" passed="46" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-26 18:23:29Z" end-time="2026-09-26 18:23:30Z" duration="0.671152">
+  <test-suite type="TestSuite" id="1066" name="PrisonGame" fullname="PrisonGame" runstate="Runnable" testcasecount="46" result="Passed" start-time="2026-09-26 18:23:29Z" end-time="2026-09-26 18:23:30Z" duration="0.671152" total="46" passed="46" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1054" name="PrisonGame.Combat.Tests.EditMode.dll" fullname="C:/Users/jjoaq/vscode-python/game/PrisonGame/Library/ScriptAssemblies/PrisonGame.Combat.Tests.EditMode.dll" runstate="Runnable" testcasecount="46" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.530641" total="46" passed="46" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="57148" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1055" name="PrisonGame" fullname="PrisonGame" runstate="Runnable" testcasecount="46" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.529024" total="46" passed="46" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1056" name="Combat" fullname="PrisonGame.Combat" runstate="Runnable" testcasecount="46" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.528516" total="46" passed="46" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1057" name="Tests" fullname="PrisonGame.Combat.Tests" runstate="Runnable" testcasecount="46" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.426957" total="46" passed="46" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1001" name="FighterActionsTests" fullname="PrisonGame.Combat.Tests.FighterActionsTests" classname="PrisonGame.Combat.Tests.FighterActionsTests" runstate="Runnable" testcasecount="18" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.214947" total="18" passed="18" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties>
+                <property name="Category" value="Combat" />
+              </properties>
+              <test-case id="1008" name="ALongFrameStillReportsItsActiveWindowOnce" fullname="PrisonGame.Combat.Tests.FighterActionsTests.ALongFrameStillReportsItsActiveWindowOnce" methodname="ALongFrameStillReportsItsActiveWindowOnce" classname="PrisonGame.Combat.Tests.FighterActionsTests" runstate="Runnable" seed="14939360" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.049223" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1011" name="BlockCancelsChargingAndSuppressesAttackAndShove" fullname="PrisonGame.Combat.Tests.FighterActionsTests.BlockCancelsChargingAndSuppressesAttackAndShove" methodname="BlockCancelsChargingAndSuppressesAttackAndShove" classname="PrisonGame.Combat.Tests.FighterActionsTests" runstate="Runnable" seed="302206268" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000213" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1014" name="DisabledWorldActionsCancelChargeAndBuffer" fullname="PrisonGame.Combat.Tests.FighterActionsTests.DisabledWorldActionsCancelChargeAndBuffer" methodname="DisabledWorldActionsCancelChargeAndBuffer" classname="PrisonGame.Combat.Tests.FighterActionsTests" runstate="Runnable" seed="276864498" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000106" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1016" name="DownedAndDeadActorsCannotAttack" fullname="PrisonGame.Combat.Tests.FighterActionsTests.DownedAndDeadActorsCannotAttack" methodname="DownedAndDeadActorsCannotAttack" classname="PrisonGame.Combat.Tests.FighterActionsTests" runstate="Runnable" seed="1362728505" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000116" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1010" name="ExpiredBufferDoesNotAttackLaterWhileHeld" fullname="PrisonGame.Combat.Tests.FighterActionsTests.ExpiredBufferDoesNotAttackLaterWhileHeld" methodname="ExpiredBufferDoesNotAttackLaterWhileHeld" classname="PrisonGame.Combat.Tests.FighterActionsTests" runstate="Runnable" seed="2050474449" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000088" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1004" name="FullChargeCapsAtTwentyTwoDamageWithLongerRecovery" fullname="PrisonGame.Combat.Tests.FighterActionsTests.FullChargeCapsAtTwentyTwoDamageWithLongerRecovery" methodname="FullChargeCapsAtTwentyTwoDamageWithLongerRecovery" classname="PrisonGame.Combat.Tests.FighterActionsTests" runstate="Runnable" seed="825864774" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.002493" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1012" name="HeldBlockStartsWhenAttackRecoveryFinishes" fullname="PrisonGame.Combat.Tests.FighterActionsTests.HeldBlockStartsWhenAttackRecoveryFinishes" methodname="HeldBlockStartsWhenAttackRecoveryFinishes" classname="PrisonGame.Combat.Tests.FighterActionsTests" runstate="Runnable" seed="573055120" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000137" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1009" name="LateRecoveryPressBuffersATapEvenIfReleasedBeforeRecoveryEnds" fullname="PrisonGame.Combat.Tests.FighterActionsTests.LateRecoveryPressBuffersATapEvenIfReleasedBeforeRecoveryEnds" methodname="LateRecoveryPressBuffersATapEvenIfReleasedBeforeRecoveryEnds" classname="PrisonGame.Combat.Tests.FighterActionsTests" runstate="Runnable" seed="100858065" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000106" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1007" name="NextSwingCanHitTheSameTargetAgain" fullname="PrisonGame.Combat.Tests.FighterActionsTests.NextSwingCanHitTheSameTargetAgain" methodname="NextSwingCanHitTheSameTargetAgain" classname="PrisonGame.Combat.Tests.FighterActionsTests" runstate="Runnable" seed="518264813" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.001672" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1006" name="OneSwingCanHitEachTargetOnlyOnce" fullname="PrisonGame.Combat.Tests.FighterActionsTests.OneSwingCanHitEachTargetOnlyOnce" methodname="OneSwingCanHitEachTargetOnlyOnce" classname="PrisonGame.Combat.Tests.FighterActionsTests" runstate="Runnable" seed="1826647294" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000197" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1005" name="PartialChargeIncreasesDamage" fullname="PrisonGame.Combat.Tests.FighterActionsTests.PartialChargeIncreasesDamage" methodname="PartialChargeIncreasesDamage" classname="PrisonGame.Combat.Tests.FighterActionsTests" runstate="Runnable" seed="756264736" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000286" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1002" name="PressImmediatelyStartsPullbackButDoesNotHit" fullname="PrisonGame.Combat.Tests.FighterActionsTests.PressImmediatelyStartsPullbackButDoesNotHit" methodname="PressImmediatelyStartsPullbackButDoesNotHit" classname="PrisonGame.Combat.Tests.FighterActionsTests" runstate="Runnable" seed="424021229" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000093" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1020" name="RejectsInvalidElapsedTime" fullname="PrisonGame.Combat.Tests.FighterActionsTests.RejectsInvalidElapsedTime" classname="PrisonGame.Combat.Tests.FighterActionsTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.039718" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1017" name="RejectsInvalidElapsedTime(-1.0f)" fullname="PrisonGame.Combat.Tests.FighterActionsTests.RejectsInvalidElapsedTime(-1.0f)" methodname="RejectsInvalidElapsedTime" classname="PrisonGame.Combat.Tests.FighterActionsTests" runstate="Runnable" seed="1882753746" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.037914" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1018" name="RejectsInvalidElapsedTime(float.NaN)" fullname="PrisonGame.Combat.Tests.FighterActionsTests.RejectsInvalidElapsedTime(float.NaN)" methodname="RejectsInvalidElapsedTime" classname="PrisonGame.Combat.Tests.FighterActionsTests" runstate="Runnable" seed="238379267" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000062" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1019" name="RejectsInvalidElapsedTime(float.PositiveInfinity)" fullname="PrisonGame.Combat.Tests.FighterActionsTests.RejectsInvalidElapsedTime(float.PositiveInfinity)" methodname="RejectsInvalidElapsedTime" classname="PrisonGame.Combat.Tests.FighterActionsTests" runstate="Runnable" seed="2101572154" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000027" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-case id="1013" name="ShoveHasRecoveryAndNoHealthDamage" fullname="PrisonGame.Combat.Tests.FighterActionsTests.ShoveHasRecoveryAndNoHealthDamage" methodname="ShoveHasRecoveryAndNoHealthDamage" classname="PrisonGame.Combat.Tests.FighterActionsTests" runstate="Runnable" seed="929195251" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000237" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1015" name="StaggerInterruptsChargeAndDoesNotFireOnRecovery" fullname="PrisonGame.Combat.Tests.FighterActionsTests.StaggerInterruptsChargeAndDoesNotFireOnRecovery" methodname="StaggerInterruptsChargeAndDoesNotFireOnRecovery" classname="PrisonGame.Combat.Tests.FighterActionsTests" runstate="Runnable" seed="952962342" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000175" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1003" name="TapReleasesAQuickTenDamagePunch" fullname="PrisonGame.Combat.Tests.FighterActionsTests.TapReleasesAQuickTenDamagePunch" methodname="TapReleasesAQuickTenDamagePunch" classname="PrisonGame.Combat.Tests.FighterActionsTests" runstate="Runnable" seed="1167817974" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000111" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1021" name="FighterStateMachineTests" fullname="PrisonGame.Combat.Tests.FighterStateMachineTests" classname="PrisonGame.Combat.Tests.FighterStateMachineTests" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.004146" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties>
+                <property name="Category" value="Combat" />
+              </properties>
+              <test-case id="1023" name="AttackRunsWindUpActiveRecoveryThenIdle" fullname="PrisonGame.Combat.Tests.FighterStateMachineTests.AttackRunsWindUpActiveRecoveryThenIdle" methodname="AttackRunsWindUpActiveRecoveryThenIdle" classname="PrisonGame.Combat.Tests.FighterStateMachineTests" runstate="Runnable" seed="567041896" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000203" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1028" name="BlockHoldsUntilReleased" fullname="PrisonGame.Combat.Tests.FighterStateMachineTests.BlockHoldsUntilReleased" methodname="BlockHoldsUntilReleased" classname="PrisonGame.Combat.Tests.FighterStateMachineTests" runstate="Runnable" seed="1391945081" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000108" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1026" name="CannotStartAnotherAttackUntilIdle" fullname="PrisonGame.Combat.Tests.FighterStateMachineTests.CannotStartAnotherAttackUntilIdle" methodname="CannotStartAnotherAttackUntilIdle" classname="PrisonGame.Combat.Tests.FighterStateMachineTests" runstate="Runnable" seed="1443425040" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000149" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1030" name="DownedAndDeadFightersCannotActOrBeStaggered" fullname="PrisonGame.Combat.Tests.FighterStateMachineTests.DownedAndDeadFightersCannotActOrBeStaggered" methodname="DownedAndDeadFightersCannotActOrBeStaggered" classname="PrisonGame.Combat.Tests.FighterStateMachineTests" runstate="Runnable" seed="147265571" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000119" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1032" name="InvalidInputsAreRejected" fullname="PrisonGame.Combat.Tests.FighterStateMachineTests.InvalidInputsAreRejected" methodname="InvalidInputsAreRejected" classname="PrisonGame.Combat.Tests.FighterStateMachineTests" runstate="Runnable" seed="1089498688" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000303" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1025" name="LeftoverTimeCarriesIntoTheNextPhase" fullname="PrisonGame.Combat.Tests.FighterStateMachineTests.LeftoverTimeCarriesIntoTheNextPhase" methodname="LeftoverTimeCarriesIntoTheNextPhase" classname="PrisonGame.Combat.Tests.FighterStateMachineTests" runstate="Runnable" seed="2041773123" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000688" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1024" name="LongTickReportsEveryPhaseInOrder" fullname="PrisonGame.Combat.Tests.FighterStateMachineTests.LongTickReportsEveryPhaseInOrder" methodname="LongTickReportsEveryPhaseInOrder" classname="PrisonGame.Combat.Tests.FighterStateMachineTests" runstate="Runnable" seed="1079095954" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000590" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1031" name="RecoverReturnsADownedFighterToIdle" fullname="PrisonGame.Combat.Tests.FighterStateMachineTests.RecoverReturnsADownedFighterToIdle" methodname="RecoverReturnsADownedFighterToIdle" classname="PrisonGame.Combat.Tests.FighterStateMachineTests" runstate="Runnable" seed="900635799" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000082" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1029" name="StaggerInterruptsAWindUpAndThenReturnsToIdle" fullname="PrisonGame.Combat.Tests.FighterStateMachineTests.StaggerInterruptsAWindUpAndThenReturnsToIdle" methodname="StaggerInterruptsAWindUpAndThenReturnsToIdle" classname="PrisonGame.Combat.Tests.FighterStateMachineTests" runstate="Runnable" seed="1434881981" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000106" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1022" name="StartsIdle" fullname="PrisonGame.Combat.Tests.FighterStateMachineTests.StartsIdle" methodname="StartsIdle" classname="PrisonGame.Combat.Tests.FighterStateMachineTests" runstate="Runnable" seed="416700471" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000062" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1027" name="ZeroWindUpOpensTheHitWindowOnTheNextTick" fullname="PrisonGame.Combat.Tests.FighterStateMachineTests.ZeroWindUpOpensTheHitWindowOnTheNextTick" methodname="ZeroWindUpOpensTheHitWindowOnTheNextTick" classname="PrisonGame.Combat.Tests.FighterStateMachineTests" runstate="Runnable" seed="1577740099" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000064" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1033" name="HealthTests" fullname="PrisonGame.Combat.Tests.HealthTests" classname="PrisonGame.Combat.Tests.HealthTests" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.103409" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties>
+                <property name="Category" value="Combat" />
+              </properties>
+              <test-case id="1037" name="AttacksDoNotHurtADownedFighter" fullname="PrisonGame.Combat.Tests.HealthTests.AttacksDoNotHurtADownedFighter" methodname="AttacksDoNotHurtADownedFighter" classname="PrisonGame.Combat.Tests.HealthTests" runstate="Runnable" seed="1902011380" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000422" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1035" name="DamageReducesHealthAndReportsAppliedAmount" fullname="PrisonGame.Combat.Tests.HealthTests.DamageReducesHealthAndReportsAppliedAmount" methodname="DamageReducesHealthAndReportsAppliedAmount" classname="PrisonGame.Combat.Tests.HealthTests" runstate="Runnable" seed="1476385275" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000123" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1044" name="InvalidDamageIsRejected" fullname="PrisonGame.Combat.Tests.HealthTests.InvalidDamageIsRejected" classname="PrisonGame.Combat.Tests.HealthTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.099644" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1041" name="InvalidDamageIsRejected(-1.0f)" fullname="PrisonGame.Combat.Tests.HealthTests.InvalidDamageIsRejected(-1.0f)" methodname="InvalidDamageIsRejected" classname="PrisonGame.Combat.Tests.HealthTests" runstate="Runnable" seed="523177584" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000352" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1042" name="InvalidDamageIsRejected(float.NaN)" fullname="PrisonGame.Combat.Tests.HealthTests.InvalidDamageIsRejected(float.NaN)" methodname="InvalidDamageIsRejected" classname="PrisonGame.Combat.Tests.HealthTests" runstate="Runnable" seed="842664509" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000035" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1043" name="InvalidDamageIsRejected(float.PositiveInfinity)" fullname="PrisonGame.Combat.Tests.HealthTests.InvalidDamageIsRejected(float.PositiveInfinity)" methodname="InvalidDamageIsRejected" classname="PrisonGame.Combat.Tests.HealthTests" runstate="Runnable" seed="1860225379" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000024" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="ParameterizedMethod" id="1049" name="InvalidMaximumIsRejected" fullname="PrisonGame.Combat.Tests.HealthTests.InvalidMaximumIsRejected" classname="PrisonGame.Combat.Tests.HealthTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000825" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1045" name="InvalidMaximumIsRejected(0.0f)" fullname="PrisonGame.Combat.Tests.HealthTests.InvalidMaximumIsRejected(0.0f)" methodname="InvalidMaximumIsRejected" classname="PrisonGame.Combat.Tests.HealthTests" runstate="Runnable" seed="1783710156" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000179" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1046" name="InvalidMaximumIsRejected(-5.0f)" fullname="PrisonGame.Combat.Tests.HealthTests.InvalidMaximumIsRejected(-5.0f)" methodname="InvalidMaximumIsRejected" classname="PrisonGame.Combat.Tests.HealthTests" runstate="Runnable" seed="2060602288" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000029" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1047" name="InvalidMaximumIsRejected(float.NaN)" fullname="PrisonGame.Combat.Tests.HealthTests.InvalidMaximumIsRejected(float.NaN)" methodname="InvalidMaximumIsRejected" classname="PrisonGame.Combat.Tests.HealthTests" runstate="Runnable" seed="1735526053" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000029" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1048" name="InvalidMaximumIsRejected(float.PositiveInfinity)" fullname="PrisonGame.Combat.Tests.HealthTests.InvalidMaximumIsRejected(float.PositiveInfinity)" methodname="InvalidMaximumIsRejected" classname="PrisonGame.Combat.Tests.HealthTests" runstate="Runnable" seed="1275065329" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000022" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-case id="1038" name="KillOnlyWorksOnADownedFighterAndOnlyOnce" fullname="PrisonGame.Combat.Tests.HealthTests.KillOnlyWorksOnADownedFighterAndOnlyOnce" methodname="KillOnlyWorksOnADownedFighterAndOnlyOnce" classname="PrisonGame.Combat.Tests.HealthTests" runstate="Runnable" seed="20465015" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000668" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1039" name="RestoreFullRecoversAliveOrDownedButNotDead" fullname="PrisonGame.Combat.Tests.HealthTests.RestoreFullRecoversAliveOrDownedButNotDead" methodname="RestoreFullRecoversAliveOrDownedButNotDead" classname="PrisonGame.Combat.Tests.HealthTests" runstate="Runnable" seed="923838722" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000167" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1034" name="StartsFullAndAlive" fullname="PrisonGame.Combat.Tests.HealthTests.StartsFullAndAlive" methodname="StartsFullAndAlive" classname="PrisonGame.Combat.Tests.HealthTests" runstate="Runnable" seed="1169362161" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000068" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1040" name="ZeroDamageIsAllowedAndChangesNothing" fullname="PrisonGame.Combat.Tests.HealthTests.ZeroDamageIsAllowedAndChangesNothing" methodname="ZeroDamageIsAllowedAndChangesNothing" classname="PrisonGame.Combat.Tests.HealthTests" runstate="Runnable" seed="31342055" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000081" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1036" name="ZeroHealthLeavesFighterDownedNotDead" fullname="PrisonGame.Combat.Tests.HealthTests.ZeroHealthLeavesFighterDownedNotDead" methodname="ZeroHealthLeavesFighterDownedNotDead" classname="PrisonGame.Combat.Tests.HealthTests" runstate="Runnable" seed="1205014734" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000184" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1050" name="StableIdTests" fullname="PrisonGame.Combat.Tests.StableIdTests" classname="PrisonGame.Combat.Tests.StableIdTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.100891" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties>
+                <property name="Category" value="Combat" />
+              </properties>
+              <test-case id="1053" name="DefaultIsInvalidAndEmptyIsRejected" fullname="PrisonGame.Combat.Tests.StableIdTests.DefaultIsInvalidAndEmptyIsRejected" methodname="DefaultIsInvalidAndEmptyIsRejected" classname="PrisonGame.Combat.Tests.StableIdTests" runstate="Runnable" seed="1244888582" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000627" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1052" name="EqualityIsByValue" fullname="PrisonGame.Combat.Tests.StableIdTests.EqualityIsByValue" methodname="EqualityIsByValue" classname="PrisonGame.Combat.Tests.StableIdTests" runstate="Runnable" seed="1713062961" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.000308" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1051" name="NewIdsAreValidAndUnique" fullname="PrisonGame.Combat.Tests.StableIdTests.NewIdsAreValidAndUnique" methodname="NewIdsAreValidAndUnique" classname="PrisonGame.Combat.Tests.StableIdTests" runstate="Runnable" seed="1370636644" result="Passed" start-time="2026-09-26 18:23:30Z" end-time="2026-09-26 18:23:30Z" duration="0.001502" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:/Users/jjoaq/AppData/LocalLow/Niuq/PrisonGame\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

@@ -1,0 +1,8 @@
+ENCOUNTER-01 step 2 - September 26, 2026
+Measured with virtual Input System devices in Unity Editor Play mode.
+The clock starts when the mouse state event is queued and ends in LateUpdate when the arms apply the pull-back pose.
+This is engine input-to-pose latency, not hardware input-to-display latency or a representative performance benchmark.
+2026-09-26T18:16:19.2096541Z [Step2 latency] queued mouse press to LateUpdate fist pose: 1.15 ms
+2026-09-26T18:18:36.9892059Z [Step2 scene latency] queued press to visible fist pose: 3.66 ms
+2026-09-26T18:18:39.0274025Z [Step2 latency] queued mouse press to LateUpdate fist pose: 0.95 ms
+The actual sandbox scene and isolated input tests both passed the under-100 ms assertion.

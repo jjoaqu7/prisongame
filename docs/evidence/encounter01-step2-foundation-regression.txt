@@ -1,0 +1,18 @@
+PASS: exactly one fighter (the dummy) in the sandbox
+PASS: dummy has its stable ID
+PASS: dummy has the debug log
+PASS: accepted player controller and interaction present
+PASS: player camera field of view is 70
+PASS: floor spans the 4 x 5 m interior plus walls
+PASS: player spawns out of reach of the dummy
+PASS: Play mode advanced the started attack through wind-up, active, recovery and back to idle, in order
+PASS: dummy is idle again after its attack
+PASS: dummy starts at 100 health, alive
+PASS: nine 10-point punches leave him at 10 health, still up
+PASS: each hit is logged with amount, kind, attacker and remaining health
+PASS: the tenth punch downs him; he is downed, not dead
+PASS: punches on a downed fighter change nothing
+PASS: the kill action kills a downed fighter
+PASS: he can only be killed once
+PASS: recovering does not revive the dead
+PASS: log shows the down and the kill with the attacker's ID

@@ -2,7 +2,10 @@
     "name": "PrisonGame.EditorTools",
     "rootNamespace": "PrisonGame.EditorTools",
     "references": [
-        "Unity.InputSystem"
+        "Unity.InputSystem",
+        "PrisonGame.Core",
+        "PrisonGame.Combat",
+        "PrisonGame.PlayerCombat"
     ],
     "includePlatforms": [
         "Editor"

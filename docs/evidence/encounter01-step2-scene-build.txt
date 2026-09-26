@@ -1,0 +1,3 @@
+Created Assets/PrisonGame/Scenes/Sandbox/CombatAttacksSandbox.unity from CombatSandbox.
+Player: stable ID sandbox-player; local input, melee sweep, placeholder fists and phase readout.
+Dummy: opt-in shove response. Original scene preserved.

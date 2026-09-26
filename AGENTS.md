@@ -13,6 +13,17 @@ First-person prison sandbox game. The rough room, first-person controller, and b
 - Keep release 2 co-op in mind while implementing release 1: separate game rules/state from local input, camera, and UI; pass the acting player explicitly where relevant; distinguish shared world state from per-player state. Apply this as systems are developed, without claiming multiplayer readiness or adding speculative networking infrastructure. See the release decision in `docs/development-plan.md`.
 - When I decide something, update its owning doc in `docs/` and its status. Do not edit `docs/history/` except to fix links.
 
+# Code and tests
+Follow `docs/engineering-standards.md` (agreed). The essentials:
+- New code goes in `PrisonGame/Assets/PrisonGame/Scripts/<Area>/` with its own assembly definition. It never references the prototype (`Assets/Prototype`).
+- Microsoft .NET style: `_camelCase` private fields, `s_camelCase` private statics, PascalCase for everything public and for constants, braces always and on their own line, one statement per line. Unity 6.3 compiles C# 9: block-scoped namespaces, no `init` setters.
+- Game rules are plain C# that receive time and input as parameters. They never read input, the camera, the HUD or `UnityEngine.Random`. Saved identity uses `StableId`.
+- New rules code gets Unity Test Framework edit-mode tests in the same task.
+- Format with `tools/format.ps1`. Before marking work done, `tools/check.ps1 -Unity` must pass (layout, naming, compile, edit-mode tests), and affected runtime checks must be rerun with evidence in `docs/evidence/`.
+- Commits pass the pre-commit hook (`git config core.hooksPath .githooks` once per clone). Do not use `--no-verify` unless the user asks.
+- Renaming a serialized field needs `[FormerlySerializedAs("oldName")]`. Prototype files keep their names until a task rewrites them.
+- Unity Editor builders are static methods in the `PrisonGame.EditorTools` assembly. `tools/unity/*.cs` snippets are history.
+
 # Communication
 1. Be direct and brief.
 2. Explain when needed, in plain terms for someone new to game dev and Unity (I'm an engineer). No analogies. Comparisons to other games are fine.

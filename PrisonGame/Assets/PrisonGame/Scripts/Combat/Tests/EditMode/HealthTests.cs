@@ -8,10 +8,10 @@ namespace PrisonGame.Combat.Tests
     [Category("Combat")]
     public sealed class HealthTests
     {
-        private static readonly StableId Player = new StableId("player-1");
+        private static readonly StableId s_player = new StableId("player-1");
 
         private static DamageInfo Hit(float amount) =>
-            new DamageInfo(Player, "fists", AttackKind.Quick, amount, Vector3.zero, Vector3.forward, 0d);
+            new DamageInfo(s_player, "fists", AttackKind.Quick, amount, Vector3.zero, Vector3.forward, 0d);
 
         [Test]
         public void StartsFullAndAlive()
@@ -70,13 +70,13 @@ namespace PrisonGame.Combat.Tests
             int kills = 0;
             StableId killer = default;
             health.Killed += id => { kills++; killer = id; };
-            Assert.IsFalse(health.Kill(Player), "A standing fighter cannot be killed by the kill action.");
+            Assert.IsFalse(health.Kill(s_player), "A standing fighter cannot be killed by the kill action.");
             health.Apply(Hit(10f));
-            Assert.IsTrue(health.Kill(Player));
-            Assert.IsFalse(health.Kill(Player));
+            Assert.IsTrue(health.Kill(s_player));
+            Assert.IsFalse(health.Kill(s_player));
             Assert.AreEqual(LifeState.Dead, health.State);
             Assert.AreEqual(1, kills);
-            Assert.AreEqual(Player, killer);
+            Assert.AreEqual(s_player, killer);
         }
 
         [Test]
@@ -90,7 +90,7 @@ namespace PrisonGame.Combat.Tests
             Assert.IsTrue(health.RestoreFull());
             Assert.AreEqual(LifeState.Alive, health.State);
             health.Apply(Hit(30f));
-            health.Kill(Player);
+            health.Kill(s_player);
             Assert.IsFalse(health.RestoreFull());
             Assert.AreEqual(LifeState.Dead, health.State);
             Assert.AreEqual(0f, health.Current);

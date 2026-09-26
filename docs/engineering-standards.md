@@ -1,0 +1,113 @@
+# Engineering standards
+
+Agreed September 25-26, 2026 (STD-01). These rules apply to every agent and to manual work. The evidence and the options considered are in the [engineering-standards research](research/engineering-standards/report.md); the decisions are recorded in the [development plan](development-plan.md#engineering-standards---agreed-september-25). Where tools enforce a rule, the tool wins; where this page and a tool disagree, fix the tool configuration and this page together.
+
+## Enforcement and commands
+
+| What | How it is enforced | Command |
+| --- | --- | --- |
+| Layout (indents, spacing, braces on their own line, one statement per line) | `PrisonGame/.editorconfig`, applied by `dotnet format` and by editors | Check: `tools/check.ps1`. Fix: `tools/format.ps1` |
+| Naming and braces in new code (`Assets/PrisonGame`) | `.editorconfig` naming rules and `IDE0011`, checked by `dotnet format style` | Same. Braces are fixed automatically; names are fixed by hand |
+| Every commit | Git pre-commit hook `.githooks/pre-commit` runs `tools/check.ps1 -Staged` and blocks the commit on failure | Enable once per clone: `git config core.hooksPath .githooks` |
+| Compiles and edit-mode tests pass | Required before a task is marked done | `tools/check.ps1 -Unity` (needs the Unity Editor open on the project) |
+| Existing prototype behavior | Runtime checks in Development builds and the Editor | See [Tests](#tests) |
+
+- Do not bypass the hook (`git commit --no-verify`) unless the user asks.
+- `tools/format.ps1 -Staged` formats only staged files; stage them again afterwards.
+- The checks need the .NET SDK (installed: 10.0.401). Naming and brace checks also need the `.csproj` files Unity generates when the project is opened; without them they are skipped with a warning.
+
+## Layout
+
+- Microsoft .NET layout: 4-space indents, each brace on its own line, one statement per line, always use braces, even around one statement. `dotnet format` applies most of it.
+- The formatter does not split a one-line block such as `void Reset() { a = 1; b = 2; }`, because that setting would also stretch every `{ get; set; }` property over four lines. Write such methods over several lines yourself.
+- Keep lines under about 120 characters. The formatter does not wrap lines; this is checked in review.
+- C# files use LF line endings (`.gitattributes` and `.editorconfig` agree).
+
+## Naming
+
+New code, meaning everything under `Assets/PrisonGame`, follows Microsoft's .NET convention:
+
+| Element | Style | Example |
+| --- | --- | --- |
+| Types, methods, properties, events, public fields, namespaces | PascalCase | `FighterStateMachine`, `TryStartAttack`, `HitWindowOpen` |
+| Interfaces | `I` + PascalCase | `IDamageable` |
+| Private and internal fields, including `[SerializeField]` ones | `_camelCase` | `_maxHealth` |
+| Private static fields, including `static readonly` | `s_camelCase` | `s_player` |
+| Constants, any visibility | PascalCase | `Capacity` |
+| Parameters and locals | camelCase | `deltaSeconds` |
+| Booleans | Read as a question | `IsAlive`, `HitWindowOpen` |
+| Events | Verb phrase; past tense for after the fact | `Damaged`, `WentDown` |
+
+- Unity shows serialized fields in the Inspector without the `_` prefix, so `_maxHealth` still reads "Max Health".
+- Renaming a serialized field loses its saved values in scenes and prefabs unless the field keeps `[FormerlySerializedAs("oldName")]`. Keep the attribute after renaming.
+- Prototype code (`Assets/Prototype`, `Assets/Editor`) keeps its current names until a task rewrites a file. Then rename it to this convention, with `[FormerlySerializedAs]` on its serialized fields, and recheck the scenes that use it.
+
+## Folders, assemblies and C# version
+
+- New code goes in `PrisonGame/Assets/PrisonGame/Scripts/<Area>/Runtime/`, with one assembly definition per area (`PrisonGame.<Area>`). Tests go in `<Area>/Tests/EditMode/` or `<Area>/Tests/PlayMode/`, and Editor tools in `EditorTools/` (`PrisonGame.EditorTools`, Editor-only). Namespaces match assembly names.
+- Dependencies point one way. `Core` depends on nothing. Game areas depend on `Core` and on each other only where needed, never in a cycle. The prototype (`Assembly-CSharp`) may use new code; new code must not use the prototype.
+- Unity 6.3 compiles C# 9.0. Block-scoped `namespace X { }` only, because file-scoped namespaces are C# 10. No `init` setters, and no records in serialized types.
+
+## Game-rule code and co-op boundaries
+
+These make release 2 co-op possible and let tests run without a scene (see the [release decision](development-plan.md#single-player-first-release-co-op-second-release---agreed)):
+
+- Game rules are plain C# classes in their area's `Runtime` assembly. They take time and input as parameters and never read `Time`, `Input`, `Keyboard`, `Camera.main`, the HUD or `UnityEngine.Random`. The assembly boundaries make most of this a compile error.
+- Input is turned into intents by one local adapter per player; the acting player or fighter is passed explicitly.
+- Per-player state (health, held item, inventory) stays separate from shared world state (NPCs, doors, dropped items).
+- Anything saved or referenced across sessions uses `StableId`, never GameObject names, instance IDs or `UnityEngine.EntityId`.
+- Randomness in rules uses a seeded `System.Random` owned by that system.
+- Presentation (animation, sound, effects, HUD) reacts to rule events and never changes rule state.
+- No networking code until release 2 work starts.
+
+## Comments
+
+- Explain why, not what. Give each class a short comment on its role and what it must not do when that is not obvious.
+- Record decisions and their sources in the docs, not in code comments.
+
+## Tests
+
+- New tests use Unity's Test Framework (NUnit):
+  - One test assembly per game assembly and mode.
+  - Each class carries `[Category("<Area>")]`.
+  - Test names read as behavior: `AttacksDoNotHurtADownedFighter`.
+  - Arrange-Act-Assert structure.
+  - `[Test]` by default. `[UnityTest]` only when a test must wait frames.
+- Every plain C# rules class gets edit-mode tests in the same task that adds it. Play-mode tests cover physics, scene wiring and frame-driven behavior.
+- An unfocused Editor does not advance Play-mode frames. A check that needs real frames sets `Application.runInBackground = true` for its duration and restores it afterwards.
+- Run edit-mode tests with `tools/check.ps1 -Unity`, or in Unity's Test Runner window.
+- The prototype's runtime checks stay as the regression suite until replaced. They compile only into the Editor and Development builds and start with a command-line flag or from the Editor:
+  - `LaundryStandaloneCheck`: `-laundry-check` in the WindowsLaundry build. It writes `LaundryCheck/results.txt` beside the build, or under `PrisonGame/` in the Editor.
+  - `tools/test-windows-build.ps1` and `tools/test-windows-sample.ps1` for the other builds.
+  - Replace one only when its system is substantially changed.
+- Save a check's results under `docs/evidence/` and link them from the progress log.
+
+## Unity Editor scripts
+
+- New scene builders and Editor checks are static methods in the Editor-only `PrisonGame.EditorTools` assembly. They are callable from the Unity CLI, a menu item or `-executeMethod`, and follow this standard like any other code.
+- A builder or check must:
+  - refuse to run while the Editor is playing or compiling, or has unsaved scenes
+  - never overwrite an existing scene or prefab
+  - read everything it needs before closing or destroying anything, and save only after every step has succeeded
+  - restore the scene that was open
+  - write its results to `docs/evidence/`
+- Loose `eval_file` snippets are for one-off inspection only. When using them, pass a timeout (the CLI's default is 5 s): `eval_file <file> <milliseconds>`.
+- The existing `tools/unity/*.cs` snippets are the record of how each scene was built. They are not formatted or converted.
+
+## Formatting-only commits
+
+- A commit that only reformats code contains no renames or logic changes. Its hash goes into `.git-blame-ignore-revs`, so GitHub's line history skips it. Locally, run `git config blame.ignoreRevsFile .git-blame-ignore-revs` once.
+
+## Before marking a task done
+
+1. `tools/check.ps1 -Unity` passes: layout, naming, compile and edit-mode tests.
+2. New rules code has edit-mode tests; changed behavior has updated checks.
+3. Any affected existing runtime checks were rerun, with results in `docs/evidence/`.
+4. The tracker and progress log record what was verified and what was not.
+
+## Later
+
+Agreed as later steps:
+- Formatting hooks in Claude Code (`.claude/settings.json`) and Codex (`.codex/hooks.json`) that call `tools/format.ps1` after each edit, once tested on Windows.
+- Unity's Code Coverage package.
+- CI with GameCI or Unity Build Automation.

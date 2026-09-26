@@ -3,7 +3,12 @@ using PrisonGame.Core;
 
 namespace PrisonGame.Combat
 {
-    public enum LifeState { Alive, Downed, Dead }
+    public enum LifeState
+    {
+        Alive,
+        Downed,
+        Dead,
+    }
 
     // Agreed rule: zero health leaves a fighter downed; killing is a separate action.
     // Plain C# with no clock, input or scene access, so tests can drive it directly.
@@ -11,7 +16,10 @@ namespace PrisonGame.Combat
     {
         public Health(float max)
         {
-            if (!(max > 0f) || float.IsInfinity(max)) throw new ArgumentOutOfRangeException(nameof(max), "Maximum health must be positive and finite.");
+            if (!(max > 0f) || float.IsInfinity(max))
+            {
+                throw new ArgumentOutOfRangeException(nameof(max), "Maximum health must be positive and finite.");
+            }
             Max = max;
             Current = max;
         }
@@ -27,9 +35,15 @@ namespace PrisonGame.Combat
 
         public DamageResult Apply(in DamageInfo hit)
         {
-            if (!(hit.Amount >= 0f) || float.IsInfinity(hit.Amount)) throw new ArgumentOutOfRangeException(nameof(hit), "Damage must be zero or positive and finite.");
+            if (!(hit.Amount >= 0f) || float.IsInfinity(hit.Amount))
+            {
+                throw new ArgumentOutOfRangeException(nameof(hit), "Damage must be zero or positive and finite.");
+            }
             // Attacks do not hurt a downed fighter; only the kill action ends him.
-            if (State != LifeState.Alive) return DamageResult.IgnoredHit;
+            if (State != LifeState.Alive)
+            {
+                return DamageResult.IgnoredHit;
+            }
             float applied = Math.Min(hit.Amount, Current);
             Current -= applied;
             bool wentDown = Current <= 0f;
@@ -40,13 +54,19 @@ namespace PrisonGame.Combat
             }
             var result = new DamageResult(applied, wentDown, false);
             Damaged?.Invoke(hit, result);
-            if (wentDown) WentDown?.Invoke(hit);
+            if (wentDown)
+            {
+                WentDown?.Invoke(hit);
+            }
             return result;
         }
 
         public bool Kill(StableId killer)
         {
-            if (State != LifeState.Downed) return false;
+            if (State != LifeState.Downed)
+            {
+                return false;
+            }
             State = LifeState.Dead;
             Killed?.Invoke(killer);
             return true;
@@ -55,7 +75,10 @@ namespace PrisonGame.Combat
         // Used when a fight ends without a result and both fighters recover.
         public bool RestoreFull()
         {
-            if (State == LifeState.Dead) return false;
+            if (State == LifeState.Dead)
+            {
+                return false;
+            }
             Current = Max;
             State = LifeState.Alive;
             return true;

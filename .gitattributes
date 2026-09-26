@@ -8,3 +8,5 @@
 *.meta text eol=lf
 *.shader text eol=lf
 *.hlsl text eol=lf
+# Git's shell runs hooks; CRLF would break the #!/bin/sh line.
+.githooks/* text eol=lf

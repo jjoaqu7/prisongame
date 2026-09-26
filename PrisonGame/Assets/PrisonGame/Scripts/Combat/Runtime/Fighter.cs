@@ -1,5 +1,6 @@
 using PrisonGame.Core;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace PrisonGame.Combat
 {
@@ -9,30 +10,42 @@ namespace PrisonGame.Combat
     [DisallowMultipleComponent]
     public sealed class Fighter : MonoBehaviour
     {
-        [SerializeField] private string stableId;
-        [SerializeField, Min(1f)] private float maxHealth = 100f;
+        [SerializeField]
+        [FormerlySerializedAs("stableId")]
+        private string _stableId;
+
+        [SerializeField]
+        [FormerlySerializedAs("maxHealth")]
+        [Min(1f)]
+        private float _maxHealth = 100f;
 
         public StableId Id { get; private set; }
         public Health Health { get; private set; }
         public FighterStateMachine State { get; private set; }
 
-        private void Reset() => stableId = StableId.New().Value;
+        private void Reset()
+        {
+            _stableId = StableId.New().Value;
+        }
 
         private void Awake()
         {
-            if (string.IsNullOrWhiteSpace(stableId))
+            if (string.IsNullOrWhiteSpace(_stableId))
             {
                 Debug.LogError("Fighter needs a stable entity ID; generating a temporary one.", this);
-                stableId = StableId.New().Value;
+                _stableId = StableId.New().Value;
             }
-            Id = new StableId(stableId);
-            Health = new Health(maxHealth);
+            Id = new StableId(_stableId);
+            Health = new Health(_maxHealth);
             State = new FighterStateMachine();
             Health.WentDown += _ => State.GoDown();
             Health.Killed += _ => State.Die();
         }
 
-        private void Update() => State.Tick(Time.deltaTime);
+        private void Update()
+        {
+            State.Tick(Time.deltaTime);
+        }
 
         // Called by the combat rules after the attacker's hit check; a fighter never
         // decides for itself that it was hit.
@@ -43,7 +56,10 @@ namespace PrisonGame.Combat
         // A fight ended without a result: both sides recover.
         public void RecoverFully()
         {
-            if (Health.RestoreFull()) State.Recover();
+            if (Health.RestoreFull())
+            {
+                State.Recover();
+            }
         }
     }
 }

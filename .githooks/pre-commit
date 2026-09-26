@@ -1,0 +1,10 @@
+#!/bin/sh
+# Blocks the commit when staged C# code breaks the project standard (docs/engineering-standards.md).
+# Enable once per clone: git config core.hooksPath .githooks
+root="$(git rev-parse --show-toplevel)"
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$root/tools/check.ps1" -Staged
+status=$?
+if [ "$status" -ne 0 ]; then
+    echo "Commit blocked by the code check. Fix the problems listed above, stage the files again, then commit."
+fi
+exit "$status"

@@ -8,7 +8,7 @@ namespace PrisonGame.Combat.Tests
     public sealed class FighterStateMachineTests
     {
         // His proposed punch: 0.7 s wind-up, then a short active window.
-        private static readonly AttackTiming Punch = new AttackTiming(0.7f, 0.15f, 0.4f);
+        private static readonly AttackTiming s_punch = new AttackTiming(0.7f, 0.15f, 0.4f);
 
         private static List<string> Record(FighterStateMachine machine)
         {
@@ -29,7 +29,7 @@ namespace PrisonGame.Combat.Tests
         public void AttackRunsWindUpActiveRecoveryThenIdle()
         {
             var machine = new FighterStateMachine();
-            Assert.IsTrue(machine.TryStartAttack(Punch));
+            Assert.IsTrue(machine.TryStartAttack(s_punch));
             Assert.AreEqual(FighterState.WindUp, machine.State);
             machine.Tick(0.69f);
             Assert.AreEqual(FighterState.WindUp, machine.State, "Cannot hit before the wind-up ends.");
@@ -49,7 +49,7 @@ namespace PrisonGame.Combat.Tests
         {
             var machine = new FighterStateMachine();
             List<string> log = Record(machine);
-            machine.TryStartAttack(Punch);
+            machine.TryStartAttack(s_punch);
             machine.Tick(5f);
             CollectionAssert.AreEqual(new[] { "Idle>WindUp", "WindUp>Active", "Active>Recovery", "Recovery>Idle" }, log);
             Assert.AreEqual(FighterState.Idle, machine.State);
@@ -59,7 +59,7 @@ namespace PrisonGame.Combat.Tests
         public void LeftoverTimeCarriesIntoTheNextPhase()
         {
             var machine = new FighterStateMachine();
-            machine.TryStartAttack(Punch);
+            machine.TryStartAttack(s_punch);
             machine.Tick(0.75f);
             Assert.AreEqual(FighterState.Active, machine.State);
             Assert.AreEqual(0.05f, machine.TimeInState, 1e-5f);
@@ -69,15 +69,15 @@ namespace PrisonGame.Combat.Tests
         public void CannotStartAnotherAttackUntilIdle()
         {
             var machine = new FighterStateMachine();
-            machine.TryStartAttack(Punch);
-            Assert.IsFalse(machine.TryStartAttack(Punch));
+            machine.TryStartAttack(s_punch);
+            Assert.IsFalse(machine.TryStartAttack(s_punch));
             machine.Tick(0.8f);
-            Assert.IsFalse(machine.TryStartAttack(Punch), "No attack during the active window.");
+            Assert.IsFalse(machine.TryStartAttack(s_punch), "No attack during the active window.");
             machine.Tick(0.1f);
             Assert.AreEqual(FighterState.Recovery, machine.State);
-            Assert.IsFalse(machine.TryStartAttack(Punch), "Recovery leaves the attacker open.");
+            Assert.IsFalse(machine.TryStartAttack(s_punch), "Recovery leaves the attacker open.");
             machine.Tick(1f);
-            Assert.IsTrue(machine.TryStartAttack(Punch));
+            Assert.IsTrue(machine.TryStartAttack(s_punch));
         }
 
         [Test]
@@ -96,7 +96,7 @@ namespace PrisonGame.Combat.Tests
             Assert.IsTrue(machine.StartBlock());
             machine.Tick(30f);
             Assert.AreEqual(FighterState.Blocking, machine.State);
-            Assert.IsFalse(machine.TryStartAttack(Punch));
+            Assert.IsFalse(machine.TryStartAttack(s_punch));
             machine.EndBlock();
             Assert.AreEqual(FighterState.Idle, machine.State);
         }
@@ -105,7 +105,7 @@ namespace PrisonGame.Combat.Tests
         public void StaggerInterruptsAWindUpAndThenReturnsToIdle()
         {
             var machine = new FighterStateMachine();
-            machine.TryStartAttack(Punch);
+            machine.TryStartAttack(s_punch);
             machine.Tick(0.3f);
             Assert.IsTrue(machine.Stagger(0.5f));
             Assert.AreEqual(FighterState.Staggered, machine.State);
@@ -120,7 +120,7 @@ namespace PrisonGame.Combat.Tests
         {
             var machine = new FighterStateMachine();
             machine.GoDown();
-            Assert.IsFalse(machine.TryStartAttack(Punch));
+            Assert.IsFalse(machine.TryStartAttack(s_punch));
             Assert.IsFalse(machine.StartBlock());
             Assert.IsFalse(machine.Stagger(0.5f));
             machine.Tick(100f);

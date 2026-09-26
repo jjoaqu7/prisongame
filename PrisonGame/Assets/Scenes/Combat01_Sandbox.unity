@@ -376,8 +376,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbc612c23bc7c584495f86fda98d92eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: PrisonGame.Combat::PrisonGame.Combat.FighterDebugLog
-  logToConsole: 1
-  showOnScreen: 1
+  _logToConsole: 1
+  _showOnScreen: 1
 --- !u!114 &354509192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -390,8 +390,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee82dadd505a86849be26125bb238bbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: PrisonGame.Combat::PrisonGame.Combat.Fighter
-  stableId: sandbox-dummy
-  maxHealth: 100
+  _stableId: sandbox-dummy
+  _maxHealth: 100
 --- !u!23 &354509193
 MeshRenderer:
   m_ObjectHideFlags: 0

@@ -39,6 +39,7 @@ The agreed tracking workflow makes the primary development agent responsible for
 | [Art and tone](art-and-tone.md) | Visual style, character presentation, and humor |
 | [Asset register](asset-register.md) | Sources, licenses and edits for imported production candidates |
 | [Art reference board](art-reference-board.md) | Labelled reference pictures and proposed visual choices for review |
+| [Engineering standards](engineering-standards.md) | Code layout, naming, folders and assemblies, tests, Editor scripts and the checks that enforce them |
 | [Development plan](development-plan.md) | Next design step, a proposed short session, first playable version, and unresolved decisions |
 | [Progress and next tasks](progress.md) | Current state, task status, items awaiting review, blockers, and session handoff |
 | [Progress log](progress-log.md) | Dated history: each task's verification details, evidence links and handoff notes |

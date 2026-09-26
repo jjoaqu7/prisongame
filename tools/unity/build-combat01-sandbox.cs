@@ -49,7 +49,7 @@ dummy.GetComponent<Renderer>().sharedMaterial=ochre;
 var nose=GameObject.CreatePrimitive(PrimitiveType.Cube);nose.name="Facing marker";UnityEngine.Object.DestroyImmediate(nose.GetComponent<Collider>());
 nose.transform.SetParent(dummy.transform,false);nose.transform.localPosition=new Vector3(0,.55f,.5f);nose.transform.localScale=new Vector3(.25f,.12f,.2f);nose.GetComponent<Renderer>().sharedMaterial=metal;
 var fighter=dummy.AddComponent<PrisonGame.Combat.Fighter>();
-var so=new SerializedObject(fighter);so.FindProperty("stableId").stringValue="sandbox-dummy";so.FindProperty("maxHealth").floatValue=100f;so.ApplyModifiedPropertiesWithoutUndo();
+var so=new SerializedObject(fighter);so.FindProperty("_stableId").stringValue="sandbox-dummy";so.FindProperty("_maxHealth").floatValue=100f;so.ApplyModifiedPropertiesWithoutUndo();
 dummy.AddComponent<PrisonGame.Combat.FighterDebugLog>();
 
 UnityEditor.SceneManagement.EditorSceneManager.SaveScene(scene,scenePath);

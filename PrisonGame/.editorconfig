@@ -1,0 +1,99 @@
+# Code rules for this Unity project. Editors, `dotnet format` and Unity's compiler read this file.
+# The standard behind it: docs/engineering-standards.md. Check with tools/check.ps1; fix with tools/format.ps1.
+root = true
+
+[*]
+charset = utf-8
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.cs]
+# LF matches .gitattributes (*.cs text eol=lf) and Unity's own repositories.
+end_of_line = lf
+indent_style = space
+indent_size = 4
+tab_width = 4
+
+# Layout: Microsoft .NET style. Each brace on its own line; one statement per line.
+csharp_new_line_before_open_brace = all
+csharp_new_line_before_else = true
+csharp_new_line_before_catch = true
+csharp_new_line_before_finally = true
+csharp_new_line_before_members_in_object_initializers = true
+csharp_new_line_before_members_in_anonymous_types = true
+csharp_indent_case_contents = true
+csharp_indent_switch_labels = true
+csharp_indent_block_contents = true
+csharp_space_after_cast = false
+csharp_space_after_keywords_in_control_flow_statements = true
+csharp_space_around_binary_operators = before_and_after
+csharp_space_after_comma = true
+csharp_space_after_semicolon_in_for_statement = true
+csharp_space_before_colon_in_inheritance_clause = true
+csharp_space_after_colon_in_inheritance_clause = true
+csharp_space_between_method_call_name_and_opening_parenthesis = false
+csharp_space_between_method_declaration_name_and_open_parenthesis = false
+csharp_space_between_parentheses = false
+# Splits `a(); b();` onto separate lines. One-line blocks such as `{ get; set; }` stay,
+# because splitting them would also stretch every auto-property over four lines.
+csharp_preserve_single_line_statements = false
+csharp_preserve_single_line_blocks = true
+
+# Naming: Microsoft .NET convention, for new code only. The prototype keeps its names until a
+# task rewrites a file (renaming serialized fields needs [FormerlySerializedAs]).
+[Assets/PrisonGame/**.cs]
+# Always use braces, even around one statement (Microsoft, Google and Unity's style guide agree).
+csharp_prefer_braces = true:warning
+dotnet_diagnostic.IDE0011.severity = warning
+
+dotnet_naming_style.pascal_case.capitalization = pascal_case
+dotnet_naming_style.camel_case.capitalization = camel_case
+dotnet_naming_style.underscore_camel_case.capitalization = camel_case
+dotnet_naming_style.underscore_camel_case.required_prefix = _
+dotnet_naming_style.s_camel_case.capitalization = camel_case
+dotnet_naming_style.s_camel_case.required_prefix = s_
+dotnet_naming_style.i_pascal_case.capitalization = pascal_case
+dotnet_naming_style.i_pascal_case.required_prefix = I
+
+dotnet_naming_symbols.constants.applicable_kinds = field, local
+dotnet_naming_symbols.constants.applicable_accessibilities = *
+dotnet_naming_symbols.constants.required_modifiers = const
+dotnet_naming_rule.constants_are_pascal_case.symbols = constants
+dotnet_naming_rule.constants_are_pascal_case.style = pascal_case
+dotnet_naming_rule.constants_are_pascal_case.severity = warning
+
+dotnet_naming_symbols.private_static_fields.applicable_kinds = field
+dotnet_naming_symbols.private_static_fields.applicable_accessibilities = private, internal, private_protected
+dotnet_naming_symbols.private_static_fields.required_modifiers = static
+dotnet_naming_rule.private_static_fields_are_s_camel_case.symbols = private_static_fields
+dotnet_naming_rule.private_static_fields_are_s_camel_case.style = s_camel_case
+dotnet_naming_rule.private_static_fields_are_s_camel_case.severity = warning
+
+dotnet_naming_symbols.private_fields.applicable_kinds = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private, internal, private_protected
+dotnet_naming_rule.private_fields_are_underscore_camel_case.symbols = private_fields
+dotnet_naming_rule.private_fields_are_underscore_camel_case.style = underscore_camel_case
+dotnet_naming_rule.private_fields_are_underscore_camel_case.severity = warning
+
+dotnet_naming_symbols.interfaces.applicable_kinds = interface
+dotnet_naming_symbols.interfaces.applicable_accessibilities = *
+dotnet_naming_rule.interfaces_start_with_i.symbols = interfaces
+dotnet_naming_rule.interfaces_start_with_i.style = i_pascal_case
+dotnet_naming_rule.interfaces_start_with_i.severity = warning
+
+dotnet_naming_symbols.types_and_members.applicable_kinds = namespace, class, struct, enum, delegate, event, method, property, local_function
+dotnet_naming_symbols.types_and_members.applicable_accessibilities = *
+dotnet_naming_rule.types_and_members_are_pascal_case.symbols = types_and_members
+dotnet_naming_rule.types_and_members_are_pascal_case.style = pascal_case
+dotnet_naming_rule.types_and_members_are_pascal_case.severity = warning
+
+dotnet_naming_symbols.public_fields.applicable_kinds = field
+dotnet_naming_symbols.public_fields.applicable_accessibilities = public, protected, protected_internal
+dotnet_naming_rule.public_fields_are_pascal_case.symbols = public_fields
+dotnet_naming_rule.public_fields_are_pascal_case.style = pascal_case
+dotnet_naming_rule.public_fields_are_pascal_case.severity = warning
+
+dotnet_naming_symbols.parameters_and_locals.applicable_kinds = parameter, local
+dotnet_naming_rule.parameters_and_locals_are_camel_case.symbols = parameters_and_locals
+dotnet_naming_rule.parameters_and_locals_are_camel_case.style = camel_case
+dotnet_naming_rule.parameters_and_locals_are_camel_case.severity = warning

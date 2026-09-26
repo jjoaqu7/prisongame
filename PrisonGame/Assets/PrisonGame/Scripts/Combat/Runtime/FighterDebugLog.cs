@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using PrisonGame.Core;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace PrisonGame.Combat
 {
@@ -10,52 +12,80 @@ namespace PrisonGame.Combat
     public sealed class FighterDebugLog : MonoBehaviour
     {
         private const int Capacity = 8;
-        [SerializeField] private bool logToConsole = true;
-        [SerializeField] private bool showOnScreen = true;
-        private readonly List<string> lines = new List<string>();
-        private Fighter fighter;
-        private GUIStyle style;
 
-        public IReadOnlyList<string> Lines => lines;
+        [SerializeField]
+        [FormerlySerializedAs("logToConsole")]
+        private bool _logToConsole = true;
+
+        [SerializeField]
+        [FormerlySerializedAs("showOnScreen")]
+        private bool _showOnScreen = true;
+
+        private readonly List<string> _lines = new List<string>();
+        private Fighter _fighter;
+        private GUIStyle _style;
+
+        public IReadOnlyList<string> Lines => _lines;
 
         private void Start()
         {
-            fighter = GetComponent<Fighter>();
-            fighter.Health.Damaged += OnDamaged;
-            fighter.Health.WentDown += OnWentDown;
-            fighter.Health.Killed += OnKilled;
-            fighter.State.Changed += OnStateChanged;
+            _fighter = GetComponent<Fighter>();
+            _fighter.Health.Damaged += OnDamaged;
+            _fighter.Health.WentDown += OnWentDown;
+            _fighter.Health.Killed += OnKilled;
+            _fighter.State.Changed += OnStateChanged;
         }
 
         private void OnDestroy()
         {
-            if (fighter == null || fighter.Health == null) return;
-            fighter.Health.Damaged -= OnDamaged;
-            fighter.Health.WentDown -= OnWentDown;
-            fighter.Health.Killed -= OnKilled;
-            fighter.State.Changed -= OnStateChanged;
+            if (_fighter == null || _fighter.Health == null)
+            {
+                return;
+            }
+            _fighter.Health.Damaged -= OnDamaged;
+            _fighter.Health.WentDown -= OnWentDown;
+            _fighter.Health.Killed -= OnKilled;
+            _fighter.State.Changed -= OnStateChanged;
         }
 
         private void OnDamaged(DamageInfo hit, DamageResult result) =>
-            Add($"-{result.Applied:0.#} {hit.Kind} from {hit.Attacker} ({fighter.Health.Current:0.#}/{fighter.Health.Max:0})");
+            Add($"-{result.Applied:0.#} {hit.Kind} from {hit.Attacker} ({_fighter.Health.Current:0.#}/{_fighter.Health.Max:0})");
+
         private void OnWentDown(DamageInfo hit) => Add($"down (last hit by {hit.Attacker})");
-        private void OnKilled(PrisonGame.Core.StableId killer) => Add($"killed by {killer}");
+
+        private void OnKilled(StableId killer) => Add($"killed by {killer}");
+
         private void OnStateChanged(FighterState from, FighterState to) => Add($"{from} -> {to}");
 
         private void Add(string text)
         {
             string line = $"{name}: {text}";
-            if (lines.Count == Capacity) lines.RemoveAt(0);
-            lines.Add(line);
-            if (logToConsole) Debug.Log("[Combat] " + line, this);
+            if (_lines.Count == Capacity)
+            {
+                _lines.RemoveAt(0);
+            }
+            _lines.Add(line);
+            if (_logToConsole)
+            {
+                Debug.Log("[Combat] " + line, this);
+            }
         }
 
         private void OnGUI()
         {
-            if (!showOnScreen || lines.Count == 0) return;
-            if (style == null) style = new GUIStyle(GUI.skin.label) { fontSize = 14 };
-            GUI.Box(new Rect(8, 8, 420, 12 + lines.Count * 20), GUIContent.none);
-            for (int i = 0; i < lines.Count; i++) GUI.Label(new Rect(16, 12 + i * 20, 410, 20), lines[i], style);
+            if (!_showOnScreen || _lines.Count == 0)
+            {
+                return;
+            }
+            if (_style == null)
+            {
+                _style = new GUIStyle(GUI.skin.label) { fontSize = 14 };
+            }
+            GUI.Box(new Rect(8, 8, 420, 12 + _lines.Count * 20), GUIContent.none);
+            for (int i = 0; i < _lines.Count; i++)
+            {
+                GUI.Label(new Rect(16, 12 + i * 20, 410, 20), _lines[i], _style);
+            }
         }
     }
 }

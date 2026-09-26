@@ -111,16 +111,7 @@ Already standard and unchanged: Force Text asset serialization, Visible Meta Fil
 
 ## Open decisions for the user
 
-Decisions 1 to 7 were agreed on 2026-09-25 and 2026-09-26 and are recorded in the [development plan](../../development-plan.md#engineering-standards---agreed-september-25). New decisions from the naming follow-up:
-
-| # | Decision | Options | Proposed | What waits on it |
-| --- | --- | --- | --- | --- |
-| 8 | Builds | Build Profiles `Windows Development` / `Windows Release`; keep one folder per milestone | Build Profiles, replacing the four folders at ENCOUNTER-01 step 7 | Build consolidation, check scripts |
-| 9 | Versioning | Semantic Versioning `0.MINOR.PATCH` with Git tags; none | Semantic Versioning; 0.2.0 when ENCOUNTER-01 finishes | Next milestone |
-| 10 | Company and product name | The user's studio or publisher name, and the product name to ship; keep defaults for now | Decide before PLAYTEST-01 | Save path, PLAYTEST-01 |
-| 11 | Folder layout for new content | Unity type folders, no prefixes; community feature folders with type prefixes | Unity type folders, no prefixes | First new art or audio |
-| 12 | Git LFS | Now for new binaries; when art production starts; never | Now, for new files only | Next binary asset |
-| 13 | Commit messages | `<TASK-ID>: <summary>`; Conventional Commits | `<TASK-ID>: <summary>` | Next commit |
+None. Decisions 1 to 7 were agreed on 2026-09-25 and 2026-09-26, and decisions 8 to 13 (builds, versioning, company name `Niuq`, folder layout, Git LFS, commit messages) on 2026-09-26. All are recorded in the [development plan](../../development-plan.md#engineering-standards---agreed-september-25) and applied in [Engineering standards](../../engineering-standards.md). Still open outside this report: the shipped product name, which is `PrisonGame` as a working title until then.
 
 ## Changelog
 
@@ -129,3 +120,4 @@ Decisions 1 to 7 were agreed on 2026-09-25 and 2026-09-26 and are recorded in th
 - 2026-09-26: the user accepted decisions 2 to 7; the open-decisions table is now empty.
 - 2026-09-26: added [analyzer trial notes](notes/analyzer-setup-trial.md). In this project Unity ignored `.editorconfig` for compiler severities and required rulesets named after their assembly, so the analyzer paragraph now describes rulesets instead of `.editorconfig` severities.
 - 2026-09-26: added [naming and organization notes](notes/naming-and-project-organization.md) after the user asked whether names such as `WindowsLaundry` follow a standard. New section on builds, versions, company name, asset and folder names, Git LFS and commit conventions; decisions 8 to 13 opened.
+- 2026-09-26: the user accepted decisions 8 to 13 and chose the company name `Niuq`; applied in STD-02.

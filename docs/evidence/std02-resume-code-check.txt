@@ -1,0 +1,6 @@
+STD-02 resume verification - September 26, 2026
+Command: tools/check.ps1 -Unity
+PASS: layout, naming/braces, asset names, rulesets, Unity compile, 28/28 edit-mode tests.
+Initial sandbox run could not access the .NET build-host named pipe. Retried outside the sandbox and passed.
+Runtime: 106 laundry, 18 Room01 smoke, 18 combat step-1 checks passed again.
+Windows builds were not rebuilt.

@@ -543,3 +543,29 @@ Verified baseline: `PrisonGame/` uses Editor 6000.3.24f1 and URP. Room01_Blockou
   - Findings: builds are conventionally named by platform, configuration and version, and Unity 6 Build Profiles support that. Semantic Versioning `0.y.z` covers initial development. The company and product names form the Windows save path. Unity's guide forbids spaces in asset names (14 materials have them), keeps test scenes separate and organizes by type. Git LFS is the norm for binary art and audio.
   - Already standard: Force Text serialization, Visible Meta Files, committed `.meta` files, the Unity `.gitignore`.
   - The report now lists decisions 8 to 13 for the user. Nothing was renamed or reconfigured.
+
+## STD-02 names, builds, versions and Git - September 26
+
+- **Decisions:** the user accepted engineering-standards decisions 8 to 13 and chose the company name `Niuq`. The product name stays `PrisonGame` as a working title. Recorded in the [development plan](development-plan.md#engineering-standards---agreed-september-25) and [Engineering standards](engineering-standards.md) (new sections: project names and layout, builds and versions, Git), with a short summary in AGENTS.md.
+- **Changes:**
+  - Player Settings company name `DefaultCompany` became `Niuq`, so saves now live in `AppData/LocalLow/Niuq/PrisonGame`. The user's existing save files (laundry, sample and its backup) and the player and Editor settings in the registry (mouse sensitivity, volumes, screen) were copied there; the old copies were left as a backup.
+  - The first Editor tools assembly, `PrisonGame.EditorTools` (Editor-only, with its ruleset). `AssetNaming.RemoveSpaces` renamed the 14 spaced prototype materials in PascalCase, keeping their GUIDs; no scene or prefab changed. `PrototypeChecks` runs prototype runtime checks in Editor Play mode.
+  - `Combat01_Sandbox` moved to `Assets/PrisonGame/Scenes/Sandbox/CombatSandbox.unity`, and its scripts were updated. The unused template `SampleScene` was deleted; its lighting profile stays, because the render pipeline assets use it.
+  - Git LFS: hooks installed in `.githooks`. `.gitattributes` routes new binary types everywhere, and PNG, JPG, WAV and MP3 only under `Assets/PrisonGame/`; no existing file changed. A probe PSD was stored as an LFS pointer and then removed.
+  - `tools/check.ps1` now fails on spaces in asset names.
+- **Found during verification:**
+  - After these changes the laundry checks failed at "E starts shift" three times, including with Unity focused.
+  - A diagnostic showed the cursor lock and the game clock working, but the Input System's Editor setting (`PointersAndKeyboardsRespectGameViewFocus`) sends keyboard input to the game only while the Game view has focus. The check was written for the built game, so it only overrides the window-focus setting. The earlier Editor pass had the Game view focused.
+  - Routing input to the game made all 106 checks pass, so this was not a regression from the renames. The fix became `PrototypeChecks` and a note in the standard's tests section.
+- **Verification:**
+  - `tools/check.ps1 -Unity` passes: layout, naming, no spaces, rulesets, compile with no new-code warnings, 28/28 edit-mode tests.
+  - Through `PrototypeChecks`: [106 laundry checks](evidence/std02-laundry-editor-checks.txt) and [18 Room01 smoke checks](evidence/std02-room01-smoke-editor-checks.txt) pass.
+  - The 18 step-1 checks pass in `CombatSandbox` at its new location.
+  - The tracked `LaundryCheck` outputs were restored afterwards.
+- **Not done:** the Windows builds were not rebuilt; Build Profiles and build consolidation come at ENCOUNTER-01 step 7. No version tag yet: the first will be `v0.2.0` when ENCOUNTER-01 finishes.
+
+## STD-02 resumed verification and checkpoint - September 26
+
+- Resumed after Claude reached its session limit. Reviewed the pending standards changes and reran `tools/check.ps1 -Unity`: all checks and 28 edit-mode tests passed. The initial sandbox run could not access the formatter build-host pipe; the authorized retry outside the sandbox passed. [Check summary](evidence/std02-resume-code-check.txt).
+- Reran [106 laundry checks](evidence/std02-resume-laundry-editor-checks.txt), [18 Room01 smoke checks](evidence/std02-resume-smoke-editor-checks.txt), and the [18 combat step-1 checks](evidence/combat01-step1-checks.txt). Restored tracked laundry fixtures after testing. Windows builds remain unchanged.
+- Handoff: checkpoint STD-02 on `encounter-01`, then implement ENCOUNTER-01 step 2. The separate character-customization research file remains outside this commit.

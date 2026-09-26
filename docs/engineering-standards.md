@@ -1,6 +1,6 @@
 # Engineering standards
 
-Agreed September 25-26, 2026 (STD-01). These rules apply to every agent and to manual work. The evidence and the options considered are in the [engineering-standards research](research/engineering-standards/report.md); the decisions are recorded in the [development plan](development-plan.md#engineering-standards---agreed-september-25). Where tools enforce a rule, the tool wins; where this page and a tool disagree, fix the tool configuration and this page together.
+Agreed September 25-26, 2026 (STD-01; project names, builds, versions and Git added in STD-02). These rules apply to every agent and to manual work. The evidence and the options considered are in the [engineering-standards research](research/engineering-standards/report.md); the decisions are recorded in the [development plan](development-plan.md#engineering-standards---agreed-september-25). Where tools enforce a rule, the tool wins; where this page and a tool disagree, fix the tool configuration and this page together.
 
 ## Enforcement and commands
 
@@ -11,6 +11,7 @@ Agreed September 25-26, 2026 (STD-01). These rules apply to every agent and to m
 | Every commit | Git pre-commit hook `.githooks/pre-commit` runs `tools/check.ps1 -Staged` and blocks the commit on failure | Enable once per clone: `git config core.hooksPath .githooks` |
 | Unity best practices in new code | Microsoft.Unity.Analyzers, raised to warnings by a ruleset beside each new assembly | `tools/check.ps1` checks the rulesets; `-Unity` fails on any compiler or analyzer warning in new code |
 | Compiles and edit-mode tests pass | Required before a task is marked done | `tools/check.ps1 -Unity` (needs the Unity Editor open on the project) |
+| No spaces in asset names | Checked in every `tools/check.ps1` run | Fix: `PrisonGame.EditorTools.AssetNaming.RemoveSpaces` in Unity |
 | Existing prototype behavior | Runtime checks in Development builds and the Editor | See [Tests](#tests) |
 
 - Do not bypass the hook (`git commit --no-verify`) unless the user asks.
@@ -68,6 +69,28 @@ These make release 2 co-op possible and let tests run without a scene (see the [
 - Presentation (animation, sound, effects, HUD) reacts to rule events and never changes rule state.
 - No networking code until release 2 work starts.
 
+## Project names and layout
+
+- **No spaces** in file or folder names under `Assets`, because Unity's command-line tools mishandle them. Join the words in PascalCase instead (`Dex burgundy` became `DexBurgundy`). Rename through Unity, not the file system, so references survive; `AssetNaming.RemoveSpaces` does this in bulk.
+- **Asset names:** PascalCase, with underscores only between the parts of a name (`Inmate_Burgundy`). No type prefixes; the Project window shows each asset's type.
+- **New content** goes under `Assets/PrisonGame/`, in Unity's type folders, created when the first file needs them: `Art/Materials`, `Art/Models`, `Art/Textures`, `Audio`, `Prefabs`, `Scenes`, `Scripts`, `Settings`. Test and experiment scenes go in `Scenes/Sandbox/`, for example `Scenes/Sandbox/CombatSandbox.unity`.
+- **Third-party content** stays in its own folder, never mixed into our folders, and each item is recorded in the [asset register](asset-register.md).
+- **The prototype's task-named folders and scenes** (`Assets/Prototype/Duty01`, `Assets/Scenes/Duty01_Laundry.unity`) are a frozen record: docs, logs and build scripts refer to them. New work does not add to them.
+
+## Builds and versions
+
+- **Build Profiles:** `Windows Development` and later `Windows Release`, set up at ENCOUNTER-01 step 7. Output goes to `Builds/Windows-Development/` and `Builds/Windows-Release/`, replacing the old one-folder-per-milestone builds. The development profile holds every scene the checks need; the command-line check flags pick what runs.
+- **Version:** Player Settings holds a Semantic Version, `0.MINOR.PATCH`, during development. MINOR goes up when a milestone is finished (0.2.0 when ENCOUNTER-01 closes the prototype loop), and PATCH for fixes. Tag the commit `v0.2.0`.
+- **Archives:** a build given to anyone else is kept as `PrisonGame-<version>-windows-<development|release>.zip`.
+- **Identity:** company name `Niuq`; product name `PrisonGame`, a working title. Together they form the Windows save folder `AppData/LocalLow/Niuq/PrisonGame`. Changing either later moves where saves are looked for, so settle the shipped title before the Steam release and plan a save migration if it changes.
+
+## Git
+
+- **Commit messages:** `<TASK-ID>: <imperative summary>`, for example `STD-02: rename spaced assets`. Add a body explaining why when it isn't obvious.
+- **Branches:** `<task-id>` or `<task-id>-<topic>`, lowercase, for example `encounter-01`.
+- **Large binaries:** new binary art and audio go through Git LFS, which `.gitattributes` handles automatically. This covers PSD, TGA, TIFF, EXR, HDR, FBX, OBJ, BLEND, OGG, FLAC, AIFF, MP4, MOV and WebM everywhere, and PNG, JPG, WAV and MP3 under `Assets/PrisonGame/`. Older PNG, JPG, WAV and MP3 files stay ordinary Git files. The LFS hooks are committed in `.githooks`. GitHub Free includes 10 GiB of LFS storage and 10 GiB of bandwidth a month.
+- **Evidence files:** `docs/evidence/<taskid>-<what>-<where>.<ext>`, for example `std01-laundry-editor-checks.txt`.
+
 ## Comments
 
 - Explain why, not what. Give each class a short comment on its role and what it must not do when that is not obvious.
@@ -83,6 +106,7 @@ These make release 2 co-op possible and let tests run without a scene (see the [
   - `[Test]` by default. `[UnityTest]` only when a test must wait frames.
 - Every plain C# rules class gets edit-mode tests in the same task that adds it. Play-mode tests cover physics, scene wiring and frame-driven behavior.
 - An unfocused Editor does not advance Play-mode frames. A check that needs real frames sets `Application.runInBackground = true` for its duration and restores it afterwards.
+- In the Editor, keyboards reach the game only while the Game view has focus. A check that simulates key presses must route input to the game for its run. To run a prototype runtime check in Editor Play mode, use `PrisonGame.EditorTools.PrototypeChecks.Start("<CheckClass>")`, which does this, then `PrototypeChecks.RestoreInput()` when its results file appears.
 - Run edit-mode tests with `tools/check.ps1 -Unity`, or in Unity's Test Runner window.
 - The prototype's runtime checks stay as the regression suite until replaced. They compile only into the Editor and Development builds and start with a command-line flag or from the Editor:
   - `LaundryStandaloneCheck`: `-laundry-check` in the WindowsLaundry build. It writes `LaundryCheck/results.txt` beside the build, or under `PrisonGame/` in the Editor.
@@ -99,12 +123,12 @@ These make release 2 co-op possible and let tests run without a scene (see the [
   - read everything it needs before closing or destroying anything, and save only after every step has succeeded
   - restore the scene that was open
   - write its results to `docs/evidence/`
-- Loose `eval_file` snippets are for one-off inspection only. When using them, pass a timeout (the CLI's default is 5 s): `eval_file <file> <milliseconds>`.
+- Loose `eval_file` snippets are for inspection and small one-off edits of a few API calls (for example setting the company name). Anything longer or reusable is a static method in `PrisonGame.EditorTools`. Always pass a timeout, because the CLI's default is 5 s: `eval_file <file> <milliseconds>`.
 - The existing `tools/unity/*.cs` snippets are the record of how each scene was built. They are not formatted or converted.
 
 ## Formatting-only commits
 
-- A commit that only reformats code contains no renames or logic changes. Its hash goes into `.git-blame-ignore-revs`, so GitHub's line history skips it. Locally, run `git config blame.ignoreRevsFile .git-blame-ignore-revs` once.
+- A formatting-only commit that only reformats code contains no renames or logic changes. Its hash goes into `.git-blame-ignore-revs`, so GitHub's line history skips it. Locally, run `git config blame.ignoreRevsFile .git-blame-ignore-revs` once.
 
 ## Before marking a task done
 

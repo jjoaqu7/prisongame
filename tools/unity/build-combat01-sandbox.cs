@@ -1,7 +1,7 @@
 // Pipeline eval_file, outside Play mode. Creates the ENCOUNTER-01 greybox fight room; never overwrites.
 // Room interior matches the neighboring cell (4 x 5 m). The player is copied from Room01 so
 // movement settings match the accepted controller; Room01 itself is not modified.
-const string scenePath="Assets/Scenes/Combat01_Sandbox.unity";
+const string scenePath="Assets/PrisonGame/Scenes/Sandbox/CombatSandbox.unity"; // moved and renamed September 26 (STD-02)
 if(EditorApplication.isPlayingOrWillChangePlaymode||EditorApplication.isCompiling)throw new System.Exception("Editor must be idle and outside Play mode");
 if(System.IO.File.Exists(scenePath))throw new System.Exception("Sandbox already exists; edit it in Unity instead of rebuilding.");
 for(int i=0;i<UnityEngine.SceneManagement.SceneManager.sceneCount;i++)if(UnityEngine.SceneManagement.SceneManager.GetSceneAt(i).isDirty)throw new System.Exception("Save pending scene edits first.");

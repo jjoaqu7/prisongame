@@ -1,6 +1,6 @@
-// Pipeline eval_file in Play mode with Combat01_Sandbox loaded. Run before verify-combat01-step1.cs:
+// Pipeline eval_file in Play mode with CombatSandbox loaded. Run before verify-combat01-step1.cs:
 // starts one dummy attack so the second script can confirm Play mode advanced it through every phase.
-if(!EditorApplication.isPlaying||UnityEngine.SceneManagement.SceneManager.GetActiveScene().name!="Combat01_Sandbox")throw new System.Exception("Enter Play mode in Combat01_Sandbox first");
+if(!EditorApplication.isPlaying||UnityEngine.SceneManagement.SceneManager.GetActiveScene().name!="CombatSandbox")throw new System.Exception("Enter Play mode in CombatSandbox first");
 // An unfocused Editor stops game frames; allow them for this check only. Unity resets this on leaving Play,
 // and verify-combat01-step1.cs restores it from Player Settings.
 Application.runInBackground=true;

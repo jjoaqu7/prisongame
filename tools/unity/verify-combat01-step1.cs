@@ -1,7 +1,7 @@
-// Pipeline eval_file in Play mode with Combat01_Sandbox loaded, after verify-combat01-step1-start.cs.
+// Pipeline eval_file in Play mode with CombatSandbox loaded, after verify-combat01-step1-start.cs.
 // ENCOUNTER-01 step 1: the scene is set up as planned, Play mode drives the fighter's timeline,
 // and the dummy takes, reports and logs damage through down and kill. Writes evidence; changes vanish on exiting Play.
-if(!EditorApplication.isPlaying||UnityEngine.SceneManagement.SceneManager.GetActiveScene().name!="Combat01_Sandbox")throw new System.Exception("Enter Play mode in Combat01_Sandbox first");
+if(!EditorApplication.isPlaying||UnityEngine.SceneManagement.SceneManager.GetActiveScene().name!="CombatSandbox")throw new System.Exception("Enter Play mode in CombatSandbox first");
 var checks=new System.Collections.Generic.List<string>();
 void Check(bool ok,string name){checks.Add((ok?"PASS: ":"FAIL: ")+name);if(!ok)throw new System.Exception(string.Join("\n",checks));}
 PrisonGame.Combat.FighterDebugLog log=null;

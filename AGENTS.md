@@ -23,6 +23,9 @@ Follow `docs/engineering-standards.md` (agreed). The essentials:
 - Commits pass the pre-commit hook (`git config core.hooksPath .githooks` once per clone). Do not use `--no-verify` unless the user asks.
 - Renaming a serialized field needs `[FormerlySerializedAs("oldName")]`. Prototype files keep their names until a task rewrites them.
 - Unity Editor builders are static methods in the `PrisonGame.EditorTools` assembly. `tools/unity/*.cs` snippets are history.
+- No spaces in asset names. New content goes under `Assets/PrisonGame/` in type folders; test scenes go in `Scenes/Sandbox/`. Prototype folders and scenes keep their names.
+- Commit messages: `<TASK-ID>: <imperative summary>`. Branches: lowercase `<task-id>[-topic]`. New binary art and audio go through Git LFS automatically.
+- Versions: `0.MINOR.PATCH` in Player Settings, MINOR up per finished milestone, with a Git tag. Company name `Niuq`; `PrisonGame` is the working product name, and it sets the save folder.
 
 # Communication
 1. Be direct and brief.

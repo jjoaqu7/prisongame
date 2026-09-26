@@ -32,6 +32,14 @@ else {
     }
 }
 
+# No spaces in asset file or folder names (Unity's command-line tools mishandle them).
+# Fix with PrisonGame.EditorTools.AssetNaming.RemoveSpaces, which keeps references intact.
+$spaced = @(Get-ChildItem -Path $AssetsRoot -Recurse -Force | Where-Object { $_.Name -like '* *' -and $_.Name -notlike '*.meta' })
+if ($spaced.Count -gt 0) {
+    $spaced | Select-Object -First 10 | ForEach-Object { Write-Host "  $($_.FullName.Substring($ProjectRoot.Length + 1))" }
+    $failures += "Names: $($spaced.Count) asset file or folder name(s) contain spaces (first ones listed above). Run PrisonGame.EditorTools.AssetNaming.RemoveSpaces in Unity."
+}
+
 # Analyzer severities: every new-code assembly needs <AssemblyName>.ruleset beside its .asmdef, identical to
 # the master copy. Unity ignores rulesets with other names and does not follow ruleset includes.
 $master = Join-Path $AssetsRoot 'PrisonGame/Scripts/PrisonGame.ruleset'

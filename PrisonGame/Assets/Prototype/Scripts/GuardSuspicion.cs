@@ -27,7 +27,8 @@ namespace PrisonGame.Prototype
 
         public void Step(float seconds)
         {
-            if (seconds <= 0 || !float.IsFinite(seconds) || (clock != null && clock.Paused)) return;
+            if (seconds <= 0 || !float.IsFinite(seconds) || (clock != null && clock.Paused))
+                return;
             var actor = GetComponent<PlayerInteraction>();
             Inside = observer != null && observer.Area != null && observer.Area.Contains(actor);
             Seen = observer != null && observer.CanSee(actor);

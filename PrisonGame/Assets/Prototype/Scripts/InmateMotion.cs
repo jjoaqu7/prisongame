@@ -71,19 +71,24 @@ namespace PrisonGame.Prototype
         private void Step(float dt)
         {
             Velocity = Vector3.zero;
-            if (dt <= 0f || !float.IsFinite(dt)) return;
+            if (dt <= 0f || !float.IsFinite(dt))
+                return;
             if (IsTalking)
             {
-                if (speaker != null) Face(speaker.position - transform.position, dt);
+                if (speaker != null)
+                    Face(speaker.position - transform.position, dt);
                 talkRemaining = Mathf.Max(0f, talkRemaining - dt);
                 return;
             }
-            if (!HasDestination) return;
+            if (!HasDestination)
+                return;
             Vector3 delta = destination - transform.position;
             delta.y = 0f;
-            if (delta.magnitude < .001f) { Stop(); return; }
+            if (delta.magnitude < .001f)
+            { Stop(); return; }
             Vector3 direction = delta.normalized;
-            if (!Face(direction, dt)) return;
+            if (!Face(direction, dt))
+                return;
 
             Physics.SyncTransforms();
             float distance = Mathf.Min(WalkSpeed * dt, delta.magnitude);
@@ -94,7 +99,8 @@ namespace PrisonGame.Prototype
                 center - Vector3.up * half, radius, direction, distance + Clearance,
                 ~0, QueryTriggerInteraction.Ignore))
             {
-                if (hit.collider.transform.IsChildOf(transform)) continue;
+                if (hit.collider.transform.IsChildOf(transform))
+                    continue;
                 distance = Mathf.Min(distance, Mathf.Max(0f, hit.distance - Clearance));
             }
 
@@ -110,7 +116,8 @@ namespace PrisonGame.Prototype
             Vector3 before = transform.position;
             transform.position = next;
             Velocity = (next - before) / dt;
-            if ((destination - next).sqrMagnitude < .000001f) HasDestination = false;
+            if ((destination - next).sqrMagnitude < .000001f)
+                HasDestination = false;
         }
 
         private bool Supported(Vector3 point)
@@ -118,14 +125,16 @@ namespace PrisonGame.Prototype
             foreach (RaycastHit hit in Physics.RaycastAll(point + Vector3.up * .12f, Vector3.down,
                 .16f, ~0, QueryTriggerInteraction.Ignore))
                 if (!hit.collider.transform.IsChildOf(transform) && hit.normal.y > .99f &&
-                    Mathf.Abs(hit.point.y - transform.position.y) < .015f) return true;
+                    Mathf.Abs(hit.point.y - transform.position.y) < .015f)
+                    return true;
             return false;
         }
 
         private bool Face(Vector3 direction, float dt)
         {
             direction.y = 0f;
-            if (direction.sqrMagnitude < .000001f) return true;
+            if (direction.sqrMagnitude < .000001f)
+                return true;
             // M5 faces local -Z.
             Quaternion rotation = Quaternion.LookRotation(-direction.normalized, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 180f * dt);

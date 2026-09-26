@@ -32,7 +32,8 @@ namespace PrisonGame.Prototype
             double now = Time.realtimeSinceStartupAsDouble;
             ApplyPause(!running);
             // On the first resumed frame, discard the interval that belonged to the pause.
-            if (running && wasRunning && clock != null) clock.Advance(now - lastSample);
+            if (running && wasRunning && clock != null)
+                clock.Advance(now - lastSample);
             lastSample = now;
             wasRunning = running;
         }
@@ -40,18 +41,21 @@ namespace PrisonGame.Prototype
         private void OnApplicationFocus(bool focus)
         {
             focused = focus;
-            if (!focus) { wasRunning = false; ApplyPause(true); }
+            if (!focus)
+            { wasRunning = false; ApplyPause(true); }
         }
 
         private void ApplyPause(bool paused)
         {
-            if (clock != null) clock.SetPaused(paused);
+            if (clock != null)
+                clock.SetPaused(paused);
             Time.timeScale = paused ? 0 : originalTimeScale;
         }
 
         private void OnDisable()
         {
-            if (clock != null) clock.SetPaused(true);
+            if (clock != null)
+                clock.SetPaused(true);
             Time.timeScale = originalTimeScale;
         }
     }

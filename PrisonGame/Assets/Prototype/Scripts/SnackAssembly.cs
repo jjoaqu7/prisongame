@@ -14,25 +14,34 @@ namespace PrisonGame.Prototype
         internal GameObject PackPrefab => packPrefab;
         internal void Restore(int stage, PlayerInteraction actor)
         {
-            Stage = stage; WorkingPlayer = stage == 0 ? null : actor;
-            if (crackersVisual != null) crackersVisual.SetActive(stage >= 1);
-            if (fruitVisual != null) fruitVisual.SetActive(stage >= 2);
+            Stage = stage;
+            WorkingPlayer = stage == 0 ? null : actor;
+            if (crackersVisual != null)
+                crackersVisual.SetActive(stage >= 1);
+            if (fruitVisual != null)
+                fruitVisual.SetActive(stage >= 2);
         }
 
         public override string Prompt(PlayerInteraction player)
         {
-            if (WorkingPlayer != null && WorkingPlayer != player) return "Table is in use";
-            if (player.HeldItem != null) return "Put down the carried item first (Q)";
+            if (WorkingPlayer != null && WorkingPlayer != player)
+                return "Table is in use";
+            if (player.HeldItem != null)
+                return "Put down the carried item first (Q)";
             return "E - " + NextStep;
         }
 
         public override void Interact(PlayerInteraction player)
         {
-            if (player == null) return;
-            if (WorkingPlayer != null && WorkingPlayer != player) { player.ShowMessage("Someone is using this tray."); return; }
-            if (player.HeldItem != null) { player.ShowMessage("Put down what you are carrying first (Q)."); return; }
+            if (player == null)
+                return;
+            if (WorkingPlayer != null && WorkingPlayer != player)
+            { player.ShowMessage("Someone is using this tray."); return; }
+            if (player.HeldItem != null)
+            { player.ShowMessage("Put down what you are carrying first (Q)."); return; }
             var supplies = player.GetComponent<SnackSupplies>();
-            if (packPrefab == null || supplies == null) { player.ShowMessage("This table is not ready."); return; }
+            if (packPrefab == null || supplies == null)
+            { player.ShowMessage("This table is not ready."); return; }
             var inventory = player.GetComponent<PlayerInventory>();
             // Finishing consumes a wrapper; its last unit frees a slot for the resulting pack.
             if (Stage == 2 && inventory != null && !inventory.CanAdd(supplies.Wrappers == 1 ? 0 : 1))
@@ -60,9 +69,12 @@ namespace PrisonGame.Prototype
                 Stage = 0;
                 WorkingPlayer = null;
             }
-            else player.ShowMessage(Stage == 1 ? "Crackers added. Next: add dried fruit." : "Fruit added. Next: wrap the pack.");
-            if (crackersVisual != null) crackersVisual.SetActive(Stage >= 1);
-            if (fruitVisual != null) fruitVisual.SetActive(Stage >= 2);
+            else
+                player.ShowMessage(Stage == 1 ? "Crackers added. Next: add dried fruit." : "Fruit added. Next: wrap the pack.");
+            if (crackersVisual != null)
+                crackersVisual.SetActive(Stage >= 1);
+            if (fruitVisual != null)
+                fruitVisual.SetActive(Stage >= 2);
         }
     }
 }

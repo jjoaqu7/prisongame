@@ -21,20 +21,24 @@ namespace PrisonGame.Prototype
         private void OnEnable()
         {
             observedStock = observedPlayer != null ? observedPlayer.GetComponent<SnackSupplies>() : null;
-            if (observedStock != null) observedStock.PackSold += OnSale;
+            if (observedStock != null)
+                observedStock.PackSold += OnSale;
         }
 
         private void OnDisable()
         {
-            if (observedStock != null) observedStock.PackSold -= OnSale;
-            if (closedSign != null) closedSign.SetActive(false);
+            if (observedStock != null)
+                observedStock.PackSold -= OnSale;
+            if (closedSign != null)
+                closedSign.SetActive(false);
         }
 
         private void OnSale(PlayerInteraction actor) => Begin(actor);
 
         public bool Begin(PlayerInteraction actor)
         {
-            if (!isActiveAndEnabled || Started || clock == null || actor == null || actor != observedPlayer) return false;
+            if (!isActiveAndEnabled || Started || clock == null || actor == null || actor != observedPlayer)
+                return false;
             Started = true;
             ReopensAt = clock.TotalMinutes + DurationMinutes;
             RefreshSign();
@@ -44,7 +48,8 @@ namespace PrisonGame.Prototype
         private void Update() => RefreshSign();
         private void RefreshSign()
         {
-            if (closedSign != null && closedSign.activeSelf != Closed) closedSign.SetActive(Closed);
+            if (closedSign != null && closedSign.activeSelf != Closed)
+                closedSign.SetActive(Closed);
         }
     }
 }

@@ -18,13 +18,17 @@ namespace PrisonGame.EditorTools
             var motion = FindFirstObjectByType<PrisonGame.Prototype.InmateMotion>();
             if (motion != null)
             {
-                if (motion != lastMotion) { lastMotion = motion; walkStart = motion.transform.position; }
+                if (motion != lastMotion)
+                { lastMotion = motion; walkStart = motion.transform.position; }
                 EditorGUILayout.HelpBox("Behavior study: press E near M5 to talk. These buttons test actual walking; obstacles stop movement. The inmate pauses while talking and then resumes the requested walk.", MessageType.Info);
                 using (new EditorGUI.DisabledScope(!EditorApplication.isPlaying))
                 {
-                    if (GUILayout.Button("Walk 1.2 m into common area")) motion.SetDestination(walkStart + Vector3.back * 1.2f);
-                    if (GUILayout.Button("Walk back to start")) motion.SetDestination(walkStart);
-                    if (GUILayout.Button("Stop walking")) motion.Stop();
+                    if (GUILayout.Button("Walk 1.2 m into common area"))
+                        motion.SetDestination(walkStart + Vector3.back * 1.2f);
+                    if (GUILayout.Button("Walk back to start"))
+                        motion.SetDestination(walkStart);
+                    if (GUILayout.Button("Stop walking"))
+                        motion.Stop();
                 }
                 EditorGUILayout.LabelField("Walk pace", PrisonGame.Prototype.InmateMotion.WalkSpeed.ToString("F2") + " m/s");
                 EditorGUILayout.LabelField("State", motion.IsTalking ? "Talking" : motion.IsBlocked ? "Blocked" : motion.HasDestination ? "Walking / turning" : "Idle");
@@ -45,9 +49,12 @@ namespace PrisonGame.EditorTools
             }
             using (new EditorGUI.DisabledScope(!EditorApplication.isPlaying || animator == null))
             {
-                if (GUILayout.Button("Idle")) animator.SetInteger("Preview", 0);
-                if (GUILayout.Button("Walk preview")) animator.SetInteger("Preview", 1);
-                if (GUILayout.Button("Gesture preview")) animator.SetInteger("Preview", 2);
+                if (GUILayout.Button("Idle"))
+                    animator.SetInteger("Preview", 0);
+                if (GUILayout.Button("Walk preview"))
+                    animator.SetInteger("Preview", 1);
+                if (GUILayout.Button("Gesture preview"))
+                    animator.SetInteger("Preview", 2);
             }
             if (animator != null && EditorApplication.isPlaying)
                 EditorGUILayout.LabelField("Preview selection", animator.GetInteger("Preview").ToString());

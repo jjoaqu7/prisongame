@@ -13,10 +13,13 @@ namespace PrisonGame.Prototype
         }
         public override void Interact(PlayerInteraction player)
         {
-            if (player == null) return;
+            if (player == null)
+                return;
             var buyer = GetComponent<SnackPackBuyer>();
-            if (buyer != null) buyer.Interact(player);
-            else player.ShowDialogue(player.HeldItem != null
+            if (buyer != null)
+                buyer.Interact(player);
+            else
+                player.ShowDialogue(player.HeldItem != null
                 ? "Inmate: Nice parcel. Around here, even the wrapping has a price."
                 : "Inmate: Welcome. The table is communal. The opinions are mandatory.", 6f);
             Talked?.Invoke(player);

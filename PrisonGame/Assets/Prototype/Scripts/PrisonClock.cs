@@ -15,7 +15,8 @@ namespace PrisonGame.Prototype
 
         public void Advance(double realSeconds)
         {
-            if (Paused || realSeconds <= 0 || double.IsNaN(realSeconds) || double.IsInfinity(realSeconds)) return;
+            if (Paused || realSeconds <= 0 || double.IsNaN(realSeconds) || double.IsInfinity(realSeconds))
+                return;
             TotalMinutes += realSeconds / RealSecondsPerGameMinute;
         }
 

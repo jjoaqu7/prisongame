@@ -47,7 +47,8 @@ namespace PrisonGame.Prototype
                 announcedReopening = true;
                 actor.ShowMessage("Stock inspection finished. The supply box is open again; restocking is available.", 6f);
             }
-            if (request == null || !request.Active || !request.Timed) return;
+            if (request == null || !request.Active || !request.Timed)
+                return;
             if (request.IsLate && !warnedLate)
             {
                 warnedLate = true;
@@ -64,25 +65,34 @@ namespace PrisonGame.Prototype
         {
             get
             {
-                if (request != null && !request.Accepted) return "Meet M5 in the common room. Look at him to read and accept his request with E.";
-                if (!stock.StarterCollected) return SupplyClosed ? WaitForSupplies : "Collect free starter supplies from the box on the common table.";
+                if (request != null && !request.Accepted)
+                    return "Meet M5 in the common room. Look at him to read and accept his request with E.";
+                if (!stock.StarterCollected)
+                    return SupplyClosed ? WaitForSupplies : "Collect free starter supplies from the box on the common table.";
                 if (actor.HeldItem != null && actor.HeldItem.GetComponent<SnackPackItem>() != null)
                     return request != null && request.Active ? "Carry this pack to M5. Press E to deliver for $" + request.DeliveryPrice + "." : "Carry this pack to M5. Press E to sell for $" + SnackSupplies.SalePrice + ".";
                 if (request == null || !request.Active)
                 {
-                    if (shelf.Installed) return "Shelf earned! Store an item in your cell, or keep making packs.";
-                    if (stock.Money >= SnackSupplies.ShelfPrice) return "Return to your cell and buy the shelf for $" + SnackSupplies.ShelfPrice + ".";
+                    if (shelf.Installed)
+                        return "Shelf earned! Store an item in your cell, or keep making packs.";
+                    if (stock.Money >= SnackSupplies.ShelfPrice)
+                        return "Return to your cell and buy the shelf for $" + SnackSupplies.ShelfPrice + ".";
                 }
-                if (actor.HeldItem != null) return "Put down the carried item (Q), then use the assembly tray.";
+                if (actor.HeldItem != null)
+                    return "Put down the carried item (Q), then use the assembly tray.";
                 if (assembly.WorkingPlayer == actor)
                 {
                     bool hasNext = assembly.Stage == 1 ? stock.Fruit > 0 : stock.Wrappers > 0;
-                    if (hasNext) return "Return to the assembly tray: " + assembly.NextStep.ToLowerInvariant() + ".";
+                    if (hasNext)
+                        return "Return to the assembly tray: " + assembly.NextStep.ToLowerInvariant() + ".";
                     return SupplyClosed ? WaitForSupplies : "Restock missing ingredients at the supply box.";
                 }
-                if (stock.Crackers > 0 && stock.Fruit > 0 && stock.Wrappers > 0) return "Use the tray on the common table to assemble a snack pack.";
-                if (stock.HasOutstandingPack) return "Pick up your finished pack from where you left it, then " + (request != null && request.Active ? "deliver" : "sell") + " to M5.";
-                if (SupplyClosed) return WaitForSupplies;
+                if (stock.Crackers > 0 && stock.Fruit > 0 && stock.Wrappers > 0)
+                    return "Use the tray on the common table to assemble a snack pack.";
+                if (stock.HasOutstandingPack)
+                    return "Pick up your finished pack from where you left it, then " + (request != null && request.Active ? "deliver" : "sell") + " to M5.";
+                if (SupplyClosed)
+                    return WaitForSupplies;
                 return stock.CanRecover ? "Collect a free recovery batch from the supply box." : "Restock at the supply box: $" + SnackSupplies.RestockPrice + " for one pack's supplies.";
             }
         }
@@ -97,11 +107,14 @@ namespace PrisonGame.Prototype
         {
             get
             {
-                if (request == null) return "";
-                if (!request.Accepted) return request.Timed
+                if (request == null)
+                    return "";
+                if (!request.Accepted)
+                    return request.Timed
                     ? "M5 wants 3 snack packs.\n1 game hour from acceptance (5 real minutes).\n$3 each before the deadline; $2 each afterward.\nAccept by talking to M5."
                     : "M5 wants 3 snack packs.\n$3 per delivery ($9 total).\nNo deadline. Accept by talking to M5.";
-                if (request.Complete) return "M5 received 3 / 3 snack packs.\n$" + request.Paid + " paid across three deliveries.\n" +
+                if (request.Complete)
+                    return "M5 received 3 / 3 snack packs.\n$" + request.Paid + " paid across three deliveries.\n" +
                     (request.Timed ? request.CompletedLate ? "Finished late; reduced payment applied.\n" : "Finished on time.\n" : "") + "You can keep selling packs to him.";
                 string timing = !request.Timed ? "$3 per delivery ($9 total).\nNo deadline."
                     : request.IsLate ? "Deadline passed: " + PrisonClock.Format(request.DueAt) + "\nLate packs now pay $2 each.\nEarlier earnings are unchanged."
@@ -116,7 +129,8 @@ namespace PrisonGame.Prototype
 
         private void OnGUI()
         {
-            if (movement == null) return;
+            if (movement == null)
+                return;
             if (titleStyle == null)
             {
                 titleStyle = new GUIStyle(GUI.skin.label) { fontSize = 18, fontStyle = FontStyle.Bold, wordWrap = true };
@@ -133,7 +147,8 @@ namespace PrisonGame.Prototype
                 GUI.Label(new Rect(clockPanel.x + 12, clockPanel.y + 8, clockWidth - 24, 60),
                     "PRISON TIME" + (request.Clock.Paused ? " - PAUSED" : "") + "\n" + PrisonClock.Format(request.Clock.TotalMinutes) + "\n1 game minute = 5 real seconds", bodyStyle);
             }
-            if (!movement.ControlsActive) { GUI.matrix = old; return; }
+            if (!movement.ControlsActive)
+            { GUI.matrix = old; return; }
             float width = Mathf.Min(330, Screen.width / scale * .3f);
             var panel = new Rect(18, 130, width, 205);
             GUI.Box(panel, GUIContent.none);

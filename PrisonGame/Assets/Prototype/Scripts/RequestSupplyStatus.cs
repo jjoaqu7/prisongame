@@ -18,8 +18,10 @@ namespace PrisonGame.Prototype
                 int crackers = stock.Crackers, fruit = stock.Fruit, wraps = stock.Wrappers, partial = 0;
                 if (assembly != null && assembly.WorkingPlayer == GetComponent<PlayerInteraction>())
                 {
-                    if (assembly.Stage == 1 && fruit > 0 && wraps > 0) { partial = 1; fruit--; wraps--; }
-                    else if (assembly.Stage == 2 && wraps > 0) { partial = 1; wraps--; }
+                    if (assembly.Stage == 1 && fruit > 0 && wraps > 0)
+                    { partial = 1; fruit--; wraps--; }
+                    else if (assembly.Stage == 2 && wraps > 0)
+                    { partial = 1; wraps--; }
                 }
                 return partial + Mathf.Min(crackers, fruit, wraps);
             }

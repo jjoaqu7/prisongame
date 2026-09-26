@@ -27,13 +27,15 @@ namespace PrisonGame.Prototype
         // Public so an Animator evaluated manually in verification can use the same correction.
         public void ApplyFloorClearance()
         {
-            if (!initialized || leftFoot == null || rightFoot == null) return;
+            if (!initialized || leftFoot == null || rightFoot == null)
+                return;
             transform.localPosition = restPosition;
             Vector3 origin = transform.position;
             Vector3 up = transform.parent != null ? transform.parent.up : Vector3.up;
             float lowest = Mathf.Min(Lowest(leftFoot, leftSoleBounds, origin, up),
                                      Lowest(rightFoot, rightSoleBounds, origin, up));
-            if (lowest < 0f) transform.position -= up * lowest;
+            if (lowest < 0f)
+                transform.position -= up * lowest;
         }
 
         private static float Lowest(Transform foot, Bounds sole, Vector3 origin, Vector3 up)
@@ -52,7 +54,8 @@ namespace PrisonGame.Prototype
 
         private void OnDisable()
         {
-            if (initialized) transform.localPosition = restPosition;
+            if (initialized)
+                transform.localPosition = restPosition;
         }
     }
 }

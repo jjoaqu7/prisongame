@@ -18,14 +18,20 @@ namespace PrisonGame.Prototype
 
         internal void Restore(SampleSaveData.Personal s)
         {
-            Money = s.money; Sales = s.sales; Crackers = s.crackers;
-            Fruit = s.fruit; Wrappers = s.wrappers; StarterCollected = s.starter;
+            Money = s.money;
+            Sales = s.sales;
+            Crackers = s.crackers;
+            Fruit = s.fruit;
+            Wrappers = s.wrappers;
+            StarterCollected = s.starter;
         }
 
         public bool CollectStarter()
         {
-            if (StarterCollected) return false;
-            if (!BatchFits) return false;
+            if (StarterCollected)
+                return false;
+            if (!BatchFits)
+                return false;
             StarterCollected = true;
             AddBatch(2);
             return true;
@@ -36,7 +42,8 @@ namespace PrisonGame.Prototype
 
         private void AddBatch(int count)
         {
-            if (count <= 0) return;
+            if (count <= 0)
+                return;
             Crackers += count;
             Fruit += count;
             Wrappers += count;
@@ -47,7 +54,8 @@ namespace PrisonGame.Prototype
             get
             {
                 foreach (var pack in FindObjectsByType<SnackPackItem>(FindObjectsSortMode.None))
-                    if (pack.Source == this && !pack.Sold) return true;
+                    if (pack.Source == this && !pack.Sold)
+                        return true;
                 return false;
             }
         }
@@ -58,9 +66,12 @@ namespace PrisonGame.Prototype
         public bool Restock(out bool free)
         {
             free = CanRecover;
-            if (!StarterCollected || Crackers >= 6 || Fruit >= 6 || Wrappers >= 6) return false;
-            if (!BatchFits) return false;
-            if (!free && !Spend(RestockPrice)) return false;
+            if (!StarterCollected || Crackers >= 6 || Fruit >= 6 || Wrappers >= 6)
+                return false;
+            if (!BatchFits)
+                return false;
+            if (!free && !Spend(RestockPrice))
+                return false;
             AddBatch(1);
             return true;
         }
@@ -69,11 +80,14 @@ namespace PrisonGame.Prototype
 
         internal bool SellHeldPack(PlayerInteraction actor, int price)
         {
-            if (price <= 0 || price > SalePrice) return false;
-            if (actor == null || actor.GetComponent<SnackSupplies>() != this || actor.HeldItem == null) return false;
+            if (price <= 0 || price > SalePrice)
+                return false;
+            if (actor == null || actor.GetComponent<SnackSupplies>() != this || actor.HeldItem == null)
+                return false;
             var item = actor.HeldItem;
             var pack = item.GetComponent<SnackPackItem>();
-            if (pack == null || pack.Sold || !actor.ConsumeHeldItem(item)) return false;
+            if (pack == null || pack.Sold || !actor.ConsumeHeldItem(item))
+                return false;
             pack.MarkSold();
             Money += price;
             Sales++;
@@ -84,16 +98,20 @@ namespace PrisonGame.Prototype
 
         public bool Spend(int amount)
         {
-            if (amount <= 0 || Money < amount) return false;
+            if (amount <= 0 || Money < amount)
+                return false;
             Money -= amount;
             return true;
         }
 
         public bool TakeIngredient(int stage)
         {
-            if (stage == 0 && Crackers > 0) { Crackers--; return true; }
-            if (stage == 1 && Fruit > 0) { Fruit--; return true; }
-            if (stage == 2 && Wrappers > 0) { Wrappers--; return true; }
+            if (stage == 0 && Crackers > 0)
+            { Crackers--; return true; }
+            if (stage == 1 && Fruit > 0)
+            { Fruit--; return true; }
+            if (stage == 2 && Wrappers > 0)
+            { Wrappers--; return true; }
             return false;
         }
     }

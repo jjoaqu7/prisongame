@@ -23,15 +23,22 @@ namespace PrisonGame.Prototype
             get
             {
                 var result = new List<Entry>();
-                if (duty.Data.hasTool) result.Add(new Entry { name = "Valve key", count = 1, detail = "Give to Rue with E while nearby." });
-                if (duty.Data.hasOfficerKey) result.Add(new Entry { name = "Harris's key", count = 1, detail = "Opens the cell next to yours. Use E at its door." });
+                if (duty.Data.hasTool)
+                    result.Add(new Entry { name = "Valve key", count = 1, detail = "Give to Rue with E while nearby." });
+                if (duty.Data.hasOfficerKey)
+                    result.Add(new Entry { name = "Harris's key", count = 1, detail = "Opens the cell next to yours. Use E at its door." });
                 AddStock(result, "Crackers", supplies.Crackers);
                 AddStock(result, "Fruit", supplies.Fruit);
                 AddStock(result, "Wrappers", supplies.Wrappers);
                 foreach (var item in FindObjectsByType<PrototypePickup>(FindObjectsSortMode.InstanceID))
                     if (item.PocketOwner == owner || owner.HeldItem == item)
-                        result.Add(new Entry { name = item.ItemName, count = 1, item = item,
-                            detail = owner.HeldItem == item ? "In hand. R to pocket. Q to put down." : "In pockets. F to hold. Q to put down." });
+                        result.Add(new Entry
+                        {
+                            name = item.ItemName,
+                            count = 1,
+                            item = item,
+                            detail = owner.HeldItem == item ? "In hand. R to pocket. Q to put down." : "In pockets. F to hold. Q to put down."
+                        });
                 return result;
             }
         }
@@ -45,9 +52,11 @@ namespace PrisonGame.Prototype
 
         public bool PocketHeld(PlayerInteraction actor)
         {
-            if (actor != owner || owner.HeldItem == null) return false;
+            if (actor != owner || owner.HeldItem == null)
+                return false;
             var item = owner.HeldItem;
-            if (!CanPocket(item)) { owner.ShowMessage("This item cannot go in your pockets."); return false; }
+            if (!CanPocket(item))
+            { owner.ShowMessage("This item cannot go in your pockets."); return false; }
             // Moving between hand and pockets does not consume another slot.
             owner.ReleaseHeldForPocket(item);
             item.Pocket(owner);
@@ -58,19 +67,25 @@ namespace PrisonGame.Prototype
             (item.GetComponent<SnackPackItem>() != null || item.ItemName == "Parcel");
         public bool Hold(PlayerInteraction actor, PrototypePickup item)
         {
-            if (actor != owner || item == null || item.PocketOwner != owner) return false;
-            if (owner.HeldItem != null) { owner.ShowMessage("Pocket or put down the held item first."); return false; }
+            if (actor != owner || item == null || item.PocketOwner != owner)
+                return false;
+            if (owner.HeldItem != null)
+            { owner.ShowMessage("Pocket or put down the held item first."); return false; }
             owner.PickUp(item);
             return owner.HeldItem == item;
         }
         public bool Drop(PlayerInteraction actor, PrototypePickup item)
         {
-            if (actor != owner || !Carries(item)) return false;
+            if (actor != owner || !Carries(item))
+                return false;
             bool wasPocketed = item.PocketOwner == owner;
-            if (wasPocketed && !Hold(actor, item)) return false;
-            if (owner.TryPutDown()) return true;
+            if (wasPocketed && !Hold(actor, item))
+                return false;
+            if (owner.TryPutDown())
+                return true;
             // A blocked placement must not change ownership or occupy the player's hand.
-            if (wasPocketed) { owner.ReleaseHeldForPocket(item); item.Pocket(owner); }
+            if (wasPocketed)
+            { owner.ReleaseHeldForPocket(item); item.Pocket(owner); }
             return false;
         }
     }

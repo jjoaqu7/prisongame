@@ -18,15 +18,18 @@ namespace PrisonGame.Prototype
 
         internal SampleSaveData.Door Capture() => new SampleSaveData.Door { position = transform.position, opening = opening, unlocked = unlocked };
         internal void Restore(SampleSaveData.Door state)
-        { transform.position = state!=null?state.position:closedPosition; opening = state!=null&&state.opening; unlocked = state!=null&&state.unlocked; }
+        { transform.position = state != null ? state.position : closedPosition; opening = state != null && state.opening; unlocked = state != null && state.unlocked; }
         internal bool ValidState(SampleSaveData.Door state)
         {
-            if(state==null)return true; // Before this room existed, it starts closed and locked.
-            var delta=state.position-closedPosition;
-            if(!float.IsFinite(delta.sqrMagnitude))return false;
-            float along=openOffset.sqrMagnitude>0?Vector3.Dot(delta,openOffset)/openOffset.sqrMagnitude:0;
-            if(along<-.001f||along>1.001f||(delta-openOffset*along).sqrMagnitude>.0001f)return false;
-            return !requiresOfficerKey || state.unlocked || (!state.opening && delta.sqrMagnitude<.0001f);
+            if (state == null)
+                return true; // Before this room existed, it starts closed and locked.
+            var delta = state.position - closedPosition;
+            if (!float.IsFinite(delta.sqrMagnitude))
+                return false;
+            float along = openOffset.sqrMagnitude > 0 ? Vector3.Dot(delta, openOffset) / openOffset.sqrMagnitude : 0;
+            if (along < -.001f || along > 1.001f || (delta - openOffset * along).sqrMagnitude > .0001f)
+                return false;
+            return !requiresOfficerKey || state.unlocked || (!state.opening && delta.sqrMagnitude < .0001f);
         }
 
         private void Awake()
@@ -36,17 +39,18 @@ namespace PrisonGame.Prototype
         }
 
         public override string Prompt(PlayerInteraction player) => Locked
-            ? (player.GetComponent<LaundryDuty>()?.Data.hasOfficerKey==true ? "E - Unlock neighboring cell with Harris's key" : "Locked - requires Harris's key")
+            ? (player.GetComponent<LaundryDuty>()?.Data.hasOfficerKey == true ? "E - Unlock neighboring cell with Harris's key" : "Locked - requires Harris's key")
             : opening ? "E - Close cell door" : "E - Open cell door";
 
         public override void Interact(PlayerInteraction player)
         {
-            if(player==null)return;
-            if(Locked)
+            if (player == null)
+                return;
+            if (Locked)
             {
-                if(player.GetComponent<LaundryDuty>()?.Data.hasOfficerKey!=true)
-                {player.ShowMessage("Locked. You need Harris's key.");return;}
-                unlocked=true;
+                if (player.GetComponent<LaundryDuty>()?.Data.hasOfficerKey != true)
+                { player.ShowMessage("Locked. You need Harris's key."); return; }
+                unlocked = true;
                 player.ShowMessage("Neighboring cell unlocked");
             }
             if (opening && DoorwayOccupied())
@@ -64,18 +68,21 @@ namespace PrisonGame.Prototype
             Vector3 half = doorCollider.size * .5f + Vector3.one * .08f;
             // Same-frame controller moves can precede physics query updates. Check the live
             // controller pose too, so a close interaction cannot trap a newly arrived player.
-            var doorway = new Bounds(center,half*2);
-            foreach(var controller in FindObjectsByType<CharacterController>(FindObjectsSortMode.None))
+            var doorway = new Bounds(center, half * 2);
+            foreach (var controller in FindObjectsByType<CharacterController>(FindObjectsSortMode.None))
             {
-                if(!controller.enabled)continue;
-                var scale=controller.transform.lossyScale;
-                float radius=controller.radius*Mathf.Max(Mathf.Abs(scale.x),Mathf.Abs(scale.z));
-                var size=new Vector3(radius*2,Mathf.Max(controller.height*Mathf.Abs(scale.y),radius*2),radius*2);
-                if(doorway.Intersects(new Bounds(controller.transform.TransformPoint(controller.center),size)))return true;
+                if (!controller.enabled)
+                    continue;
+                var scale = controller.transform.lossyScale;
+                float radius = controller.radius * Mathf.Max(Mathf.Abs(scale.x), Mathf.Abs(scale.z));
+                var size = new Vector3(radius * 2, Mathf.Max(controller.height * Mathf.Abs(scale.y), radius * 2), radius * 2);
+                if (doorway.Intersects(new Bounds(controller.transform.TransformPoint(controller.center), size)))
+                    return true;
             }
             foreach (Collider other in Physics.OverlapBox(center, half, Quaternion.identity, ~0, QueryTriggerInteraction.Ignore))
             {
-                if (other.transform.IsChildOf(transform)) continue;
+                if (other.transform.IsChildOf(transform))
+                    continue;
                 if (other.GetComponentInParent<CharacterController>() != null || other.GetComponentInParent<PrototypePickup>() != null)
                     return true;
             }
@@ -86,9 +93,11 @@ namespace PrisonGame.Prototype
 
         internal void Step(float seconds)
         {
-            if(!float.IsFinite(seconds)||seconds<=0)return;
+            if (!float.IsFinite(seconds) || seconds <= 0)
+                return;
             // Check throughout closing, so walking into a closing doorway reopens it.
-            if (!opening && Vector3.Distance(transform.position, closedPosition) > .01f && DoorwayOccupied()) opening = true;
+            if (!opening && Vector3.Distance(transform.position, closedPosition) > .01f && DoorwayOccupied())
+                opening = true;
             transform.position = Vector3.MoveTowards(transform.position,
                 closedPosition + (opening ? openOffset : Vector3.zero), speed * seconds);
         }

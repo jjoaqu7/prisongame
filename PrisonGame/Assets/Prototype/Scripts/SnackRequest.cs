@@ -34,34 +34,43 @@ namespace PrisonGame.Prototype
                 var stock = GetComponent<SnackSupplies>();
                 int count = 0;
                 foreach (var pack in FindObjectsByType<SnackPackItem>(FindObjectsSortMode.None))
-                    if (!pack.Sold && pack.Source == stock) count++;
+                    if (!pack.Sold && pack.Source == stock)
+                        count++;
                 return count;
             }
         }
 
         internal void Restore(SampleSaveData.Personal s)
         {
-            Accepted = s.accepted; Delivered = s.delivered; Paid = s.paid;
-            DueAt = s.dueAt; CompletedLate = s.completedLate;
+            Accepted = s.accepted;
+            Delivered = s.delivered;
+            Paid = s.paid;
+            DueAt = s.dueAt;
+            CompletedLate = s.completedLate;
         }
 
         public bool Accept(PlayerInteraction actor, SnackPackBuyer recipient)
         {
-            if (!Owns(actor) || recipient == null || recipient != customer || Accepted) return false;
+            if (!Owns(actor) || recipient == null || recipient != customer || Accepted)
+                return false;
             Accepted = true;
-            if (Timed) DueAt = clock.TotalMinutes + DeadlineMinutes;
+            if (Timed)
+                DueAt = clock.TotalMinutes + DeadlineMinutes;
             return true;
         }
 
         public bool Deliver(PlayerInteraction actor, SnackPackBuyer recipient)
         {
-            if (!Owns(actor) || !Active || recipient == null || recipient != customer) return false;
+            if (!Owns(actor) || !Active || recipient == null || recipient != customer)
+                return false;
             int price = DeliveryPrice;
             bool late = IsLate;
-            if (!GetComponent<SnackSupplies>().SellHeldPack(actor, price)) return false;
+            if (!GetComponent<SnackSupplies>().SellHeldPack(actor, price))
+                return false;
             Paid += price;
             Delivered++;
-            if (Complete) CompletedLate = late;
+            if (Complete)
+                CompletedLate = late;
             return true;
         }
 

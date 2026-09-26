@@ -34,7 +34,8 @@ namespace PrisonGame.Prototype
         private void Awake()
         {
             controller = GetComponent<CharacterController>();
-            if (playerCamera == null) playerCamera = GetComponentInChildren<Camera>();
+            if (playerCamera == null)
+                playerCamera = GetComponentInChildren<Camera>();
             if (playerCamera == null)
             {
                 Debug.LogError("FirstPersonController needs a child camera.", this);
@@ -47,7 +48,8 @@ namespace PrisonGame.Prototype
             mouseSensitivity = Mathf.Clamp(PlayerPrefs.GetFloat(SensitivityKey, mouseSensitivity), 0.03f, 0.4f);
             // Local display preference only; simulation continues to use elapsed time.
             frameLimit = ValidFrameLimit(PlayerPrefs.GetInt(FrameLimitKey, 60));
-            if (!Application.isEditor) Application.targetFrameRate = frameLimit;
+            if (!Application.isEditor)
+                Application.targetFrameRate = frameLimit;
             moveAction = new InputAction("Walk", InputActionType.Value);
             moveAction.AddCompositeBinding("2DVector")
                 .With("Up", "<Keyboard>/w").With("Down", "<Keyboard>/s")
@@ -66,7 +68,8 @@ namespace PrisonGame.Prototype
         internal void SetFrameLimit(int value, bool persist = true)
         {
             frameLimit = ValidFrameLimit(value);
-            if (!Application.isEditor) Application.targetFrameRate = frameLimit;
+            if (!Application.isEditor)
+                Application.targetFrameRate = frameLimit;
             if (persist)
             {
                 PlayerPrefs.SetInt(FrameLimitKey, frameLimit);
@@ -89,7 +92,8 @@ namespace PrisonGame.Prototype
 
         private void OnApplicationFocus(bool focused)
         {
-            if (!focused) SetCursorCaptured(false);
+            if (!focused)
+                SetCursorCaptured(false);
         }
 
         private void Update()
@@ -102,7 +106,8 @@ namespace PrisonGame.Prototype
 
             if (cursorCaptured)
             {
-                if (!skipLookFrame) ApplyLook(lookAction.ReadValue<Vector2>());
+                if (!skipLookFrame)
+                    ApplyLook(lookAction.ReadValue<Vector2>());
                 skipLookFrame = false;
             }
             StepMovement(cursorCaptured ? moveAction.ReadValue<Vector2>() : Vector2.zero, Time.deltaTime);
@@ -118,9 +123,11 @@ namespace PrisonGame.Prototype
 
         private void StepMovement(Vector2 input, float deltaTime)
         {
-            if (deltaTime <= 0f || !controller.enabled) return;
+            if (deltaTime <= 0f || !controller.enabled)
+                return;
             input = Vector2.ClampMagnitude(input, 1f);
-            if (controller.isGrounded && verticalSpeed < 0f) verticalSpeed = -2f;
+            if (controller.isGrounded && verticalSpeed < 0f)
+                verticalSpeed = -2f;
             verticalSpeed = Mathf.Max(verticalSpeed - 20f * deltaTime, -30f);
             Vector3 planar = transform.right * input.x + transform.forward * input.y;
             controller.Move((planar * walkSpeed + Vector3.up * verticalSpeed) * deltaTime);
@@ -152,13 +159,15 @@ namespace PrisonGame.Prototype
             controller.enabled = false;
             transform.SetPositionAndRotation(position, Quaternion.Euler(0, yaw, 0));
             controller.enabled = true;
-            verticalSpeed = 0; pitch = savedPitch;
+            verticalSpeed = 0;
+            pitch = savedPitch;
             playerCamera.transform.localRotation = Quaternion.Euler(pitch, 0, 0);
         }
 
         private void OnGUI()
         {
-            if (playerCamera == null) return;
+            if (playerCamera == null)
+                return;
             if (hintStyle == null)
             {
                 hintStyle = new GUIStyle(GUI.skin.label) { fontSize = 16, alignment = TextAnchor.MiddleCenter };
@@ -174,9 +183,10 @@ namespace PrisonGame.Prototype
             if (cursorCaptured)
             {
                 GUI.Label(new Rect(viewWidth / 2f - 12, viewHeight / 2f - 12, 24, 24), "+", hintStyle);
-                if(GetComponent<LaundryHud>()==null || !GetComponent<LaundryHud>().Focused) {
-                GUI.Box(new Rect(viewWidth / 2f - 300, viewHeight - 42, 600, 32), GUIContent.none);
-                GUI.Label(new Rect(viewWidth / 2f - 300, viewHeight - 42, 600, 32), "WASD: walk   E: interact   Q: put down   Esc: settings", hintStyle);
+                if (GetComponent<LaundryHud>() == null || !GetComponent<LaundryHud>().Focused)
+                {
+                    GUI.Box(new Rect(viewWidth / 2f - 300, viewHeight - 42, 600, 32), GUIContent.none);
+                    GUI.Label(new Rect(viewWidth / 2f - 300, viewHeight - 42, 600, 32), "WASD: walk   E: interact   Q: put down   Esc: settings", hintStyle);
                 }
                 GUI.matrix = previousMatrix;
                 return;
@@ -198,7 +208,8 @@ namespace PrisonGame.Prototype
                 GUILayout.Label("Frame limit", labelStyle);
                 int selected = frameLimit == 60 ? 0 : frameLimit == 120 ? 1 : 2;
                 int choice = GUILayout.Toolbar(selected, FrameLimitLabels, GUILayout.Height(30));
-                if (choice != selected) SetFrameLimit(choice == 0 ? 60 : choice == 1 ? 120 : -1);
+                if (choice != selected)
+                    SetFrameLimit(choice == 0 ? 60 : choice == 1 ? 120 : -1);
                 GUILayout.Space(8);
             }
             GUILayout.Label("Mouse sensitivity: " + mouseSensitivity.ToString("0.00"), labelStyle);
@@ -209,11 +220,15 @@ namespace PrisonGame.Prototype
                 PlayerPrefs.SetFloat(SensitivityKey, sensitivity);
                 PlayerPrefs.Save();
             }
-            if (audio != null) audio.DrawMenu(labelStyle);
-            if (saves != null) saves.DrawMenu(labelStyle, buttonStyle);
+            if (audio != null)
+                audio.DrawMenu(labelStyle);
+            if (saves != null)
+                saves.DrawMenu(labelStyle, buttonStyle);
             GUILayout.Space(12);
-            if (GUILayout.Button("Resume walking", buttonStyle, GUILayout.Height(40))) SetCursorCaptured(true);
-            if (!Application.isEditor && GUILayout.Button("Quit game", buttonStyle, GUILayout.Height(36))) Application.Quit();
+            if (GUILayout.Button("Resume walking", buttonStyle, GUILayout.Height(40)))
+                SetCursorCaptured(true);
+            if (!Application.isEditor && GUILayout.Button("Quit game", buttonStyle, GUILayout.Height(36)))
+                Application.Quit();
             GUILayout.EndArea();
             GUI.matrix = previousMatrix;
         }

@@ -25,7 +25,8 @@ namespace PrisonGame.Prototype
 
         public void RefreshAnimation()
         {
-            if (motion == null) return;
+            if (motion == null)
+                return;
             float rate = motion.Velocity.magnitude / AuthoredWalkSpeed;
             int selection = motion.IsGesturing ? 2 : rate > .001f ? 1 : 0;
             animator.SetFloat(MoveRate, Mathf.Max(0f, rate));
@@ -34,7 +35,8 @@ namespace PrisonGame.Prototype
             {
                 lastTalkSequence = motion.TalkSequence;
                 // Retriggering talk restarts the gesture, including during its existing state.
-                if (selection == 2) animator.CrossFadeInFixedTime("GesturePreview", .15f, 0, 0f);
+                if (selection == 2)
+                    animator.CrossFadeInFixedTime("GesturePreview", .15f, 0, 0f);
             }
         }
     }

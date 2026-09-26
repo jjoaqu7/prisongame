@@ -12,7 +12,8 @@ namespace PrisonGame.Prototype
         private void OnEnable()
         {
             label = GetComponent<TextMesh>();
-            if (material == null) material = new Material(labelShader);
+            if (material == null)
+                material = new Material(labelShader);
             GetComponent<MeshRenderer>().sharedMaterial = material;
             RefreshAtlas(label.font);
             Font.textureRebuilt += RefreshAtlas;

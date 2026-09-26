@@ -92,9 +92,35 @@ Unity projects keep build and automation code as static methods in Editor code i
 
 Steps 2 to 5 fit in one session before ENCOUNTER-01 step 2, so the fight's input code is the first to follow the standard.
 
+## Names, builds, versions and Git
+
+([naming and organization notes](notes/naming-and-project-organization.md)) The code standard left project-level names to habit, and the four build folders (`Windows`, `WindowsSample`, `WindowsPerf`, `WindowsLaundry`) show the result. They are named after content, while the common practice is platform, configuration and version. **Proposed** unless the table below marks a choice as Open:
+
+| Area | Now | Proposed rule | Basis |
+| --- | --- | --- | --- |
+| Builds | Four 175 MB copies named after milestones | Unity 6 Build Profiles `Windows Development` (all scenes the checks need) and later `Windows Release`; output in `Builds/Windows-Development/`; builds given to others archived as `PrisonGame-<version>-windows-<config>.zip` | Build Profiles have their own scene lists and are committed assets; Unity suggests separate release and development profiles |
+| Version | `0.1.0`, never changed | Semantic Versioning `0.MINOR.PATCH`: MINOR up at each finished milestone (0.2.0 when ENCOUNTER-01 closes the loop), PATCH for fixes; Git tag `v0.2.0` | semver.org: `0.y.z` is for initial development, start at 0.1.0 |
+| Company and product name | `DefaultCompany` / `PrisonGame` | Set the real names before the first outside playtester; they form the Windows save path `AppData/LocalLow/<company>/<product>` | Unity scripting reference |
+| Asset names | 14 materials contain spaces; others mix styles | No spaces; PascalCase with underscores only between parts; renamed with Unity's rename so references survive | Unity: spaces break command-line tools; be consistent and document it |
+| Folders and scenes | Task-named prototype folders and scenes; template `SampleScene` | New content under `Assets/PrisonGame/` in Unity's type folders (`Art/Materials`, `Audio`, `Prefabs`, `Scenes`, ...); test scenes in `Scenes/Sandbox/`; prototype names frozen as the record; delete `SampleScene` | Unity: own content in one root, test scenes separate, organize by type |
+| Git LFS | Not used; repo small (largest file 11.5 MB) | Turn on for new binary art and audio (`png`, `jpg`, `psd`, `wav`, `mp3`, `ogg`, `fbx`, video) before production assets; no history rewrite | GitHub warns at 50 MiB, blocks at 100 MiB, prefers repos under 1 GB; free LFS quota 10 GiB storage and bandwidth |
+| Commits and branches | Imperative sentences, some with task IDs; branch `encounter-01` | `<TASK-ID>: <imperative summary>`; branches `<task-id>` or `<task-id>-<topic>` in lowercase | Links history to the tracker; Conventional Commits is the alternative if automated changelogs are wanted |
+| Evidence files | Mostly `<task>-<what>.txt` | `<taskid>-<what>-<where>.<ext>` in `docs/evidence/` | Existing majority practice |
+
+Already standard and unchanged: Force Text asset serialization, Visible Meta Files, committed `.meta` files, and the Unity `.gitignore`.
+
 ## Open decisions for the user
 
-None. The user agreed decision 1 (naming) and then decisions 2 to 7 as proposed on 2026-09-25; they are recorded in the [development plan](../../development-plan.md#engineering-standards---agreed-september-25) and applied in [Engineering standards](../../engineering-standards.md).
+Decisions 1 to 7 were agreed on 2026-09-25 and 2026-09-26 and are recorded in the [development plan](../../development-plan.md#engineering-standards---agreed-september-25). New decisions from the naming follow-up:
+
+| # | Decision | Options | Proposed | What waits on it |
+| --- | --- | --- | --- | --- |
+| 8 | Builds | Build Profiles `Windows Development` / `Windows Release`; keep one folder per milestone | Build Profiles, replacing the four folders at ENCOUNTER-01 step 7 | Build consolidation, check scripts |
+| 9 | Versioning | Semantic Versioning `0.MINOR.PATCH` with Git tags; none | Semantic Versioning; 0.2.0 when ENCOUNTER-01 finishes | Next milestone |
+| 10 | Company and product name | The user's studio or publisher name, and the product name to ship; keep defaults for now | Decide before PLAYTEST-01 | Save path, PLAYTEST-01 |
+| 11 | Folder layout for new content | Unity type folders, no prefixes; community feature folders with type prefixes | Unity type folders, no prefixes | First new art or audio |
+| 12 | Git LFS | Now for new binaries; when art production starts; never | Now, for new files only | Next binary asset |
+| 13 | Commit messages | `<TASK-ID>: <summary>`; Conventional Commits | `<TASK-ID>: <summary>` | Next commit |
 
 ## Changelog
 
@@ -102,3 +128,4 @@ None. The user agreed decision 1 (naming) and then decisions 2 to 7 as proposed 
 - 2026-09-25: added [practice notes for decisions 2 to 7](notes/practice-for-remaining-decisions.md). The formatter proposal changed from CSharpier to `.editorconfig` with `dotnet format`: Unity's own repository uses `.editorconfig`, the tool is already installed, and a local trial worked. The Editor-script proposal changed from outside `Assets` to an Editor-only assembly, because `-executeMethod` and GameCI require that. The one-time reformat now uses `.git-blame-ignore-revs`. CI options now include Unity Build Automation.
 - 2026-09-26: the user accepted decisions 2 to 7; the open-decisions table is now empty.
 - 2026-09-26: added [analyzer trial notes](notes/analyzer-setup-trial.md). In this project Unity ignored `.editorconfig` for compiler severities and required rulesets named after their assembly, so the analyzer paragraph now describes rulesets instead of `.editorconfig` severities.
+- 2026-09-26: added [naming and organization notes](notes/naming-and-project-organization.md) after the user asked whether names such as `WindowsLaundry` follow a standard. New section on builds, versions, company name, asset and folder names, Git LFS and commit conventions; decisions 8 to 13 opened.

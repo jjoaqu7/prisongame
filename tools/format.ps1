@@ -14,8 +14,14 @@ if ($Staged -and $files.Count -eq 0) {
 }
 
 Write-Host 'Formatting layout...'
-& dotnet format whitespace $AssetsRoot --folder --include @(Get-IncludeArgs $files)
-if ($LASTEXITCODE -ne 0) { throw "dotnet format whitespace failed (exit $LASTEXITCODE)." }
+# Splitting crammed lines can leave indentation that dotnet format only fixes on a later pass.
+$include = @(Get-IncludeArgs $files)
+for ($pass = 1; $pass -le 3; $pass++) {
+    & dotnet format whitespace $AssetsRoot --folder --include $include
+    if ($LASTEXITCODE -ne 0) { throw "dotnet format whitespace failed (exit $LASTEXITCODE)." }
+    & dotnet format whitespace $AssetsRoot --folder --include $include --verify-no-changes -v q *> $null
+    if ($LASTEXITCODE -eq 0) { break }
+}
 
 $newCode = @($files | Where-Object { $_ -like 'Assets/PrisonGame/*' })
 if (-not $Staged) { $newCode = @('Assets/PrisonGame/') }

@@ -1,7 +1,8 @@
 # Checks code against the project standard (docs/engineering-standards.md). Exit code 0 means everything passed.
 #   (default)  layout of all project C# code; naming and braces in new code (Assets/PrisonGame)
 #   -Staged    the same checks on staged C# files only; the Git pre-commit hook uses this
-#   -Unity     also recompile in the open Unity Editor and run the edit-mode tests through the Unity CLI
+#   -Unity     also refresh and recompile in the open Unity Editor, fail on compiler or analyzer warnings
+#              in new code, and run the edit-mode tests through the Unity CLI
 # Fix layout and braces with tools/format.ps1. Naming is fixed by hand (see the standard).
 param([switch]$Staged, [switch]$Unity)
 
@@ -31,10 +32,26 @@ else {
     }
 }
 
+# Analyzer severities: every new-code assembly needs <AssemblyName>.ruleset beside its .asmdef, identical to
+# the master copy. Unity ignores rulesets with other names and does not follow ruleset includes.
+$master = Join-Path $AssetsRoot 'PrisonGame/Scripts/PrisonGame.ruleset'
+if (-not (Test-Path -LiteralPath $master)) { $failures += 'Rulesets: master PrisonGame/Scripts/PrisonGame.ruleset is missing.' }
+else {
+    $masterText = Get-Content -LiteralPath $master -Raw
+    foreach ($asmdef in Get-ChildItem -Path (Join-Path $AssetsRoot 'PrisonGame') -Recurse -Filter '*.asmdef') {
+        $name = (Get-Content -LiteralPath $asmdef.FullName -Raw | ConvertFrom-Json).name
+        $ruleset = Join-Path $asmdef.DirectoryName "$name.ruleset"
+        if (-not (Test-Path -LiteralPath $ruleset)) { $failures += "Rulesets: $name has no $name.ruleset beside its .asmdef. Copy PrisonGame/Scripts/PrisonGame.ruleset there under that name." }
+        elseif ((Get-Content -LiteralPath $ruleset -Raw) -ne $masterText) { $failures += "Rulesets: $name.ruleset differs from the master copy PrisonGame/Scripts/PrisonGame.ruleset." }
+    }
+}
+
 if ($Unity) {
     $cli = if ($env:UNITY_CLI) { $env:UNITY_CLI } else { Join-Path $env:LOCALAPPDATA 'Unity\bin\unity.exe' }
     if (-not (Test-Path -LiteralPath $cli)) { throw "Unity CLI not found at $cli. Set UNITY_CLI to its path." }
-    Write-Host 'Recompiling in the open Unity Editor...'
+    Write-Host 'Refreshing assets and recompiling in the open Unity Editor...'
+    $consoleStart = & $cli command console --project-path $ProjectRoot --no-banner --json --tail 1 2>$null | Out-String | ConvertFrom-Json
+    & $cli command eval --project-path $ProjectRoot --no-banner 'AssetDatabase.Refresh(); return 1;' 120000 | Out-Null
     & $cli command recompile --project-path $ProjectRoot --no-banner | Out-Null
     $status = $null
     for ($i = 0; $i -lt 100; $i++) {
@@ -45,10 +62,23 @@ if ($Unity) {
     if ($null -eq $status) { $failures += 'Unity: recompile did not finish within 5 minutes.' }
     elseif ($status -match '"failed"\s*:\s*true') { $failures += "Unity: compilation failed: $status" }
     else {
+        Start-Sleep -Seconds 3
+        $since = $consoleStart.data.result
+        $log = & $cli command console --project-path $ProjectRoot --no-banner --json --since $since.cursor --since_session $since.session --level warn 2>$null | Out-String | ConvertFrom-Json
+        $newCodeWarnings = @($log.data.result.entries | ForEach-Object { ($_.message -split "`n")[0] } | Where-Object { $_ -match '^Assets[\\/]PrisonGame[\\/]' })
+        if ($newCodeWarnings.Count -gt 0) {
+            $newCodeWarnings | ForEach-Object { Write-Host "  $_" }
+            $failures += "Unity: $($newCodeWarnings.Count) compiler or analyzer warning(s) in new code (listed above)."
+        }
         Write-Host 'Running edit-mode tests...'
         Start-Sleep -Seconds 5
-        $raw = & $cli command run_tests --project-path $ProjectRoot --no-banner --json --timeout 600 --mode editor 2>$null | Out-String
-        $summary = ($raw | ConvertFrom-Json).data.result.Summary
+        # The Unity CLI server restarts after a domain reload, so retry briefly if it is not reachable yet.
+        $summary = $null
+        for ($attempt = 1; $attempt -le 5 -and $null -eq $summary; $attempt++) {
+            $raw = & $cli command run_tests --project-path $ProjectRoot --no-banner --json --timeout 600 --mode editor 2>$null | Out-String
+            try { $summary = ($raw | ConvertFrom-Json).data.result.Summary } catch { $summary = $null }
+            if ($null -eq $summary) { Start-Sleep -Seconds 5 }
+        }
         if ($null -eq $summary) { $failures += 'Unity: tests did not report a result (is the Editor idle and outside Play mode?).' }
         else {
             Write-Host "Edit-mode tests: $($summary.Passed) passed, $($summary.Failed) failed, $($summary.Skipped) skipped of $($summary.Total)."

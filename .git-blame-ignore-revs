@@ -1,0 +1,4 @@
+# Formatting-only commits, skipped by GitHub blame and by git blame locally
+# (enable once: git config blame.ignoreRevsFile .git-blame-ignore-revs).
+# Reformat prototype code to the standard (whitespace only), STD-01
+a704ac69d132a421a2c24680f52407358dafd41e

@@ -9,6 +9,7 @@ Agreed September 25-26, 2026 (STD-01). These rules apply to every agent and to m
 | Layout (indents, spacing, braces on their own line, one statement per line) | `PrisonGame/.editorconfig`, applied by `dotnet format` and by editors | Check: `tools/check.ps1`. Fix: `tools/format.ps1` |
 | Naming and braces in new code (`Assets/PrisonGame`) | `.editorconfig` naming rules and `IDE0011`, checked by `dotnet format style` | Same. Braces are fixed automatically; names are fixed by hand |
 | Every commit | Git pre-commit hook `.githooks/pre-commit` runs `tools/check.ps1 -Staged` and blocks the commit on failure | Enable once per clone: `git config core.hooksPath .githooks` |
+| Unity best practices in new code | Microsoft.Unity.Analyzers, raised to warnings by a ruleset beside each new assembly | `tools/check.ps1` checks the rulesets; `-Unity` fails on any compiler or analyzer warning in new code |
 | Compiles and edit-mode tests pass | Required before a task is marked done | `tools/check.ps1 -Unity` (needs the Unity Editor open on the project) |
 | Existing prototype behavior | Runtime checks in Development builds and the Editor | See [Tests](#tests) |
 
@@ -44,9 +45,16 @@ New code, meaning everything under `Assets/PrisonGame`, follows Microsoft's .NET
 
 ## Folders, assemblies and C# version
 
-- New code goes in `PrisonGame/Assets/PrisonGame/Scripts/<Area>/Runtime/`, with one assembly definition per area (`PrisonGame.<Area>`). Tests go in `<Area>/Tests/EditMode/` or `<Area>/Tests/PlayMode/`, and Editor tools in `EditorTools/` (`PrisonGame.EditorTools`, Editor-only). Namespaces match assembly names.
+- New code goes in `PrisonGame/Assets/PrisonGame/Scripts/<Area>/Runtime/`, with one assembly definition per area (`PrisonGame.<Area>`). Tests go in `<Area>/Tests/EditMode/` or `<Area>/Tests/PlayMode/`, and Editor tools in `EditorTools/` (`PrisonGame.EditorTools`, Editor-only). Namespaces match assembly names. Every new assembly also gets its ruleset copy (see [Analyzers](#analyzers)).
 - Dependencies point one way. `Core` depends on nothing. Game areas depend on `Core` and on each other only where needed, never in a cycle. The prototype (`Assembly-CSharp`) may use new code; new code must not use the prototype.
 - Unity 6.3 compiles C# 9.0. Block-scoped `namespace X { }` only, because file-scoped namespaces are C# 10. No `init` setters, and no records in serialized types.
+
+## Analyzers
+
+- Microsoft.Unity.Analyzers 1.27.0 (MIT, [licence](../PrisonGame/Assets/PrisonGame/Scripts/Core/Runtime/Analyzers/LICENSE.txt)) sits in `Assets/PrisonGame/Scripts/Core/Runtime/Analyzers/`. It is labelled `RoslynAnalyzer` and disabled for every platform, so it never ships. It checks Unity-specific mistakes such as null propagation on Unity objects (`UNT0008`) and wrong message signatures (`UNT0006`).
+- Its rules are suggestions by default, which the Unity Console does not show. New code raises them to warnings with a ruleset: every assembly under `Assets/PrisonGame` has `<AssemblyName>.ruleset` beside its `.asmdef`, an identical copy of the master `Assets/PrisonGame/Scripts/PrisonGame.ruleset`. Unity ignores a ruleset with any other name, does not follow ruleset includes, and does not read `.editorconfig` for compiler severities. So a new assembly needs its own copy; `tools/check.ps1` fails when one is missing or differs.
+- `UNT0021` (make Unity messages protected) stays off, because private Unity messages are the common convention.
+- The prototype also compiles with the analyzer but keeps default severities, so its findings stay hidden until a task rewrites a file.
 
 ## Game-rule code and co-op boundaries
 
@@ -100,7 +108,7 @@ These make release 2 co-op possible and let tests run without a scene (see the [
 
 ## Before marking a task done
 
-1. `tools/check.ps1 -Unity` passes: layout, naming, compile and edit-mode tests.
+1. `tools/check.ps1 -Unity` passes: layout, naming, rulesets, compile without warnings in new code, and edit-mode tests.
 2. New rules code has edit-mode tests; changed behavior has updated checks.
 3. Any affected existing runtime checks were rerun, with results in `docs/evidence/`.
 4. The tracker and progress log record what was verified and what was not.

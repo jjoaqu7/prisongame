@@ -22,3 +22,14 @@ Processing: mono conversion, rumble removal, softened upper frequencies, gentle 
 An unused Freesound concrete-footsteps candidate by SoftDistortionFX (https://freesound.org/people/SoftDistortionFX/sounds/465299/, CC0) remains as `audio-source/steps.mp3` with its source page; it is not imported or shipped. No Sonniss assets were needed for this first palette.
 
 Palette preview: [WAV](../audio-source/palette-preview.wav). Order: four footsteps, pickup, wrap, restock, placement, crackers, fruit, door, shelf, sale, then room tone. This is an isolated preview, not a recording of runtime spatial mixing.
+
+## STD-01: code analyzer
+
+Status: in use for development only; excluded from every build platform, so it never ships in the game.
+
+| Source | Creator | License / evidence | Used for |
+| --- | --- | --- | --- |
+| [Microsoft.Unity.Analyzers 1.27.0](https://www.nuget.org/packages/Microsoft.Unity.Analyzers/1.27.0) | Microsoft | MIT (NuGet licence expression); text from the [repository LICENSE](https://github.com/microsoft/Microsoft.Unity.Analyzers/blob/main/LICENSE) kept beside the DLL | Unity-specific compiler warnings in new code |
+
+File: `PrisonGame/Assets/PrisonGame/Scripts/Core/Runtime/Analyzers/Microsoft.Unity.Analyzers.dll`, the unmodified `analyzers/dotnet/cs` DLL from the NuGet package (SHA-256 begins `da18985c3216a485`), retrieved 2026-09-26. It is built against Roslyn 3.11; Unity 6.3 compiles with Roslyn 4.3.
+

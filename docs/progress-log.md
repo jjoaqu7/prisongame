@@ -627,3 +627,21 @@ Verified baseline: `PrisonGame/` uses Editor 6000.3.24f1 and URP. Room01_Blockou
   - The 18 step-1 checks pass in `CombatSandbox`.
   - [Kick capture](evidence/encounter01-step3-kick.png): 12 damage and 0.6 m knockback, landed through the rules.
 - **Not verified:** how the kick feels; that is part of the user's review. Windows builds unchanged.
+
+## Grab, drag and throw decided - September 27
+
+- **Request:** after trying the sandbox ("OK nice mechanics"), the user asked how to add the ragdoll plus grabbing, carrying and throwing, and whether it is difficult. Estimate given: the ragdoll (step 6) and grab-and-throw are each about one High session; grabbing needs the ragdoll first.
+- **Decisions:**
+  - simple physics dragging, with no slowdown
+  - anything handheld and any downed or dead body can be grabbed and thrown, with the same throw action
+  - standard keys: E grabs, LMB throws
+  - dragging a body out of a guard's view is a good later use; note it for the guard work
+
+  Recorded in [Gameplay](gameplay.md#grab-drag-and-throw---agreed-september-27-not-built-yet), [Factions and events](factions-and-events.md#fights-and-consequences---proposed-rules) and the development plan (new step 6b). The weapons row now allows throwing.
+- **Open, found while recording:**
+  - E on a downed body both grabs and kills; proposed: tap grabs, hold kills.
+  - LMB attacks while holding a weapon, so throwing the book or rod needs another key; proposed: G throws anything held.
+  - Throw strength and thrown-object damage.
+
+  All three are listed for the next chat.
+- **Not done:** no code. The user asked to save these for the next chat. Nothing was committed or pushed in this entry.

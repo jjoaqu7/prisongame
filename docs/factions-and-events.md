@@ -34,6 +34,8 @@ Tune the frequency and overlap of incidents through playtesting. If an event int
 
 How dangerous incidents are to uninvolved players, whether they can threaten belongings, and how losses work remain open. Consequences should be understandable and the player should have a recoverable path forward. Rivalries can produce lasting changes in who cooperates, what is available, and which opportunities emerge.
 
+**Agreed idea, September 27 - hiding bodies:** the player can drag a downed or dead body (see [Grab, drag and throw](gameplay.md#grab-drag-and-throw---agreed-september-27-not-built-yet)), for example out of a guard's view so it is not found. The user asked for this to be kept for the guard work. **Open:** how guards discover bodies (line of sight, patrol checks, reports from other inmates) and what discovery leads to. The neighboring-cell prototype has no guard response to the killing.
+
 ## Guard rotations - proposed rules
 
 Use a persistent cast of guards with recognizable personalities and ordinary recurring shifts. Randomized substitutions, patrol assignments, and responses to incidents add variation. This is a proposed game system, not a claim about real prison staffing.

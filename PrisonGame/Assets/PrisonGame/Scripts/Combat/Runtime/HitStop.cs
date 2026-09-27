@@ -20,6 +20,11 @@ namespace PrisonGame.Combat
             Remaining = Math.Max(Remaining, seconds);
         }
 
+        public void Clear()
+        {
+            Remaining = 0f;
+        }
+
         // Returns the part of deltaSeconds left for the fighter's timeline after the freeze.
         public float Consume(float deltaSeconds)
         {

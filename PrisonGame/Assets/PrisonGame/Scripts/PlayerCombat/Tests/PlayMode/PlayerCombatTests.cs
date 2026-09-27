@@ -229,7 +229,7 @@ namespace PrisonGame.PlayerCombat.Tests
         public IEnumerator OtherCharactersHaveNoShoveReaction()
         {
             bool reported = false;
-            _sweep.HitResolved += (target, hit) => reported = hit.Kind == AttackKind.Shove;
+            _sweep.HitResolved += (target, hit, result) => reported = hit.Kind == AttackKind.Shove;
             _actor.Actions.Tick(0f, new CombatIntent(true, shovePressed: true));
             _actor.Actions.Tick(0.06f, new CombatIntent(true));
             yield return null;

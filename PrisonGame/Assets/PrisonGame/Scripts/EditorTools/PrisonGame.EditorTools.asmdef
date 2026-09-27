@@ -5,7 +5,8 @@
         "Unity.InputSystem",
         "PrisonGame.Core",
         "PrisonGame.Combat",
-        "PrisonGame.PlayerCombat"
+        "PrisonGame.PlayerCombat",
+        "PrisonGame.AI"
     ],
     "includePlatforms": [
         "Editor"

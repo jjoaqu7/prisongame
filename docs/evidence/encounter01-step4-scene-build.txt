@@ -1,0 +1,4 @@
+Added fight-back to Assets/PrisonGame/Scenes/Sandbox/CombatAttacksSandbox.unity.
+Fight: FightController over the cell floor (4 x 5 m), challenger sandbox-player, opponent sandbox-dummy.
+Dummy: timed blocks off; Aim child at head height; MeleeSweep; InmateFighterController (seed 20260927); FighterHitSounds (blocked: soft medium, timed block: soft heavy); 'Visual' moved under a new 'Pose' with a placeholder 'Fist'; InmatePoseView.
+Player: FightHud on the camera; CameraKick also reacts to hits taken; blocked and timed-block sounds.

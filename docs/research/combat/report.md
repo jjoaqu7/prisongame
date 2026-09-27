@@ -1,6 +1,6 @@
 # Build the neighbor-cell fight rules-first
 
-Status: complete, September 25, 2026 (RESEARCH-01). Evidence: [notes](notes/). Conventions: [research README](../README.md). **Update:** the user has since decided open decisions 1, 4 and 5 and made the shove a general action; [Gameplay](../../gameplay.md#neighboring-cell-inmate-encounter---agreed-purpose-and-real-combat) records them and overrides this report where they differ.
+Status: updated, September 27, 2026 (RESEARCH-01; conventions added for ENCOUNTER-01). Evidence: [notes](notes/). Conventions: [research README](../README.md). **Update:** the user has since decided open decisions 1, 4 and 5 and made the shove a general action; [Gameplay](../../gameplay.md#neighboring-cell-inmate-encounter---agreed-purpose-and-real-combat) records them and overrides this report where they differ.
 
 The research supports one consistent, **proposed** approach to real first-person melee for this game. The player gets four verbs: a quick attack, a hold-to-charge heavy attack, a block with a forgiving timed-block bonus, and a shove. The inmate telegraphs each attack with a long, obvious wind-up. Hits are found by script-driven swept physics queries during code-timed windows, not by trigger colliders on a swinging arm. Every combat rule is a plain C# class that receives the acting fighter explicitly and lives in its own assembly definition, so the compiler rejects rule code that reaches for input, the camera or the HUD. The first-person melee postmortems found, Arkane's Dark Messiah talk above all, name the failures this plan avoids: sluggish controls, unreadable enemy attacks, misjudged distance, and levels built before combat was settled. The open question with the largest effect on code is whether an armed player stops the inmate fighting back or only gains an advantage. Every reference found keeps armed fights two-sided, so this report proposes the advantage reading, and treating "the player is armed" as data the inmate reads makes either answer a tuning change rather than a rewrite. Co-op readiness costs little now: attack intents from a named fighter, time passed into rules, stable IDs, hit queries built from the attacker's own view, per-fighter hitstop instead of global time scaling, and no networking code. The same choices let edit-mode tests decide a fight in milliseconds. Thirteen decisions for the user are listed near the end, and ENCOUNTER-01 planning should follow them at **High** reasoning.
 
@@ -252,8 +252,23 @@ None of these are decided. Decisions 1, 4 and 5 block the most code. Once made, 
 | 12 | Code organization and AI tool | Assembly definitions and an `Assets/PrisonGame/` folder; code FSM or Unity Behavior | Adopt the layout; code FSM | Step 1 |
 | 13 | Animation sourcing | Convert the rig to Humanoid for store and Mixamo clips; hand-author; paid Cascadeur Indie | Check the rig first; archive any Mixamo clips used | Step 8 |
 
+## Controls and feedback conventions - update, September 27
+
+On September 27 the user asked to "use standardized or most common option" for the open grab and throw questions and for step 4. The [conventions notes](notes/controls-and-feedback-conventions.md) found:
+- Holding a key is the usual way to confirm a deliberate or irreversible action. Apex Legends finishes a downed enemy by holding E ([GameWatcher](https://www.gamewatcher.com/news/apex-legends-finishers-execute-how-to)). So tap E grabs and hold E kills.
+- G is the common PC throw key. Chivalry 2, a first-person melee game where weapons can be thrown, uses G for "Throw" ([DefKey](https://defkey.com/chivalry-2-shortcuts)).
+- Throw speed has no common value. Half-Life 2 treats it as a tuning force, and its designers made fast collisions cause damage ([Slashdot, GDC report](https://slashdot.org/story/06/03/24/1926234/gdc---physics-in-half-life-2)).
+- Sekiro's timed-block window is about 0.2 s and shrinks when the block is spammed ([Fextralife, fan](https://sekiroshadowsdietwice.wiki.fextralife.com/Deflection)). The agreed 0.25 s is slightly more generous.
+- A brief red flash or red screen edge is the most common sign that the player was hit.
+
+The user's choices are recorded in [Gameplay](../../gameplay.md#grab-drag-and-throw---agreed-september-27-not-built-yet), which overrides this report where they differ.
+
 ## Conclusion
 
 The research shows that, for this project, co-op readiness and agent testability are the same requirement. The choices that would let a release 2 host re-run player 2's swing are the ones that let an edit-mode test decide a fight in milliseconds with no scene: intents from a named fighter, time passed into the rules, stable IDs, queries from the attacker's own view, and per-fighter hitstop. That discipline costs almost nothing extra in release 1, and an assembly boundary makes the compiler enforce it rather than code review. The real uncertainty lies elsewhere. The research found no sourced timings for first-person melee specifically, no precedent for a cute-looking game with a deliberate kill, and no settled rating path for Australia. The user's judgment and playtesting resolve these, not more reading.
 
 What tests cannot settle is feel and fairness, and those decide whether "real combat" works here. The references fail in the same four ways: slow input, unreadable wind-ups, misjudged distance, and levels built before combat. Each is cheaper to fix in a greybox room than in the finished cell. The armed-player question matters for the same reason: if a weapon ends the fight, the tuning work above has little left to tune. The next step is for the user to settle at least decisions 1, 4 and 5. ENCOUNTER-01 should then be planned at **High** reasoning, because it introduces combat, death and persistent character state together.
+
+## Changelog
+
+- 2026-09-27: added [notes/controls-and-feedback-conventions.md](notes/controls-and-feedback-conventions.md) and the conventions section above, answering the grab, kill and throw key questions, throw strength, the timed-block window and player damage feedback with the most common options.

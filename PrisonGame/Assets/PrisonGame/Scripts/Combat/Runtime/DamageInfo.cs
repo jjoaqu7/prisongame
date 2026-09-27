@@ -29,8 +29,12 @@ namespace PrisonGame.Combat
         // Freeze applied to the attacker's and the target's combat timelines when the hit lands.
         public readonly float HitStopSeconds;
 
+        // Added to the target's stagger meter (see StaggerMeter); a full meter staggers.
+        public readonly float StaggerPower;
+
         public DamageInfo(StableId attacker, string weaponId, AttackKind kind, float amount,
-            Vector3 point, Vector3 direction, double time, float knockback = 0f, float hitStopSeconds = 0f)
+            Vector3 point, Vector3 direction, double time, float knockback = 0f, float hitStopSeconds = 0f,
+            float staggerPower = 0f)
         {
             Attacker = attacker;
             WeaponId = weaponId;
@@ -41,7 +45,22 @@ namespace PrisonGame.Combat
             Time = time;
             Knockback = knockback;
             HitStopSeconds = hitStopSeconds;
+            StaggerPower = staggerPower;
         }
+
+        // The same hit with a different amount, used when a block reduces it.
+        public DamageInfo WithAmount(float amount) =>
+            new DamageInfo(Attacker, WeaponId, Kind, amount, Point, Direction, Time, Knockback, HitStopSeconds,
+                StaggerPower);
+    }
+
+    // How the defender's block met a hit. Agreed rules: a blocked hit does a quarter of its damage;
+    // a block raised just before the hit lands is a timed block: no damage, and the attacker staggers.
+    public enum BlockOutcome
+    {
+        None,
+        Blocked,
+        TimedBlock,
     }
 
     public readonly struct DamageResult
@@ -50,12 +69,14 @@ namespace PrisonGame.Combat
         public readonly bool WentDown;
         // True when the target was already down or dead, so the hit changed nothing.
         public readonly bool Ignored;
+        public readonly BlockOutcome Block;
 
-        public DamageResult(float applied, bool wentDown, bool ignored)
+        public DamageResult(float applied, bool wentDown, bool ignored, BlockOutcome block = BlockOutcome.None)
         {
             Applied = applied;
             WentDown = wentDown;
             Ignored = ignored;
+            Block = block;
         }
 
         public static DamageResult IgnoredHit => new DamageResult(0f, false, true);

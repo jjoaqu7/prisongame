@@ -26,6 +26,13 @@ namespace PrisonGame.Combat
 
         [SerializeField]
         private AudioClip[] _shove = new AudioClip[0];
+
+        // A hit that met a block sounds dull; a timed block gets a heavier thud so it reads as a success.
+        [SerializeField]
+        private AudioClip[] _blocked = new AudioClip[0];
+
+        [SerializeField]
+        private AudioClip[] _timedBlock = new AudioClip[0];
         private MeleeSweep _sweep;
         private AudioSource _impact;
         private AudioSource _layer;
@@ -40,6 +47,12 @@ namespace PrisonGame.Combat
             _kick = kick;
             _kickLayer = kickLayer;
             _shove = shove;
+        }
+
+        public void ConfigureBlocks(AudioClip[] blocked, AudioClip[] timedBlock)
+        {
+            _blocked = blocked;
+            _timedBlock = timedBlock;
         }
 
         private void Awake()
@@ -71,10 +84,20 @@ namespace PrisonGame.Combat
             }
         }
 
-        private void OnHit(Fighter target, DamageInfo hit)
+        private void OnHit(Fighter target, DamageInfo hit, DamageResult result)
         {
             float volume = Mathf.Clamp01(PlayerPrefs.GetFloat(EffectsVolumeKey, DefaultEffectsVolume));
             LastLayer = null;
+            if (result.Block == BlockOutcome.TimedBlock && _timedBlock != null && _timedBlock.Length > 0)
+            {
+                LastImpact = Play(_impact, _timedBlock, hit.Point, volume);
+                return;
+            }
+            if (result.Block == BlockOutcome.Blocked && _blocked != null && _blocked.Length > 0)
+            {
+                LastImpact = Play(_impact, _blocked, hit.Point, volume * 0.8f);
+                return;
+            }
             switch (hit.Kind)
             {
                 case AttackKind.Shove:

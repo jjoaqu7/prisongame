@@ -26,7 +26,7 @@ namespace PrisonGame.Combat
 
     // Provisional unarmed tuning, separated from device input and presentation. Agreed
     // September 27: no charged punch; the kick does slightly more damage than the punch and is
-    // slower, reaches further and pushes harder (it also staggers once the inmate fights back).
+    // slower, reaches further and pushes harder, and it staggers the inmate (full stagger power).
     public readonly struct UnarmedAttack
     {
         public const float ShoveDistance = 1f;
@@ -38,9 +38,10 @@ namespace PrisonGame.Combat
         public AttackTiming Timing { get; }
         public float HitStopSeconds { get; }
         public float Knockback { get; }
+        public float StaggerPower { get; }
 
-        private UnarmedAttack(AttackKind kind, string weaponId, float damage, float reach, AttackTiming timing,
-            float hitStopSeconds, float knockback)
+        public UnarmedAttack(AttackKind kind, string weaponId, float damage, float reach, AttackTiming timing,
+            float hitStopSeconds, float knockback, float staggerPower)
         {
             Kind = kind;
             WeaponId = weaponId;
@@ -49,19 +50,51 @@ namespace PrisonGame.Combat
             Timing = timing;
             HitStopSeconds = hitStopSeconds;
             Knockback = knockback;
+            StaggerPower = staggerPower;
         }
 
         public static UnarmedAttack Punch =>
-            new UnarmedAttack(AttackKind.Punch, "fists", 10f, 1.1f, new AttackTiming(0.06f, 0.12f, 0.25f), 0.06f, 0.08f);
+            new UnarmedAttack(AttackKind.Punch, "fists", 10f, 1.1f, new AttackTiming(0.06f, 0.12f, 0.25f), 0.06f, 0.08f,
+                25f);
 
         public static UnarmedAttack Kick =>
-            new UnarmedAttack(AttackKind.Kick, "foot", 12f, 1.4f, new AttackTiming(0.3f, 0.14f, 0.45f), 0.09f, 0.6f);
+            new UnarmedAttack(AttackKind.Kick, "foot", 12f, 1.4f, new AttackTiming(0.3f, 0.14f, 0.45f), 0.09f, 0.6f,
+                StaggerMeter.Capacity);
 
         public static UnarmedAttack Shove =>
             new UnarmedAttack(AttackKind.Shove, "hands", 0f, 1.1f, new AttackTiming(0.05f, 0.12f, 0.35f), 0.05f,
-                ShoveDistance);
+                ShoveDistance, 0f);
 
-        public static UnarmedAttack For(AttackKind kind)
+        // The neighboring inmate's telegraphed punch: 12 damage after a 0.7 s wind-up (agreed starting
+        // values). It never staggers the player; the player's defence is the block and timed block.
+        public static UnarmedAttack InmatePunch =>
+            new UnarmedAttack(AttackKind.Punch, "fists", 12f, 1.2f, new AttackTiming(0.7f, 0.15f, 0.6f), 0.08f, 0f, 0f);
+
+        public static UnarmedAttack For(AttackKind kind) => UnarmedMoveset.Player.For(kind);
+    }
+
+    // The unarmed attacks one fighter can make. Weapons (step 5) will replace these per held item.
+    public sealed class UnarmedMoveset
+    {
+        public UnarmedMoveset(UnarmedAttack punch, UnarmedAttack kick, UnarmedAttack shove)
+        {
+            Punch = punch;
+            Kick = kick;
+            Shove = shove;
+        }
+
+        public UnarmedAttack Punch { get; }
+        public UnarmedAttack Kick { get; }
+        public UnarmedAttack Shove { get; }
+
+        public static UnarmedMoveset Player { get; } =
+            new UnarmedMoveset(UnarmedAttack.Punch, UnarmedAttack.Kick, UnarmedAttack.Shove);
+
+        // He fights with the one telegraphed punch; kick and shove are kept for completeness.
+        public static UnarmedMoveset Inmate { get; } =
+            new UnarmedMoveset(UnarmedAttack.InmatePunch, UnarmedAttack.Kick, UnarmedAttack.Shove);
+
+        public UnarmedAttack For(AttackKind kind)
         {
             switch (kind)
             {
@@ -86,6 +119,8 @@ namespace PrisonGame.Combat
         private float _bufferRemaining;
         private AttackKind _buffered;
         private bool _ownsAction;
+        private UnarmedMoveset _moveset = UnarmedMoveset.Player;
+        private float _windUpScale = 1f;
 
         public FighterActions(StableId actor, FighterStateMachine state)
         {
@@ -100,6 +135,27 @@ namespace PrisonGame.Combat
 
         public StableId Actor { get; }
         public UnarmedAttack CurrentAttack { get; private set; } = UnarmedAttack.Punch;
+
+        public UnarmedMoveset Moveset
+        {
+            get => _moveset;
+            set => _moveset = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        // Stretches the wind-up of attacks started from now on; the hurt inmate winds up slower.
+        public float WindUpScale
+        {
+            get => _windUpScale;
+            set
+            {
+                if (!(value > 0f) || float.IsInfinity(value))
+                {
+                    throw new ArgumentOutOfRangeException(nameof(value), "Wind-up scale must be positive and finite.");
+                }
+                _windUpScale = value;
+            }
+        }
+
         public int SwingNumber { get; private set; }
         public bool CanHit => _ownsAction && _state.HitWindowOpen;
         public event Action ActiveWindowOpened;
@@ -131,7 +187,7 @@ namespace PrisonGame.Combat
             if (intent.ShovePressed && _state.State == FighterState.Idle)
             {
                 _bufferRemaining = 0f;
-                BeginAttack(UnarmedAttack.Shove);
+                BeginAttack(_moveset.Shove);
                 return;
             }
             // A kick wins if both are pressed in the same frame: it is the deliberate, slower move.
@@ -139,7 +195,7 @@ namespace PrisonGame.Combat
             AttackKind kind = intent.KickPressed ? AttackKind.Kick : AttackKind.Punch;
             if (requested && _state.State == FighterState.Idle)
             {
-                BeginAttack(UnarmedAttack.For(kind));
+                BeginAttack(_moveset.For(kind));
                 return;
             }
             if (requested && _state.State == FighterState.Recovery && _ownsAction)
@@ -150,7 +206,7 @@ namespace PrisonGame.Combat
             if (_state.State == FighterState.Idle && _bufferRemaining > 0f)
             {
                 _bufferRemaining = 0f;
-                BeginAttack(UnarmedAttack.For(_buffered));
+                BeginAttack(_moveset.For(_buffered));
             }
         }
 
@@ -176,7 +232,14 @@ namespace PrisonGame.Combat
 
         private void BeginAttack(UnarmedAttack attack)
         {
-            if (!_state.TryStartAttack(attack.Timing))
+            AttackTiming timing = attack.Timing;
+            if (_windUpScale != 1f)
+            {
+                timing = new AttackTiming(timing.WindUp * _windUpScale, timing.Active, timing.Recovery);
+                attack = new UnarmedAttack(attack.Kind, attack.WeaponId, attack.Damage, attack.Reach, timing,
+                    attack.HitStopSeconds, attack.Knockback, attack.StaggerPower);
+            }
+            if (!_state.TryStartAttack(timing))
             {
                 return;
             }

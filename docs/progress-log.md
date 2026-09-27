@@ -645,3 +645,65 @@ Verified baseline: `PrisonGame/` uses Editor 6000.3.24f1 and URP. Room01_Blockou
 
   All three are listed for the next chat.
 - **Not done:** no code. The user asked to save these for the next chat. Nothing was committed or pushed in this entry.
+
+## ENCOUNTER-01 step 4 the inmate fights back - September 27
+
+- **User decisions this session:**
+  - The user answered "OK proceed" when asked whether "OK nice mechanics" approved the step 2-3 feel. Recorded as approval; the review item moved to Done.
+  - The user asked to "use standardized or most common option (search too to make sure for anything)". The [conventions notes](research/combat/notes/controls-and-feedback-conventions.md) and the combat report update found the common choices, now recorded as agreed in [Gameplay](gameplay.md#grab-drag-and-throw---agreed-september-27-not-built-yet):
+    - tap E grabs a downed body, holding E kills (Apex Legends' hold-E finisher)
+    - G throws whatever is held, weapons included (Chivalry 2)
+    - thrown objects hurt only above a speed threshold (Half-Life 2)
+    - raising the block again within 0.4 s of lowering it is never a timed block (Sekiro shrinks its window for repeated presses)
+    - a faint red screen-edge flash when the player is hit (Doom, Battlefield)
+  - Step 4's own numbers are recorded in Gameplay as starting values for tuning, not decisions.
+- **Rules (Combat assembly):**
+  - `FighterDefense` resolves each landed hit:
+    - a held block takes a quarter of the damage
+    - a block raised within 0.25 s is a timed block: no damage, and the attacker staggers for 1 s
+    - the spam guard above
+    - hits build a `StaggerMeter`: 100 points; a punch adds 25, a kick 100; it drains at 25/s after 1 s
+    - at or below a third of health the fighter is hurt and builds stagger 1.5 times faster
+  - Only the player's `Fighter` can timed-block (`_canTimedBlock`). Otherwise a player punch landing just after he raised his guard would stagger the player.
+  - `UnarmedMoveset` gives each fighter its attacks. His `InmatePunch`: 12 damage, 0.7 s wind-up, 1.2 m reach, never staggers the player. `WindUpScale` makes the hurt inmate's wind-up 30% slower.
+  - `FightSession` (plain C#): the first hit or shove starts the fight. 10 s outside his cell ends it with both at full health. Losing fades for 1.2 s, then asks for the checkpoint. Winning refills the player's health. The health bar shows during a fight and for 3 s after.
+  - `FightController` takes the in-memory checkpoint from `MeleeSweep`'s new `HitLanding` event, which fires before the first hit's damage. It restores positions, health and states. The manual save slot is untouched.
+  - `DamageInfo` carries stagger power, and `DamageResult` reports the block outcome. `MeleeSweep.HitResolved` passes the result. `CapsuleClearance` is shared by knockback and his movement.
+- **AI (new `PrisonGame.AI` assembly, plus edit-mode and play-mode test assemblies):**
+  - `InmateBrain` is a plain C# state machine: Idle, Approach, Ready, WindUp, Attack, Recover, Block, Stagger, Downed, Dead.
+    - He approaches at 2 m/s and starts a punch within 1.3 m. He stops closing at 1 m and only chases again beyond 1.6 m.
+    - His first punch comes 0.4 to 0.8 s after the fight starts, later ones 2 to 3 s apart.
+    - After about a third of the hits he takes, he blocks for 1 s.
+    - He holds his ground while the player is down or outside the cell.
+    - He uses his own seeded `System.Random`.
+  - `InmateFighterController` turns and moves him with collision, keeps him in his cell, and submits intents like the player's input adapter.
+  - `InmatePoseView` is a placeholder for the capsule: fist pull-back telegraph, punch, guard, stagger wobble, hurt hunch, lying on his side when downed.
+- **Player presentation (PlayerCombat):**
+  - `FightHud`: the fight-only health bar, the red edge flash, "Timed block", and the loss fade.
+  - `CameraKick` also jolts the view when hit, using the existing camera-shake setting.
+  - Blocked and timed-block hits reuse the CC0 Kenney soft impacts already in the [asset register](asset-register.md).
+  - The HUD line now reads "He fights back...".
+- **Scene:** `CombatSandboxBuilder.AddFightBack` added all of this to `CombatAttacksSandbox`. It is additive only and refuses a second run ([build record](evidence/encounter01-step4-scene-build.txt)).
+- **Verification (incomplete):**
+  - Last genuine full run, before the layer fix: layout and naming pass. There are no new-code warnings after one analyzer fix. 100/100 edit-mode tests pass (48 new). 30/31 play-mode tests pass:
+    - all 7 new fight tests, including the step's three done criteria: he damages an idle player (12), a timed block prevents his damage and staggers him, and a loss restores the pre-fight positions, health and states
+    - a held block takes 3
+    - he approaches and stops short
+    - leaving ends the fight with both at full health
+    - downing him wins and refills the player
+    - the 23 earlier tests
+  - The one failure was the new built-sandbox scene test. It found the layer bug below.
+  - After the layer fix, the rerun did not complete. My `editor_stop` reported success, but Unity was still leaving Play mode when the check's recompile started. The scripts reloaded inside Play mode, and every fighter lost its runtime state and threw a null reference each frame. That flooded `Editor.log` (over 200 MB) and made the Unity command pipeline unresponsive. That run's printed test counts were stale, read from the previous run's stored status. The [evidence file](evidence/encounter01-step4-code-check.txt) is annotated to say so.
+  - I stopped Play mode by sending Unity's Ctrl+P shortcut, since I had entered Play mode myself for a diagnostic. The flood stopped, but the pipeline still did not answer, so the Editor needs a restart before the rerun.
+  - A live query in the scene confirmed the fix's effect: with every layer included, his punch's sphere cast finds the player 0.70 m away. The compiled fix and the updated fight tests are not yet verified by a completed run.
+  - Not rerun: the 18 step 1 checks in `CombatSandbox`; the pipeline was down. No wind-up capture was taken.
+- **Found on the way:**
+  - **The prototype player is on Unity's "Ignore Raycast" layer** (so its own interaction ray skips it), and melee hit checks used Unity's default layers, which leave that layer out. In the real sandbox he swung three times from 0.7 m and never hit. The isolated tests had missed it because their test player was on the default layer. Hit checks and movement clearance now use every layer, and each fighter still filters itself out; the isolated fight tests now put their player on layer 2. This matters again at step 7, where the laundry scene's player has the same setup.
+  - **Tooling gap:** `tools/check.ps1 -Unity` neither refuses to run while the Editor is playing nor rejects a play-mode status that shows no fresh run. Both allowed the faulty rerun above. Proposed fix: guard both.
+  - The new scene test first failed because, with the input adapter disabled, no "controls on" intent reached the player after the punch, so the punch was cancelled. The test now sends one each frame, as the adapter does.
+  - The analyzer flagged a `GetComponent` in the step 2 scene test; it now uses `TryGetComponent`.
+- **Not verified:**
+  - How the fight feels: whether his wind-up reads, whether 0.25 s timed blocks are learnable, and whether 2 to 3 s between punches is right. That is the user's review.
+  - There is no wind-up whoosh or grunt; the Kenney pack has none.
+  - The laundry (106) and Room01 checks were not rerun: no prototype code or prototype scene changed, and those scenes contain no combat components.
+  - Windows builds are unchanged.

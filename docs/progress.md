@@ -1,6 +1,6 @@
 # Progress and next tasks
 
-Last updated: September 26, 2026.
+Last updated: September 27, 2026.
 
 ## How to use this tracker - agreed
 
@@ -15,20 +15,30 @@ The [development plan](development-plan.md) owns milestone scope and sequencing.
 ## Current state
 
 - **Milestone:** closing the prototype chain with ENCOUNTER-01, the neighboring-cell fight. Its [fight rules](gameplay.md#neighboring-cell-fight-rules---agreed-september-25) and [build plan](development-plan.md#encounter-01-build-plan---september-25) were agreed September 25. Release 1's broad scope is agreed: [Release 1 scope](development-plan.md#release-1-scope---agreed-september-25).
-- **Next action:** start a new chat from the handoff below. First ask whether "OK nice mechanics" approves the step 2-3 feel. Then continue ENCOUNTER-01: step 4, the inmate fights back (**High**), or steps 6 and 6b first if the user wants the ragdoll and dragging sooner. After ENCOUNTER-01, REL1-01 (**High**).
-- **Blockers:** none. Working locally on `encounter-01`; STD-02 is checkpointed as `3322500`. The last publication was September 25; these changes have not been pushed.
+- **Next action:** restart the Unity Editor (its command pipeline stopped answering; see Blockers). Then rerun `tools/check.ps1 -Unity` and the 18 step 1 checks to verify step 4's layer fix. Then the user tries the fight (see Awaiting your review). Then step 5, the book and rod (**Medium**), or steps 6 and 6b (**High**). After ENCOUNTER-01, REL1-01 (**High**).
+- **Blockers:** the Unity Editor needs a restart. A recompile ran while it was leaving Play mode, the fighters lost their runtime state, and the command pipeline has not answered since. Play mode is stopped, and the scene has no unsaved changes. Working on `encounter-01`; see Publication in the handoff.
 - **Latest builds** (ignored by Git): `PrisonGame/Builds/WindowsLaundry/PrisonGame.exe` has laundry duty, HUD, inventory and the neighboring cell (scene `Duty01_Laundry`). `PrisonGame/Builds/WindowsSample/PrisonGame.exe` has the combined earning sample with sound (scene `Save01_Progress`).
 
 ## Awaiting your review
 
 Implemented and technically checked; only the user can judge feel and appearance. List each item here with what to try and what to judge, and move it to Done when the user approves it.
 
-ENCOUNTER-01 steps 2-3, controls and hit feel. Open `Assets/PrisonGame/Scenes/Sandbox/CombatAttacksSandbox.unity`, press Play, click **Resume walking** and walk up to the orange dummy:
-- **Try:** click LMB to punch, press V to kick (slower, reaches further, pushes harder), hold RMB to block, and press F to shove.
-- **Judge:** whether a hit reads clearly. On each hit both fighters freeze for a split second, the dummy leans away and is pushed back (much further for a kick), your view kicks slightly, and a punch sound plays (heavier, with a thud, for a kick). Also judge whether punching feels responsive and whether the kick's slower wind-up feels right.
-- **Adjust:** camera shake can be turned off in the Escape menu. Exit and re-enter Play to reset the dummy. He does not fight back yet (step 4).
-- [Step-3 log](progress-log.md#encounter-01-step-3-hit-feedback---september-27).
-- **User feedback, September 27:** "OK nice mechanics". Not yet confirmed as approval; ask before marking it done.
+ENCOUNTER-01 step 4, the inmate fights back. **Try it after the Editor restart and a passing rerun** (see Current state). Open `Assets/PrisonGame/Scenes/Sandbox/CombatAttacksSandbox.unity`, press Play, click **Resume walking** and punch or shove the orange dummy to start the fight:
+- **Try:**
+  - Let him hit you: 12 damage, a red edge flash and a view jolt.
+  - Hold RMB well before his punch: you take 3.
+  - Raise RMB just before his punch lands, when his fist is pulled back: no damage, "Timed block", and he staggers.
+  - Kick (V) to stagger him, even through his guard, or punch four times quickly.
+  - Get him below a third of his health: he hunches and winds up slower.
+  - Lose the fight: it fades to black and puts you both back where the fight started.
+  - Down him: he lies on his side, and your health refills.
+- **Judge:**
+  - whether his wind-up (the fist pulled back and up, a lean back, 0.7 s) reads in time to block
+  - whether the timed block is learnable
+  - whether 2 to 3 s between his punches and his 2 m/s approach feel fair
+  - whether the flash and jolt read without being too much
+- **Adjust:** camera shake, including the jolt when hit, can be turned off in the Escape menu. Exit and re-enter Play to reset. He has no wind-up sound yet (the sound pack has none). The capsule and fist are placeholders until step 6.
+- [Step-4 log](progress-log.md#encounter-01-step-4-the-inmate-fights-back---september-27).
 
 ## Tasks
 
@@ -66,11 +76,11 @@ Details for each row are in the [progress log](progress-log.md). Rows without th
 | INV-01 | Six-slot inventory and Dex-to-Harris key | Done | User approved for the prototype September 25. 41 rule/save, 79 Editor and 79 executable checks. [Log](progress-log.md#inv-01---functional-inventory-and-officer-secret) |
 | CELL-01 | Immediate dialogue, Harris's secret, neighboring cell | Done | User approved for the prototype September 25. 22 new, 106 Editor and 106 executable checks. [Log](progress-log.md#cell-01---dialogue-correction-and-harriss-neighboring-cell-key) |
 | PLAYTEST-01 | Uncoached new-player test | To do | Milestone 6 exit test: a new player tries the sample without coaching; note confusion, repetition and interest. **Medium**. |
-| RESEARCH-01 | Combat research | Done | [Report](research/combat/report.md) with a proposed approach, build order and 13 open decisions; findings are not decisions. [Log](progress-log.md#research-01-combat-research---september-25) |
+| RESEARCH-01 | Combat research | Done | [Report](research/combat/report.md) with a proposed approach, build order and 13 open decisions; findings are not decisions. Updated September 27 with the [common conventions](research/combat/notes/controls-and-feedback-conventions.md) for grab, kill and throw keys, timed blocks and hit feedback. [Log](progress-log.md#research-01-combat-research---september-25) |
 | RESEARCH-02 | Coding, scripting and testing standards | Done | [Report](research/engineering-standards/report.md). Decisions 1 to 13 agreed and applied in STD-01 and STD-02. [Log](progress-log.md#research-02-engineering-standards---september-25) |
 | STD-01 | Adopt the engineering standards | Done | [Standard](engineering-standards.md) in place September 26, enforced by `.editorconfig` + `dotnet format`, `tools/check.ps1` / `tools/format.ps1`, a blocking pre-commit hook (proven to block), and Microsoft.Unity.Analyzers with per-assembly rulesets (proven to warn). Prototype reformatted whitespace-only (`a704ac6`, in `.git-blame-ignore-revs`); 28 tests, 106 laundry and 18 smoke checks pass in the Editor. Windows builds were not rebuilt. Later: agent post-edit hooks, coverage, CI. [Log](progress-log.md#std-01-engineering-standards-adopted---september-26) |
 | STD-02 | Names, builds, versions and Git | Done | Company name `Niuq`, with saves and settings copied to the new location. 14 spaced materials renamed. `CombatSandbox` moved to `Assets/PrisonGame/Scenes/Sandbox/`; template scene deleted. Git LFS for new binaries, commit and branch rules, `PrisonGame.EditorTools` (`AssetNaming`, `PrototypeChecks`). Check passes; 106 laundry, 18 smoke and 18 sandbox checks pass. Build Profiles come at ENCOUNTER-01 step 7. [Log](progress-log.md#std-02-names-builds-versions-and-git---september-26) |
-| ENCOUNTER-01 | Neighboring-cell fight | In progress | Rules and 8-step plan agreed September 25; September 27 the charged punch was replaced by a kick (V, 12 damage vs the punch's 10, slower, 1.4 m reach, 0.6 m push). **Steps 1-3 implemented and technically verified** in `CombatAttacksSandbox`: punches, kick, block input, shove, placeholder arms and leg, hitstop, knockback, flinch, camera kick with an off setting, CC0 placeholder sounds. 52 edit-mode and 23 play-mode tests pass. **Needs your review:** controls and hit feel (user said "OK nice mechanics"; approval not confirmed). **Agreed September 27, not built:** grab, drag and throw bodies and handheld objects (step 6b). Next: step 4. [Log](progress-log.md#encounter-01-kick-replaces-the-charged-punch---september-27). Done when the fight, death, saved outcome and completion work through the full Rue/Dex/Harris chain. [Plan](development-plan.md#encounter-01-build-plan---september-25) |
+| ENCOUNTER-01 | Neighboring-cell fight | In progress | Rules and 8-step plan agreed September 25. **Steps 1-3 done:** the user approved the controls and hit feel September 27. **Step 4 implemented; verification incomplete** in `CombatAttacksSandbox`: the inmate approaches, telegraphs and throws his punch, blocks, staggers (meter; the kick always staggers), gets hurt, goes down; the player's block, timed block, fight-only health bar and hit flash; losing restores the fight-start checkpoint. Last full run: 100/100 edit-mode and 30/31 play-mode tests, including the three done criteria. The failing scene test found that hit checks skipped the player's Ignore Raycast layer; the fix is in but not yet verified (Editor restart needed). **Then needs your review:** step 4 feel. All grab and throw rules for step 6b are now agreed. Next: step 5. [Log](progress-log.md#encounter-01-step-4-the-inmate-fights-back---september-27). Done when the fight, death, saved outcome and completion work through the full Rue/Dex/Harris chain. [Plan](development-plan.md#encounter-01-build-plan---september-25) |
 | SHOVE-01 | Reactions to shoving by character type | To do | Agreed September 25: shove anyone at any time on F; reactions depend on who (a prisoner starts a fight). ENCOUNTER-01 step 2 builds the shove itself; this task adds reactions for guards, gangs and contacts when those are developed. [Gameplay](gameplay.md#shoving---agreed-direction-and-key-reactions-open) |
 | REL1-01 | Release 1 milestone list | To do | Derive from the agreed [scope](development-plan.md#release-1-scope---agreed-september-25): detailed for the next milestones, broad later, with proposed quantities (wings, gangs, escape routes) for the user to decide. **High**. |
 
@@ -103,7 +113,7 @@ Patterns to consider borrowing: Unity's [inspect/change/run/verify workflow](htt
 - **September 27, step 3:** hit feedback added to `CombatAttacksSandbox`, and `tools/check.ps1 -Unity` now also runs play-mode tests. The sandbox is ready for your feel review. [Log](progress-log.md#encounter-01-step-3-hit-feedback---september-27).
 - **September 27, kick:** the user replaced the charged punch with a kick on V; built, tested and recorded in Gameplay. Play-mode input tests were made independent of window focus and real mouse use. [Log](progress-log.md#encounter-01-kick-replaces-the-charged-punch---september-27).
 - **September 27, grab and throw (docs only, no code):** user chose simple physics dragging with no slowdown, one throw action for handheld objects and downed or dead bodies, standard keys (E grab, LMB throw), and hiding bodies from guards as a later use. Recorded in Gameplay, Factions/events and the plan (step 6b). [Log](progress-log.md#grab-drag-and-throw-decided---september-27).
-- **Start of the next chat:** (1) ask whether "OK nice mechanics" approves the step 2-3 feel; (2) the grab and throw key questions in [Gameplay](gameplay.md#grab-drag-and-throw---agreed-september-27-not-built-yet) are open, so ask before step 6b; (3) continue with step 4 (**High**), or steps 6 and 6b first if the user wants the ragdoll and dragging sooner, since they do not depend on his AI.
-- **Next:** see "Start of the next chat" above.
-- **Open user decisions:** step 2-3 feel approval; grab and throw keys (tap vs hold E on a downed body, a key for throwing weapons) and throw strength; the shipped product name (working title `PrisonGame`, which sets the save folder); release 1 quantities (wings, gangs, escape routes). The user will merge `encounter-01` into `main` after testing it. The encounter has no story in this prototype (agreed).
-- **Publication:** pushed September 25; see Current state.
+- **September 27, step 4:** the user approved the step 2-3 feel and asked for the most common option on every open question; the conventions were researched and recorded as agreed. Step 4 built in `CombatAttacksSandbox`; the verification rerun after a layer fix is blocked by a stuck Editor. [Log](progress-log.md#encounter-01-step-4-the-inmate-fights-back---september-27).
+- **Start of the next chat:** (1) after the user restarts Unity, rerun `tools/check.ps1 -Unity` and the step 1 checks, fix anything that fails, and commit; consider guarding `check.ps1` against running during Play mode and against stale play-mode results; (2) ask for the user's step 4 review and tune from it; (3) continue with step 5, the book and rod (**Medium**), or steps 6 and 6b (**High**) if the user prefers.
+- **Open user decisions:** step 4 feel approval; the shipped product name (working title `PrisonGame`, which sets the save folder); release 1 quantities (wings, gangs, escape routes). The user will merge `encounter-01` into `main` after testing it. The encounter has no story in this prototype (agreed).
+- **Publication:** last push September 25. The four earlier ENCOUNTER-01 commits and the step 4 commit are local only. The user OK'd pushing on September 27; push after the step 4 rerun passes.

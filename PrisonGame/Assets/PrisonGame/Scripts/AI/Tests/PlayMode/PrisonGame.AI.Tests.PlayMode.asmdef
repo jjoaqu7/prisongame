@@ -1,0 +1,25 @@
+{
+    "name": "PrisonGame.AI.Tests.PlayMode",
+    "rootNamespace": "PrisonGame.AI.Tests.PlayMode",
+    "references": [
+        "PrisonGame.Core",
+        "PrisonGame.Combat",
+        "PrisonGame.AI",
+        "PrisonGame.PlayerCombat",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

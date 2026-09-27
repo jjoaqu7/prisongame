@@ -146,6 +146,19 @@ namespace PrisonGame.Combat
             return true;
         }
 
+        // Puts the fighter into the state matching a restored life state, as when a checkpoint is loaded.
+        public void ResetTo(LifeState life)
+        {
+            FighterState target = life == LifeState.Dead ? FighterState.Dead
+                : life == LifeState.Downed ? FighterState.Downed
+                : FighterState.Idle;
+            if (State != target)
+            {
+                Enter(target);
+            }
+            TimeInState = 0f;
+        }
+
         public void Tick(float deltaSeconds)
         {
             if (!(deltaSeconds >= 0f) || float.IsInfinity(deltaSeconds))

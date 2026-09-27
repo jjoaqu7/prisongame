@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using NUnit.Framework;
+using PrisonGame.AI;
 using PrisonGame.Combat;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -43,6 +44,11 @@ namespace PrisonGame.PlayerCombat.Tests
                 GameObject player = GameObject.Find("Player");
                 Fighter actor = player.GetComponent<Fighter>();
                 Fighter dummy = GameObject.Find("Sandbox dummy").GetComponent<Fighter>();
+                // This test covers the player's controls; step 4's fight-back has its own scene test.
+                if (dummy.TryGetComponent(out InmateFighterController inmate))
+                {
+                    inmate.enabled = false;
+                }
                 Assert.AreEqual("sandbox-player", actor.Id.Value);
                 Assert.AreEqual("sandbox-dummy", dummy.Id.Value);
                 Assert.AreEqual(70f, player.GetComponentInChildren<Camera>().fieldOfView);

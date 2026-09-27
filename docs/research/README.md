@@ -6,7 +6,7 @@ Sourced research that informs the user's decisions. Findings are references, not
 
 | Topic | Report | Status | Answers |
 | --- | --- | --- | --- |
-| combat | [combat/report.md](combat/report.md) | Complete, September 25, 2026 (RESEARCH-01) | How to design, implement, organize, test and produce real first-person melee; 13 open decisions, of which 1, 4 and 5 are now decided |
+| combat | [combat/report.md](combat/report.md) | Complete, September 25, 2026 (RESEARCH-01); updated September 27 | How to design, implement, organize, test and produce real first-person melee; 13 open decisions, of which 1, 4 and 5 are now decided. The September 27 update gives the common conventions for grab, kill and throw keys, timed-block windows and player damage feedback |
 | engineering-standards | [engineering-standards/report.md](engineering-standards/report.md) | Complete, September 25, 2026 (RESEARCH-02) | How to standardize C# style, tests and Unity Editor scripts, and make Claude Code, Codex and manual commits follow them, based on common practice; naming agreed, 6 open decisions |
 
 ## Layout

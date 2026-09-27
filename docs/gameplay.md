@@ -237,7 +237,7 @@ The ENCOUNTER-01 plan proposed a default for each open fight decision. On Septem
 | --- | --- | --- |
 | Attacking (2) | Left mouse punches on press: the fist pulls back at once and the punch lands about 0.06 s later. No charging, combos or lock-on. | Agreed September 27: the user removed the charged punch in favour of a kick. A press during recovery is remembered briefly (buffered). |
 | Kick | V. Slightly more damage than a punch (12 against 10); slower to wind up (0.3 s, so the inmate can punish it once he fights back), reaches further (1.4 m against 1.1 m) and pushes him back about 0.6 m. From step 4 it also staggers him. | Agreed September 27: the user asked for a kick instead of the charged punch, doing "slightly more dmg than punch", and chose V and the slower, longer-reaching version. The shove stays the social, no-damage push; the kick is a combat move. |
-| Blocking and stamina (3) | Hold right mouse to block; a blocked hit does a quarter of its damage. Raising the block within about 0.25 s before his punch lands is a timed block: no damage, and he staggers. No stamina. | Add stamina only if playtests show spamming wins. |
+| Blocking and stamina (3) | Hold right mouse to block; a blocked hit does a quarter of its damage. Raising the block within about 0.25 s before his punch lands is a timed block: no damage, and he staggers. No stamina. | Add stamina only if playtests show spamming wins. Agreed September 27 (most common option): raising the block again less than 0.4 s after lowering it gives a normal block, not a timed one, as Sekiro shrinks its window for repeated presses. |
 | Shove | F pushes the neighbor about a metre back and briefly staggers him. On anyone else it plays the shove with no push or reaction until SHOVE-01. | Inside the Tab view F still holds the selected item; the view already blocks world actions. |
 | Critical hits | None. Kicks do slightly more damage than punches, and weapons more again. | User decisions, September 25 and 27. |
 | Weapons (8) | Two objects in his cell. The book: fast, a little more damage than fists. A loose bunk rod: slower, longer reach, about double fist damage, strong stagger. Neither breaks. Both use the existing single held item. Both can be thrown (see [Grab, drag and throw](#grab-drag-and-throw---agreed-september-27-not-built-yet)). He fights barehanded and never picks them up. | No breaking: user decision. |
@@ -249,12 +249,20 @@ The ENCOUNTER-01 plan proposed a default for each open fight decision. On Septem
 | Going down (6) | At zero health he goes limp as a ragdoll, and the final hit's push sends him flopping, played for laughs. He then lies there breathing and stays down. Bloodless. | |
 | Kill | Looking at him shows "Hold E - Kill"; holding E for about 1.5 s kills him. Attacks do not hurt a downed inmate. | |
 | Kill tone (7) | Quiet: his breathing stops and room sound dips for a few seconds; no joke or music sting. | The funny drop and the quiet kill are meant to contrast. |
-| Fight feedback (9) | The player's health bar appears only during a fight and briefly after. No bar for him; his state shows through reactions and the hurt pose. Small screen shake on hits, on by default, with an off setting. | If players cannot tell how hurt he is, add a bar. |
+| Fight feedback (9) | The player's health bar appears only during a fight and briefly after. No bar for him; his state shows through reactions and the hurt pose. Small screen shake on hits, on by default, with an off setting. When the player is hit, a short, faint red screen-edge flash (weaker for a blocked hit) and a small view kick that the same setting turns off. | If players cannot tell how hurt he is, add a bar. The hit flash was agreed September 27 as the most common option (Doom, Battlefield). |
 | View (10) | 70-degree vertical field of view, fixed while fight animation is built. Placeholder arms and fists first; better arms at step 8. A field-of-view slider comes with later settings work. | Arkane had to redo every character animation after widening the field of view. |
 | Aftermath (11) | His body stays in the cell and is saved. No saving during a fight. No guard or witness response in this prototype. | A prototype simplification, not the final rule. |
 | Animation (13) | Keep M5's code-built Generic rig and author the fight clips by script. Consider converting to Humanoid for Mixamo or store clips only if these are not good enough at step 8. | |
 
 **Starting values for tuning, not decisions:** both fighters have 100 health. A punch does 10, a kick 12. The book multiplies damage by 1.3, and the rod by 2 with 1.6 m reach against the fists' 1.1 m. His punch does 12 after a 0.7 s wind-up, with 2 to 3 s between attacks. Unarmed, the player needs about 10 punches or 9 kicks; he needs 9 unblocked punches.
+
+**Step 4 starting values (September 27), for tuning, not decisions:**
+- **His movement:** he walks up at 2 m/s (the player walks at 3 m/s), starts a punch within 1.3 m (centre to centre), stops closing at 1 m, and only chases again beyond 1.6 m, so he does not flip between approaching and attacking.
+- **His punch:** 1.2 m reach. His first punch comes 0.4 to 0.8 s after the fight starts, and later ones 2 to 3 s apart, measured start to start. During the wind-up he keeps turning and steps in slowly; once the punch is out he is committed.
+- **His guard:** after about a third of the hits he takes, he raises his guard for 1 s.
+- **Stagger meter:** 100 points. A punch adds 25, so four quick punches stagger him; a kick adds 100, so it always staggers, even through his guard. The meter starts draining 1 s after the last hit, at 25 per second. A stagger lasts 0.8 s, or 1 s after a timed block.
+- **Hurt:** at or below a third of his health he winds up 30% slower (0.91 s) and fills the stagger meter 1.5 times faster.
+- **Player feedback:** a red screen-edge flash lasting 0.35 s (fainter through a block) and a view kick of 1.4 degrees (0.5 through a block). The health bar stays up for 3 s after a fight. Losing fades to black over 1.2 s, then fades back in after the checkpoint restore.
 
 ### Grab, drag and throw - agreed September 27, not built yet
 
@@ -267,10 +275,10 @@ The user asked for ragdoll bodies that can be grabbed, carried and thrown, then 
 - **Standard keys:** E grabs, as it already picks up objects, and LMB throws what you are holding (as in Half-Life 2).
 - **A throw** releases the item or body with a push along your view. A thrown body stays a ragdoll; a thrown object tumbles.
 
-**Open (settle before building):**
-1. **E on a downed body both grabs and kills.** The agreed kill is "hold E for about 1.5 s". Proposed: tap E grabs, hold E kills. On a dead body E only grabs.
-2. **Throwing the book or rod.** While a weapon is held, LMB attacks with it, so LMB cannot also throw it. Proposed: G, the common throw key in shooters, throws whatever is held, and LMB throws only non-weapon objects and bodies. The alternative is that weapons cannot be thrown.
-3. **Throw strength, and whether thrown objects hurt.** Proposed starting point: objects at about 8 m/s and bodies at about 4 m/s. A thrown book or rod lands a light hit (a few damage and a stagger), and other objects do no damage.
+**Agreed September 27 - the three open questions:** the user asked to "use standardized or most common option". The [conventions research](research/combat/notes/controls-and-feedback-conventions.md) found:
+1. **Tap E grabs a downed body; holding E for about 1.5 s kills him.** On a dead body E only grabs. Holding a key is the common way to confirm an irreversible action; Apex Legends finishes a downed enemy by holding E.
+2. **G throws whatever is held, weapons included.** LMB still throws non-weapon objects and bodies. A held weapon is thrown only with G, because LMB attacks with it. Chivalry 2, a first-person melee game, throws weapons with G, and G is the usual PC grenade key.
+3. **Thrown objects hurt only when moving fast.** Starting values for tuning: objects about 8 m/s, bodies about 4 m/s. The book and rod land a light hit (a few damage and a stagger); light items such as snack packs do no damage. Half-Life 2 set the same principle ("collisions should cause damage") with a speed threshold.
 
 **Later use (agreed idea):** dragging a body out of a guard's view so it is not discovered. Recorded for the guard work in [Factions and events](factions-and-events.md#fights-and-consequences---proposed-rules).
 

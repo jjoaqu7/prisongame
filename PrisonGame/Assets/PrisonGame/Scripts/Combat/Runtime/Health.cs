@@ -33,7 +33,7 @@ namespace PrisonGame.Combat
         public event Action<DamageInfo> WentDown;
         public event Action<StableId> Killed;
 
-        public DamageResult Apply(in DamageInfo hit)
+        public DamageResult Apply(in DamageInfo hit, BlockOutcome block = BlockOutcome.None)
         {
             if (!(hit.Amount >= 0f) || float.IsInfinity(hit.Amount))
             {
@@ -52,7 +52,7 @@ namespace PrisonGame.Combat
                 Current = 0f;
                 State = LifeState.Downed;
             }
-            var result = new DamageResult(applied, wentDown, false);
+            var result = new DamageResult(applied, wentDown, false, block);
             Damaged?.Invoke(hit, result);
             if (wentDown)
             {
@@ -70,6 +70,24 @@ namespace PrisonGame.Combat
             State = LifeState.Dead;
             Killed?.Invoke(killer);
             return true;
+        }
+
+        // Returns health to a value saved earlier, such as the fight-start checkpoint. Unlike
+        // RestoreFull this can bring back a downed or dead fighter, because a checkpoint undoes the fight.
+        public void Restore(float current, LifeState state)
+        {
+            if (!(current >= 0f) || current > Max)
+            {
+                throw new ArgumentOutOfRangeException(nameof(current),
+                    "Restored health must be between zero and the maximum.");
+            }
+            if ((state == LifeState.Alive) != (current > 0f))
+            {
+                throw new ArgumentException(
+                    "A living fighter has health above zero; a downed or dead one has none.", nameof(state));
+            }
+            Current = current;
+            State = state;
         }
 
         // Used when a fight ends without a result and both fighters recover.

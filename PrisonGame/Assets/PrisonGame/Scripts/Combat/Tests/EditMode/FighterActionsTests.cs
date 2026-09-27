@@ -220,5 +220,37 @@ namespace PrisonGame.Combat.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => _actions.Tick(seconds, s_idle));
         }
+
+        [Test]
+        public void InmatePunchIsTelegraphedAndDoesTwelveDamage()
+        {
+            _actions.Moveset = UnarmedMoveset.Inmate;
+            Punch();
+            UnarmedAttack punch = _actions.CurrentAttack;
+            Assert.AreEqual(12f, punch.Damage);
+            Assert.AreEqual(0.7f, punch.Timing.WindUp, 1e-6f);
+            Assert.AreEqual(0f, punch.StaggerPower, "His punch never staggers the player.");
+        }
+
+        [Test]
+        public void WindUpScaleSlowsOnlyTheWindUpOfNewAttacks()
+        {
+            _actions.Moveset = UnarmedMoveset.Inmate;
+            _actions.WindUpScale = 1.3f;
+            Punch();
+            Assert.AreEqual(0.91f, _state.CurrentAttack.WindUp, 1e-5f);
+            Assert.AreEqual(UnarmedAttack.InmatePunch.Timing.Active, _state.CurrentAttack.Active, 1e-6f);
+            Assert.AreEqual(UnarmedAttack.InmatePunch.Timing.Recovery, _state.CurrentAttack.Recovery, 1e-6f);
+            Assert.AreEqual(0.91f, _actions.CurrentAttack.Timing.WindUp, 1e-5f);
+        }
+
+        [Test]
+        public void PlayerMovesetIsTheDefaultAndKicksStagger()
+        {
+            Assert.AreSame(UnarmedMoveset.Player, _actions.Moveset);
+            Assert.AreEqual(StaggerMeter.Capacity, UnarmedAttack.Kick.StaggerPower);
+            Assert.Throws<ArgumentNullException>(() => _actions.Moveset = null);
+            Assert.Throws<ArgumentOutOfRangeException>(() => _actions.WindUpScale = 0f);
+        }
     }
 }

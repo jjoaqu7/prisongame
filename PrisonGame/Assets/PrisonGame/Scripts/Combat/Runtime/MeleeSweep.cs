@@ -18,7 +18,13 @@ namespace PrisonGame.Combat
         private RaycastHit[] _hits = new RaycastHit[16];
 
         public Transform Aim { get => _aim; set => _aim = value; }
-        public event Action<Fighter, DamageInfo> HitResolved;
+
+        // Raised when a hit has landed but before any of its effects, so a fight can take its
+        // checkpoint from the state just before the first hit.
+        public event Action<Fighter, DamageInfo> HitLanding;
+
+        // Raised after the hit's damage, block, push and hitstop have been applied.
+        public event Action<Fighter, DamageInfo, DamageResult> HitResolved;
 
         private void Awake() => _fighter = GetComponent<Fighter>();
         private void OnEnable() => Subscribe();
@@ -104,7 +110,7 @@ namespace PrisonGame.Combat
             // the origin blocks the swing, even if a target also overlaps it.
             int overlapCount;
             while ((overlapCount = Physics.OverlapSphereNonAlloc(origin, Radius, _overlaps,
-                Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore)) == _overlaps.Length)
+                CapsuleClearance.Layers, QueryTriggerInteraction.Ignore)) == _overlaps.Length)
             {
                 Array.Resize(ref _overlaps, _overlaps.Length * 2);
             }
@@ -131,7 +137,7 @@ namespace PrisonGame.Combat
             int hitCount;
             while ((hitCount = Physics.SphereCastNonAlloc(origin, Radius, direction, _hits,
                 _fighter.Actions.CurrentAttack.Reach - Radius,
-                Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore)) == _hits.Length)
+                CapsuleClearance.Layers, QueryTriggerInteraction.Ignore)) == _hits.Length)
             {
                 Array.Resize(ref _hits, _hits.Length * 2);
             }
@@ -164,10 +170,16 @@ namespace PrisonGame.Combat
             }
             UnarmedAttack attack = _fighter.Actions.CurrentAttack;
             var hit = new DamageInfo(_fighter.Id, attack.WeaponId, attack.Kind, attack.Damage,
-                point, direction, Time.timeAsDouble, attack.Knockback, attack.HitStopSeconds);
+                point, direction, Time.timeAsDouble, attack.Knockback, attack.HitStopSeconds, attack.StaggerPower);
+            HitLanding?.Invoke(target, hit);
+            DamageResult result = default;
             if (attack.Kind != AttackKind.Shove)
             {
-                target.ApplyHit(hit);
+                result = target.ApplyHit(hit);
+            }
+            if (result.Block == BlockOutcome.TimedBlock)
+            {
+                _fighter.Parried();
             }
             // Only opted-in targets move; everyone else keeps the no-reaction default.
             if (target.TryGetComponent(out SandboxHitReceiver receiver))
@@ -177,7 +189,7 @@ namespace PrisonGame.Combat
             // Hitstop freezes exactly the two fighters involved (see HitStop).
             _fighter.HitStop.Begin(hit.HitStopSeconds);
             target.HitStop.Begin(hit.HitStopSeconds);
-            HitResolved?.Invoke(target, hit);
+            HitResolved?.Invoke(target, hit, result);
         }
 
         private void OnDrawGizmosSelected()

@@ -5,6 +5,7 @@
         "PrisonGame.Core",
         "PrisonGame.Combat",
         "PrisonGame.PlayerCombat",
+        "PrisonGame.AI",
         "Unity.InputSystem",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner"

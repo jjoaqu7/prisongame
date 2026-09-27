@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using PrisonGame.AI;
 using PrisonGame.Combat;
 using PrisonGame.PlayerCombat;
 using UnityEditor;
@@ -201,6 +202,106 @@ namespace PrisonGame.EditorTools
                 }
                 File.AppendAllText("../docs/evidence/encounter01-step3-scene-build.txt",
                     "Kick (September 27): placeholder leg 'KickLeg' added under the camera and wired to the arms view.\n");
+            }
+            finally
+            {
+                EditorSceneManager.RestoreSceneManagerSetup(previous);
+            }
+        }
+
+        // ENCOUNTER-01 step 4: the dummy fights back. Adds his brain and movement, his punch's hit check and
+        // sounds, placeholder poses, the fight controller for the cell, and the player's fight HUD.
+        // Additive only: refuses to run twice, and saves only after every step has succeeded.
+        [MenuItem("PrisonGame/Add Fight Back To Combat Attacks Sandbox")]
+        public static void AddFightBack()
+        {
+            if (EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isCompiling)
+            {
+                throw new InvalidOperationException("Stop Play mode and compilation before building.");
+            }
+            for (int i = 0; i < SceneManager.sceneCount; i++)
+            {
+                if (SceneManager.GetSceneAt(i).isDirty)
+                {
+                    throw new InvalidOperationException("Save or discard scene changes first.");
+                }
+            }
+            AudioClip[] punch = LoadClips("ImpactPunch_Medium_00", 5);
+            AudioClip[] kick = LoadClips("ImpactPunch_Heavy_00", 5);
+            AudioClip[] kickLayer = LoadClips("ImpactSoft_Heavy_00", 4);
+            AudioClip[] shove = LoadClips("ImpactSoft_Medium_00", 4);
+            SceneSetup[] previous = EditorSceneManager.GetSceneManagerSetup();
+            try
+            {
+                Scene scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
+                GameObject player = GameObject.Find("Player");
+                Fighter actor = player == null ? null : player.GetComponent<Fighter>();
+                MeleeSweep playerSweep = player == null ? null : player.GetComponent<MeleeSweep>();
+                FighterHitSounds playerSounds = player == null ? null : player.GetComponent<FighterHitSounds>();
+                Camera view = player == null ? null : player.GetComponentInChildren<Camera>();
+                CameraKick cameraKick = view == null ? null : view.GetComponent<CameraKick>();
+                GameObject dummyObject = GameObject.Find("Sandbox dummy");
+                Fighter dummy = dummyObject == null ? null : dummyObject.GetComponent<Fighter>();
+                Transform visual = dummyObject == null ? null : dummyObject.transform.Find("Visual");
+                if (actor == null || playerSweep == null || playerSounds == null || cameraKick == null || dummy == null ||
+                    visual == null)
+                {
+                    throw new InvalidOperationException(
+                        "The attack sandbox needs its player fighter, sweep, sounds, camera kick, dummy and dummy visual.");
+                }
+                if (dummy.GetComponent<InmateFighterController>() != null)
+                {
+                    throw new InvalidOperationException("The dummy already fights back; refusing to add it twice.");
+                }
+
+                // The fight covers the cell's floor inside its walls.
+                var fightObject = new GameObject("Fight");
+                var fight = fightObject.AddComponent<FightController>();
+                fight.Configure(actor, dummy, new Bounds(new Vector3(0f, 1.4f, 0f), new Vector3(4f, 2.8f, 5f)));
+
+                // Only the player's blocks can be timed.
+                var serializedDummy = new SerializedObject(dummy);
+                serializedDummy.FindProperty("_canTimedBlock").boolValue = false;
+                serializedDummy.ApplyModifiedPropertiesWithoutUndo();
+
+                // His punch is checked from head height along his facing, like the player's from the camera.
+                var aim = new GameObject("Aim").transform;
+                aim.SetParent(dummy.transform, false);
+                aim.localPosition = new Vector3(0f, 0.667f, 0f);
+                dummy.gameObject.AddComponent<MeleeSweep>().Aim = aim;
+                dummy.gameObject.AddComponent<InmateFighterController>().Configure(fight, 20260927);
+                FighterHitSounds dummySounds = dummy.gameObject.AddComponent<FighterHitSounds>();
+                dummySounds.Configure(punch, kick, kickLayer, shove);
+                dummySounds.ConfigureBlocks(shove, kickLayer);
+                playerSounds.ConfigureBlocks(shove, kickLayer);
+
+                // Poses move a "Pose" parent; the existing flinch keeps tilting "Visual" inside it.
+                var pose = new GameObject("Pose").transform;
+                pose.SetParent(dummy.transform, false);
+                visual.SetParent(pose, false);
+                GameObject fist = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                fist.name = "Fist";
+                fist.transform.SetParent(pose, false);
+                fist.transform.localScale = new Vector3(0.18f / 0.8f, 0.18f / 0.9f, 0.18f / 0.8f);
+                UnityEngine.Object.DestroyImmediate(fist.GetComponent<Collider>());
+                fist.GetComponent<Renderer>().sharedMaterial = visual.GetComponent<Renderer>().sharedMaterial;
+                dummy.gameObject.AddComponent<InmatePoseView>().Configure(pose, fist.transform);
+
+                view.gameObject.AddComponent<FightHud>().Configure(fight, actor);
+                cameraKick.Configure(playerSweep, actor);
+                if (!EditorSceneManager.SaveScene(scene))
+                {
+                    throw new IOException("Could not save the attack sandbox.");
+                }
+                Directory.CreateDirectory("../docs/evidence");
+                File.WriteAllText("../docs/evidence/encounter01-step4-scene-build.txt",
+                    "Added fight-back to " + ScenePath + ".\n" +
+                    "Fight: FightController over the cell floor (4 x 5 m), challenger sandbox-player, " +
+                    "opponent sandbox-dummy.\n" +
+                    "Dummy: timed blocks off; Aim child at head height; MeleeSweep; InmateFighterController (seed 20260927); " +
+                    "FighterHitSounds (blocked: soft medium, timed block: soft heavy); 'Visual' moved under a new 'Pose' " +
+                    "with a placeholder 'Fist'; InmatePoseView.\n" +
+                    "Player: FightHud on the camera; CameraKick also reacts to hits taken; blocked and timed-block sounds.\n");
             }
             finally
             {

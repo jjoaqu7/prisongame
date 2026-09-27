@@ -48,32 +48,7 @@ namespace PrisonGame.Combat
             Physics.SyncTransforms();
         }
 
-        private float ClearDistance(Vector3 direction, float wanted)
-        {
-            Physics.SyncTransforms();
-            Bounds bounds = _capsule.bounds;
-            float radius = Mathf.Min(bounds.extents.x, bounds.extents.z);
-            float halfSegment = Mathf.Max(0f, bounds.extents.y - radius);
-            Vector3 top = bounds.center + Vector3.up * halfSegment;
-            Vector3 bottom = bounds.center - Vector3.up * halfSegment;
-            float distance = wanted;
-            // A small skin avoids the floor's touching surface counting as a horizontal obstacle.
-            int count;
-            while ((count = Physics.CapsuleCastNonAlloc(top, bottom, radius - 0.01f, direction, _obstacles,
-                wanted, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore)) == _obstacles.Length)
-            {
-                System.Array.Resize(ref _obstacles, _obstacles.Length * 2);
-            }
-            for (int i = 0; i < count; i++)
-            {
-                RaycastHit obstacle = _obstacles[i];
-                if (obstacle.collider.GetComponentInParent<Fighter>() == _fighter)
-                {
-                    continue;
-                }
-                distance = Mathf.Min(distance, Mathf.Max(0f, obstacle.distance - 0.02f));
-            }
-            return distance;
-        }
+        private float ClearDistance(Vector3 direction, float wanted) =>
+            CapsuleClearance.Distance(_capsule, direction, wanted, _fighter, ref _obstacles);
     }
 }

@@ -4,7 +4,8 @@ using UnityEngine.Rendering;
 
 namespace PrisonGame.PlayerCombat
 {
-    // Local-player presentation: a small upward kick of the view when this player lands a hit.
+    // Local-player presentation: a small upward kick of the view when this player lands a hit, and
+    // a sideways jolt when this player is hit (smaller through a block, none for a timed block).
     // The offset is applied only while this camera renders and removed straight after, so the
     // transform that aiming and hit checks read is never moved. On by default, with an off
     // setting in the Escape menu (agreed: "screen shake on by default with an off switch").
@@ -13,9 +14,13 @@ namespace PrisonGame.PlayerCombat
     {
         public const string EnabledKey = "PrisonGame.CameraShake";
         public const float DecaySeconds = 0.15f;
+        public const float TakenDegrees = 1.4f;
+        public const float TakenBlockedDegrees = 0.5f;
         [SerializeField] private MeleeSweep _sweep;
+        [SerializeField] private Fighter _fighter;
         private Camera _camera;
         private bool _subscribed;
+        private bool _subscribedTaken;
         private float _peakDegrees;
         private float _roll;
         private float _elapsed = DecaySeconds;
@@ -36,7 +41,11 @@ namespace PrisonGame.PlayerCombat
         public float PeakDegrees => _peakDegrees;
         public int RenderApplications { get; private set; }
 
-        public void Configure(MeleeSweep sweep) => _sweep = sweep;
+        public void Configure(MeleeSweep sweep, Fighter fighter = null)
+        {
+            _sweep = sweep;
+            _fighter = fighter;
+        }
 
         private void Awake() => _camera = GetComponent<Camera>();
 
@@ -51,12 +60,16 @@ namespace PrisonGame.PlayerCombat
 
         private void Subscribe()
         {
-            if (_subscribed || _sweep == null)
+            if (!_subscribed && _sweep != null)
             {
-                return;
+                _sweep.HitResolved += OnHit;
+                _subscribed = true;
             }
-            _sweep.HitResolved += OnHit;
-            _subscribed = true;
+            if (!_subscribedTaken && _fighter != null && _fighter.Defense != null)
+            {
+                _fighter.Defense.HitTaken += OnHitTaken;
+                _subscribedTaken = true;
+            }
         }
 
         private void OnDisable()
@@ -68,17 +81,38 @@ namespace PrisonGame.PlayerCombat
                 _sweep.HitResolved -= OnHit;
                 _subscribed = false;
             }
+            if (_subscribedTaken)
+            {
+                _fighter.Defense.HitTaken -= OnHitTaken;
+                _subscribedTaken = false;
+            }
             Restore();
         }
 
-        private void OnHit(Fighter target, DamageInfo hit)
+        private void OnHit(Fighter target, DamageInfo hit, DamageResult result)
+        {
+            float degrees = hit.Kind == AttackKind.Kick ? 1.2f : hit.Kind == AttackKind.Shove ? 0.4f : 0.6f;
+            Kick(degrees, 0.3f);
+        }
+
+        private void OnHitTaken(DamageInfo hit, DamageResult result)
+        {
+            if (result.Block == BlockOutcome.TimedBlock || result.Ignored)
+            {
+                return;
+            }
+            Kick(result.Block == BlockOutcome.Blocked ? TakenBlockedDegrees : TakenDegrees, 1f);
+        }
+
+        // Roll is a fraction of the peak: small when landing a hit, a full sideways jolt when taking one.
+        private void Kick(float degrees, float rollFraction)
         {
             if (!IsOn)
             {
                 return;
             }
-            _peakDegrees = hit.Kind == AttackKind.Kick ? 1.2f : hit.Kind == AttackKind.Shove ? 0.4f : 0.6f;
-            _roll = Random.Range(-0.3f, 0.3f) * _peakDegrees;
+            _peakDegrees = degrees;
+            _roll = Random.Range(-rollFraction, rollFraction) * _peakDegrees;
             _elapsed = 0f;
         }
 

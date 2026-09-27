@@ -102,7 +102,7 @@ namespace PrisonGame.PlayerCombat
             GUI.Label(new Rect(22f, top + 5f, 600f, 24f), "LMB: punch    V: kick    RMB: hold block    F: shove", _style);
             GUI.Label(new Rect(22f, top + 31f, 600f, 24f), $"Phase: {_fighter.State.State}", _style);
             GUI.Label(new Rect(22f, top + 57f, 600f, 24f),
-                "Sandbox: dummy does not fight back yet. E remains interaction.", _style);
+                "He fights back. Raise the block just before his punch lands to stagger him.", _style);
         }
     }
 }

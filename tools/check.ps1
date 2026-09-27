@@ -57,6 +57,22 @@ else {
 if ($Unity) {
     $cli = if ($env:UNITY_CLI) { $env:UNITY_CLI } else { Join-Path $env:LOCALAPPDATA 'Unity\bin\unity.exe' }
     if (-not (Test-Path -LiteralPath $cli)) { throw "Unity CLI not found at $cli. Set UNITY_CLI to its path." }
+    # A recompile while the Editor is in, entering or leaving Play mode reloads scripts inside Play mode: every
+    # component loses its runtime state and the test runs never finish. Refuse instead.
+    # No double quotes inside the snippet: Windows PowerShell strips them when calling a native program.
+    $mode = & $cli command eval --project-path $ProjectRoot --no-banner 'return EditorApplication.isPlayingOrWillChangePlaymode;' 30000 2>$null | Out-String
+    if ($mode -notmatch '"result":false') { throw 'Unity: the Editor is in Play mode, or entering or leaving it, or not answering. Stop Play mode, wait until it has finished, and run the check again.' }
+
+    # A test command can return an earlier run's stored results. Accept a result only if the console shows that
+    # run's own "Run finished" line, logged after the given cursor, with the same number of tests.
+    function Get-ConsoleCursor {
+        return (& $cli command console --project-path $ProjectRoot --no-banner --json --tail 1 2>$null | Out-String | ConvertFrom-Json).data.result
+    }
+    function Test-FreshRun($since, $total) {
+        $log = & $cli command console --project-path $ProjectRoot --no-banner --json --since $since.cursor --since_session $since.session 2>$null | Out-String | ConvertFrom-Json
+        $finished = @($log.data.result.entries | ForEach-Object { ($_.message -split "`n")[0] } | Where-Object { $_ -match '^\[TestResultCollector\] Run finished: \d+ total' })
+        return $finished.Count -gt 0 -and $finished[-1] -match "Run finished: $total total"
+    }
     Write-Host 'Refreshing assets and recompiling in the open Unity Editor...'
     $consoleStart = & $cli command console --project-path $ProjectRoot --no-banner --json --tail 1 2>$null | Out-String | ConvertFrom-Json
     & $cli command eval --project-path $ProjectRoot --no-banner 'AssetDatabase.Refresh(); return 1;' 120000 | Out-Null
@@ -80,6 +96,7 @@ if ($Unity) {
         }
         Write-Host 'Running edit-mode tests...'
         Start-Sleep -Seconds 5
+        $editStart = Get-ConsoleCursor
         # The Unity CLI server restarts after a domain reload, so retry briefly if it is not reachable yet.
         $summary = $null
         for ($attempt = 1; $attempt -le 5 -and $null -eq $summary; $attempt++) {
@@ -91,6 +108,7 @@ if ($Unity) {
         else {
             Write-Host "Edit-mode tests: $($summary.Passed) passed, $($summary.Failed) failed, $($summary.Skipped) skipped of $($summary.Total)."
             if ($summary.Failed -gt 0 -or $summary.Total -eq 0) { $failures += 'Unity: edit-mode tests failed or none ran.' }
+            elseif (-not (Test-FreshRun $editStart $summary.Total)) { $failures += 'Unity: the edit-mode result is not from a fresh run (no matching "Run finished" in the console).' }
         }
 
         # Play-mode tests restart scripting, which drops a waiting request, so they run in the background
@@ -107,6 +125,7 @@ if ($Unity) {
             catch { return $null }
         }
         $previous = Get-TestStatus
+        $playStart = Get-ConsoleCursor
         & $cli command run_tests --project-path $ProjectRoot --no-banner --json --mode playmode --async_tests true 2>$null | Out-Null
         $play = $null
         $sawRunning = $false
@@ -123,6 +142,7 @@ if ($Unity) {
             Write-Host "Play-mode tests: $($play.summary.passed) passed, $($play.summary.failed) failed, $($play.summary.skipped) skipped of $($play.summary.total)."
             $play.results | Where-Object { $_.Status -ne 'Passed' } | ForEach-Object { Write-Host "  $($_.Status): $($_.FullName) $($_.Message)" }
             if ($play.summary.failed -gt 0 -or $play.summary.total -eq 0) { $failures += 'Unity: play-mode tests failed or none ran.' }
+            elseif (-not (Test-FreshRun $playStart $play.summary.total)) { $failures += 'Unity: the play-mode result is not from a fresh run (no matching "Run finished" in the console).' }
         }
     }
 }

@@ -707,3 +707,20 @@ Verified baseline: `PrisonGame/` uses Editor 6000.3.24f1 and URP. Room01_Blockou
   - There is no wind-up whoosh or grunt; the Kenney pack has none.
   - The laundry (106) and Room01 checks were not rerun: no prototype code or prototype scene changed, and those scenes contain no combat components.
   - Windows builds are unchanged.
+
+## ENCOUNTER-01 step 4 verification rerun - September 27
+
+- **Context:** the user restarted the Unity Editor after the stuck rerun recorded in the [step 4 entry](#encounter-01-step-4-the-inmate-fights-back---september-27).
+- **Tooling fixed:** `tools/check.ps1 -Unity` now:
+  - refuses to start while the Editor is in, entering or leaving Play mode
+  - accepts a test result only if the Unity console shows that run's own "Run finished" line with the same test count, so it can no longer report an earlier run's stored results
+
+  The first version of the Play-mode guard failed to compile inside Unity: Windows PowerShell 5.1 strips double quotes from arguments passed to native programs. The snippet is now quote-free. [Engineering standards](engineering-standards.md#tests) describes both guards.
+- **A stray process:** the check started before the restart had stayed hung. It finished during the first rerun and wrote into the same evidence file. That run was discarded and the check was run again alone.
+- **Verified:**
+  - [Code check](evidence/encounter01-step4-code-check.txt) passes: layout, naming, no new-code warnings. 100/100 edit-mode and [31/31 play-mode tests](evidence/encounter01-step4-playmode-tests.json), both confirmed as fresh runs.
+  - The layer fix works. The built-sandbox scene test now passes: he lands his 12-damage punch on the real prototype player, the edge flash shows, and he stays in the cell. The fight tests pass with their player on the Ignore Raycast layer like the real one.
+  - The [18 step 1 checks](evidence/encounter01-step4-foundation-regression.txt) pass in `CombatSandbox`. The script now waits for each Play-mode transition to finish.
+- **Capture and one placeholder change:** the first capture showed his pulled-back fist inside his outline and the same orange as his body, so the telegraph barely read. The wind-up now pulls the fist out wide and high, clear of his body. The final code check ran after that change. [Wind-up capture](evidence/encounter01-step4-windup.png): 0.9 s into a 1 s wind-up, fight active, player at 88 health, with the fight-only health bar.
+- **Not verified:** feel; that is the user's review. Windows builds are unchanged.
+- **Handoff:** the user tries the fight (see Awaiting your review in [Progress](progress.md)), then step 5 (**Medium**) or steps 6 and 6b (**High**).

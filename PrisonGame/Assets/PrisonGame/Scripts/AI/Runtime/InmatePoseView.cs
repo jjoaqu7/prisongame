@@ -16,8 +16,9 @@ namespace PrisonGame.AI
         public const float StaggerLeanDegrees = -14f;
 
         // Local positions under the scaled capsule (0.8 x 0.9 x 0.8), chosen to read from the player's view.
+        // The wind-up pulls the fist out wide and high, clear of his outline, so it stands out from his body.
         private static readonly Vector3 s_fistRest = new Vector3(0.31f, 0.5f, 0.56f);
-        private static readonly Vector3 s_fistPulled = new Vector3(0.44f, 0.83f, -0.12f);
+        private static readonly Vector3 s_fistPulled = new Vector3(0.78f, 0.86f, 0.05f);
         private static readonly Vector3 s_fistOut = new Vector3(0.12f, 0.67f, 1.19f);
         private static readonly Vector3 s_fistGuard = new Vector3(0.12f, 0.72f, 0.44f);
         private static readonly Vector3 s_hurtDrop = new Vector3(0f, -0.06f, 0f);

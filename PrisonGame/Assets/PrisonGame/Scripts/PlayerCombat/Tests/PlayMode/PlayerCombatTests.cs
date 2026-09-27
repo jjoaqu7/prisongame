@@ -24,6 +24,8 @@ namespace PrisonGame.PlayerCombat.Tests
         private bool _previousBackground;
         private static readonly WaitForSeconds s_warmup = new WaitForSeconds(0.1f);
         private static readonly WaitForSeconds s_swingWait = new WaitForSeconds(0.25f);
+        private InputSettings.BackgroundBehavior _previousBackgroundBehavior;
+        private List<InputDevice> _realDevices;
 #if UNITY_EDITOR
         private InputSettings.EditorInputBehaviorInPlayMode _previousInputBehavior;
 #endif
@@ -34,6 +36,10 @@ namespace PrisonGame.PlayerCombat.Tests
             _previousBackground = Application.runInBackground;
             Application.runInBackground = true;
             _previousLock = Cursor.lockState;
+            // Keep the simulated mouse and keyboard enabled when Unity is not the focused app.
+            _previousBackgroundBehavior = InputSystem.settings.backgroundBehavior;
+            InputSystem.settings.backgroundBehavior = InputSettings.BackgroundBehavior.IgnoreFocus;
+            _realDevices = InputIsolation.DisableRealPointerAndKeyboard();
 #if UNITY_EDITOR
             _previousInputBehavior = InputSystem.settings.editorInputBehaviorInPlayMode;
             InputSystem.settings.editorInputBehaviorInPlayMode =
@@ -69,6 +75,8 @@ namespace PrisonGame.PlayerCombat.Tests
             _objects.Clear();
             Cursor.lockState = _previousLock;
             Application.runInBackground = _previousBackground;
+            InputSystem.settings.backgroundBehavior = _previousBackgroundBehavior;
+            InputIsolation.Restore(_realDevices);
 #if UNITY_EDITOR
             InputSystem.settings.editorInputBehaviorInPlayMode = _previousInputBehavior;
 #endif
@@ -96,10 +104,15 @@ namespace PrisonGame.PlayerCombat.Tests
             return fighter;
         }
 
-        private void Punch(float charge = 0.03f, float advance = 0.07f)
+        private void Punch(float advance = 0.07f)
         {
-            _actor.Actions.Tick(0f, new CombatIntent(true, true, true));
-            _actor.Actions.Tick(charge, new CombatIntent(true));
+            _actor.Actions.Tick(0f, new CombatIntent(true, punchPressed: true));
+            _actor.Actions.Tick(advance, new CombatIntent(true));
+        }
+
+        private void Kick(float advance = 0.31f)
+        {
+            _actor.Actions.Tick(0f, new CombatIntent(true, kickPressed: true));
             _actor.Actions.Tick(advance, new CombatIntent(true));
         }
 
@@ -118,11 +131,16 @@ namespace PrisonGame.PlayerCombat.Tests
         }
 
         [UnityTest]
-        public IEnumerator AChargedPunchDealsMoreDamage()
+        public IEnumerator AKickReachesPastAPunchAndDealsTwelveDamage()
         {
-            Punch(0.8f);
+            _target.transform.position = new Vector3(0f, 0f, 1.5f);
+            Physics.SyncTransforms();
+            Punch();
+            Assert.AreEqual(100f, _target.Health.Current, "1.5 m is beyond a punch.");
+            _actor.Actions.Tick(1f, new CombatIntent(true));
+            Kick();
             yield return null;
-            Assert.AreEqual(78f, _target.Health.Current);
+            Assert.AreEqual(88f, _target.Health.Current);
         }
 
         [UnityTest]
@@ -175,7 +193,7 @@ namespace PrisonGame.PlayerCombat.Tests
         [UnityTest]
         public IEnumerator LongFrameCannotSkipTheHitWindow()
         {
-            Punch(0.03f, 1f);
+            Punch(1f);
             yield return null;
             Assert.AreEqual(90f, _target.Health.Current);
             Assert.AreEqual(FighterState.Idle, _actor.State.State);
@@ -250,8 +268,8 @@ namespace PrisonGame.PlayerCombat.Tests
             InputSystem.QueueStateEvent(_mouse, new MouseState().WithButton(MouseButton.Left));
             yield return null;
             yield return null;
-            Assert.IsTrue(view.IsPulledBack);
-            Assert.Less(right.localPosition.z, 0.4f);
+            // The punch fires on press, so its 0.06 s pull-back may already be over; check when it was shown.
+            Assert.That(view.PullbackShownAt, Is.GreaterThanOrEqualTo(queuedAt), "The press showed the pull-back.");
             double milliseconds = (view.PullbackShownAt - queuedAt) * 1000d;
             Debug.Log($"[Step2 latency] queued mouse press to LateUpdate fist pose: {milliseconds:F2} ms");
             Assert.That(milliseconds, Is.InRange(0d, 99.999d));
@@ -284,28 +302,46 @@ namespace PrisonGame.PlayerCombat.Tests
         }
 
         [UnityTest]
-        public IEnumerator MenuGateCancelsChargeAndRequiresAFreshPressAfterResume()
+        public IEnumerator VKicksThroughTheLocalInputAdapter()
+        {
+            yield return EnableInput();
+            InputSystem.QueueStateEvent(_keyboard, new KeyboardState(Key.V));
+            yield return null;
+            yield return null;
+            Assert.AreEqual(1, _actor.Actions.SwingNumber);
+            Assert.AreEqual(AttackKind.Kick, _actor.Actions.CurrentAttack.Kind);
+            InputSystem.QueueStateEvent(_keyboard, new KeyboardState());
+            yield return s_swingWait;
+            yield return s_swingWait;
+            Assert.AreEqual(88f, _target.Health.Current);
+        }
+
+        [UnityTest]
+        public IEnumerator MenuGateCancelsTheSwingAndRequiresAFreshPressAfterResume()
         {
             yield return EnableInput();
             var input = _actor.GetComponent<LocalCombatInput>();
-            InputSystem.QueueStateEvent(_mouse, new MouseState().WithButton(MouseButton.Left));
+            InputSystem.QueueStateEvent(_keyboard, new KeyboardState(Key.V));
             yield return null;
             yield return null;
-            Assert.IsTrue(_actor.Actions.IsCharging);
+            Assert.AreEqual(1, _actor.Actions.SwingNumber);
             input.WorldActionsEnabled = false;
             yield return null;
             yield return null;
-            Assert.IsFalse(_actor.Actions.IsCharging);
+            Assert.AreEqual(FighterState.Idle, _actor.State.State, "Opening a menu cancels the kick.");
+            Assert.AreEqual(100f, _target.Health.Current);
             input.WorldActionsEnabled = true;
             yield return null;
-            InputSystem.QueueStateEvent(_mouse, new MouseState());
+            yield return null;
+            Assert.AreEqual(1, _actor.Actions.SwingNumber, "A key still held from before the menu does not attack.");
+            InputSystem.QueueStateEvent(_keyboard, new KeyboardState());
             yield return null;
             yield return null;
-            Assert.AreEqual(0, _actor.Actions.SwingNumber);
             InputSystem.QueueStateEvent(_mouse, new MouseState().WithButton(MouseButton.Left));
             yield return null;
             yield return null;
-            Assert.IsTrue(_actor.Actions.IsCharging);
+            Assert.AreEqual(2, _actor.Actions.SwingNumber);
+            Assert.AreEqual(AttackKind.Punch, _actor.Actions.CurrentAttack.Kind);
         }
     }
 }

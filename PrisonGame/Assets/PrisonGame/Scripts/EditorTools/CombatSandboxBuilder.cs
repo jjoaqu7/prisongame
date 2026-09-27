@@ -91,9 +91,9 @@ namespace PrisonGame.EditorTools
                     throw new InvalidOperationException("Save or discard scene changes first.");
                 }
             }
-            AudioClip[] quick = LoadClips("ImpactPunch_Medium_00", 5);
-            AudioClip[] charged = LoadClips("ImpactPunch_Heavy_00", 5);
-            AudioClip[] chargedLayer = LoadClips("ImpactSoft_Heavy_00", 4);
+            AudioClip[] punch = LoadClips("ImpactPunch_Medium_00", 5);
+            AudioClip[] kick = LoadClips("ImpactPunch_Heavy_00", 5);
+            AudioClip[] kickLayer = LoadClips("ImpactSoft_Heavy_00", 4);
             AudioClip[] shove = LoadClips("ImpactSoft_Medium_00", 4);
             SceneSetup[] previous = EditorSceneManager.GetSceneManagerSetup();
             try
@@ -135,7 +135,7 @@ namespace PrisonGame.EditorTools
                 }
                 dummy.gameObject.AddComponent<HitFlinchView>().Configure(visual.transform);
 
-                player.AddComponent<FighterHitSounds>().Configure(quick, charged, chargedLayer, shove);
+                player.AddComponent<FighterHitSounds>().Configure(punch, kick, kickLayer, shove);
                 view.gameObject.AddComponent<CameraKick>().Configure(sweep);
                 if (!EditorSceneManager.SaveScene(scene))
                 {
@@ -145,8 +145,62 @@ namespace PrisonGame.EditorTools
                 File.WriteAllText("../docs/evidence/encounter01-step3-scene-build.txt",
                     "Added hit feedback to " + ScenePath + ".\n" +
                     "Dummy: body visual moved to child 'Visual' (collider unchanged), HitFlinchView.\n" +
-                    "Player: FighterHitSounds with " + quick.Length + " quick, " + charged.Length + " charged, " +
-                    chargedLayer.Length + " layer and " + shove.Length + " shove clips; CameraKick on the camera.\n");
+                    "Player: FighterHitSounds with " + punch.Length + " punch, " + kick.Length + " kick, " +
+                    kickLayer.Length + " kick layer and " + shove.Length + " shove clips; CameraKick on the camera.\n");
+            }
+            finally
+            {
+                EditorSceneManager.RestoreSceneManagerSetup(previous);
+            }
+        }
+
+        // Agreed September 27: the charged punch is replaced by a kick on V. Adds the placeholder leg
+        // the arms view animates. Additive only: refuses to run twice.
+        [MenuItem("PrisonGame/Add Kick Leg To Combat Attacks Sandbox")]
+        public static void AddKickLeg()
+        {
+            if (EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isCompiling)
+            {
+                throw new InvalidOperationException("Stop Play mode and compilation before building.");
+            }
+            for (int i = 0; i < SceneManager.sceneCount; i++)
+            {
+                if (SceneManager.GetSceneAt(i).isDirty)
+                {
+                    throw new InvalidOperationException("Save or discard scene changes first.");
+                }
+            }
+            SceneSetup[] previous = EditorSceneManager.GetSceneManagerSetup();
+            try
+            {
+                Scene scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
+                GameObject player = GameObject.Find("Player");
+                Camera view = player == null ? null : player.GetComponentInChildren<Camera>();
+                CombatArmsView arms = view == null ? null : view.GetComponent<CombatArmsView>();
+                Transform left = view == null ? null : view.transform.Find("LeftFist");
+                Transform right = view == null ? null : view.transform.Find("RightFist");
+                if (arms == null || left == null || right == null)
+                {
+                    throw new InvalidOperationException("The attack sandbox needs its camera, arms view and both fists.");
+                }
+                if (view.transform.Find("KickLeg") != null)
+                {
+                    throw new InvalidOperationException("The kick leg is already in the sandbox; refusing to add it twice.");
+                }
+                GameObject leg = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+                leg.name = "KickLeg";
+                leg.transform.SetParent(view.transform, false);
+                leg.transform.SetLocalPositionAndRotation(new Vector3(0.08f, -0.95f, 0.3f), Quaternion.Euler(70f, 0f, 0f));
+                leg.transform.localScale = new Vector3(0.2f, 0.34f, 0.2f);
+                UnityEngine.Object.DestroyImmediate(leg.GetComponent<Collider>());
+                leg.GetComponent<Renderer>().sharedMaterial = right.GetComponent<Renderer>().sharedMaterial;
+                arms.Configure(player.GetComponent<Fighter>(), left, right, leg.transform);
+                if (!EditorSceneManager.SaveScene(scene))
+                {
+                    throw new IOException("Could not save the attack sandbox.");
+                }
+                File.AppendAllText("../docs/evidence/encounter01-step3-scene-build.txt",
+                    "Kick (September 27): placeholder leg 'KickLeg' added under the camera and wired to the arms view.\n");
             }
             finally
             {

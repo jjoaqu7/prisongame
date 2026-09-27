@@ -35,7 +35,7 @@ namespace PrisonGame.PlayerCombat
             bool available = WorldActionsEnabled && Cursor.lockState == CursorLockMode.Locked &&
                 (keyboard == null || !keyboard.escapeKey.wasPressedThisFrame);
             bool anyHeld = (mouse != null && (mouse.leftButton.isPressed || mouse.rightButton.isPressed)) ||
-                (keyboard != null && keyboard.fKey.isPressed);
+                (keyboard != null && (keyboard.fKey.isPressed || keyboard.vKey.isPressed));
             if (!available || !_wasAvailable)
             {
                 _waitForRelease = anyHeld;
@@ -51,10 +51,10 @@ namespace PrisonGame.PlayerCombat
                 return;
             }
             _fighter.SubmitIntent(new CombatIntent(true,
-                mouse != null && mouse.leftButton.wasPressedThisFrame,
-                mouse != null && mouse.leftButton.isPressed,
-                mouse != null && mouse.rightButton.isPressed,
-                keyboard != null && keyboard.fKey.wasPressedThisFrame));
+                punchPressed: mouse != null && mouse.leftButton.wasPressedThisFrame,
+                kickPressed: keyboard != null && keyboard.vKey.wasPressedThisFrame,
+                blockHeld: mouse != null && mouse.rightButton.isPressed,
+                shovePressed: keyboard != null && keyboard.fKey.wasPressedThisFrame));
         }
     }
 }

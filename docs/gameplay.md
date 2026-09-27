@@ -235,10 +235,11 @@ The ENCOUNTER-01 plan proposed a default for each open fight decision. On Septem
 
 | Rule | Agreed | Notes |
 | --- | --- | --- |
-| Attacking (2) | Left mouse. Tap for a quick punch; hold and release for a charged punch with more damage and stagger and a longer recovery. Pressing pulls the fist or weapon back at once. No combos or lock-on. | The pull-back on press keeps the response within the research's 100 ms target, although the swing fires on release. |
+| Attacking (2) | Left mouse punches on press: the fist pulls back at once and the punch lands about 0.06 s later. No charging, combos or lock-on. | Agreed September 27: the user removed the charged punch in favour of a kick. A press during recovery is remembered briefly (buffered). |
+| Kick | V. Slightly more damage than a punch (12 against 10); slower to wind up (0.3 s, so the inmate can punish it once he fights back), reaches further (1.4 m against 1.1 m) and pushes him back about 0.6 m. From step 4 it also staggers him. | Agreed September 27: the user asked for a kick instead of the charged punch, doing "slightly more dmg than punch", and chose V and the slower, longer-reaching version. The shove stays the social, no-damage push; the kick is a combat move. |
 | Blocking and stamina (3) | Hold right mouse to block; a blocked hit does a quarter of its damage. Raising the block within about 0.25 s before his punch lands is a timed block: no damage, and he staggers. No stamina. | Add stamina only if playtests show spamming wins. |
 | Shove | F pushes the neighbor about a metre back and briefly staggers him. On anyone else it plays the shove with no push or reaction until SHOVE-01. | Inside the Tab view F still holds the selected item; the view already blocks world actions. |
-| Critical hits | None. Weapons and charged punches simply do more damage. | User decision. |
+| Critical hits | None. Kicks do slightly more damage than punches, and weapons more again. | User decisions, September 25 and 27. |
 | Weapons (8) | Two objects in his cell. The book: fast, a little more damage than fists. A loose bunk rod: slower, longer reach, about double fist damage, strong stagger. Neither breaks. Both use the existing single held item. No throwing yet. He fights barehanded and never picks them up. | No breaking: user decision. |
 | Injuries | No lasting injuries in this fight. Below about a third of his health he is visibly hurt: hunched, slower wind-ups, easier to stagger. The player's health refills when a fight ends. | Losing reloads, so a lasting player injury would have nothing to affect. |
 | Yield or flee | Neither, in this fight. | The cell is small, the loop requires the kill, and the downed state already gives a deliberate moment. Kept as an idea for gang fights. |
@@ -253,7 +254,7 @@ The ENCOUNTER-01 plan proposed a default for each open fight decision. On Septem
 | Aftermath (11) | His body stays in the cell and is saved. No saving during a fight. No guard or witness response in this prototype. | A prototype simplification, not the final rule. |
 | Animation (13) | Keep M5's code-built Generic rig and author the fight clips by script. Consider converting to Humanoid for Mixamo or store clips only if these are not good enough at step 8. | |
 
-**Starting values for tuning, not decisions:** both fighters have 100 health. A quick fist punch does 10 and a full charge 22. The book multiplies damage by 1.3, and the rod by 2 with 1.6 m reach against the fists' 1.1 m. His punch does 12 after a 0.7 s wind-up, with 2 to 3 s between attacks. Unarmed, the player needs about 10 quick punches; he needs 9 unblocked punches.
+**Starting values for tuning, not decisions:** both fighters have 100 health. A punch does 10, a kick 12. The book multiplies damage by 1.3, and the rod by 2 with 1.6 m reach against the fists' 1.1 m. His punch does 12 after a 0.7 s wind-up, with 2 to 3 s between attacks. Unarmed, the player needs about 10 punches or 9 kicks; he needs 9 unblocked punches.
 
 ### Shoving - agreed direction and key, reactions open
 

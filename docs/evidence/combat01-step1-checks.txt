@@ -18,10 +18,10 @@ PASS: recovering does not revive the dead
 PASS: log shows the down and the kill with the attacker's ID
 
 Dummy debug log (latest lines):
-Sandbox dummy: -10 Quick from sandbox-check (30/100)
-Sandbox dummy: -10 Quick from sandbox-check (20/100)
-Sandbox dummy: -10 Quick from sandbox-check (10/100)
-Sandbox dummy: -10 Quick from sandbox-check (0/100)
+Sandbox dummy: -10 Punch from sandbox-check (30/100)
+Sandbox dummy: -10 Punch from sandbox-check (20/100)
+Sandbox dummy: -10 Punch from sandbox-check (10/100)
+Sandbox dummy: -10 Punch from sandbox-check (0/100)
 Sandbox dummy: Idle -> Downed
 Sandbox dummy: down (last hit by sandbox-check)
 Sandbox dummy: Downed -> Dead

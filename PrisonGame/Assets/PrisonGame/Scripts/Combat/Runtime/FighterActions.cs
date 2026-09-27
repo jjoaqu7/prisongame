@@ -8,70 +8,83 @@ namespace PrisonGame.Combat
     public readonly struct CombatIntent
     {
         public bool Enabled { get; }
-        public bool AttackPressed { get; }
-        public bool AttackHeld { get; }
+        public bool PunchPressed { get; }
+        public bool KickPressed { get; }
         public bool BlockHeld { get; }
         public bool ShovePressed { get; }
 
-        public CombatIntent(bool enabled, bool attackPressed = false, bool attackHeld = false,
+        public CombatIntent(bool enabled, bool punchPressed = false, bool kickPressed = false,
             bool blockHeld = false, bool shovePressed = false)
         {
             Enabled = enabled;
-            AttackPressed = attackPressed;
-            AttackHeld = attackHeld;
+            PunchPressed = punchPressed;
+            KickPressed = kickPressed;
             BlockHeld = blockHeld;
             ShovePressed = shovePressed;
         }
     }
 
-    // Provisional fist tuning, separated from device input and presentation. Hitstop and
-    // knockback grow with charge so a full charge reads heavier than a jab (step-3 values).
-    public readonly struct FistAttack
+    // Provisional unarmed tuning, separated from device input and presentation. Agreed
+    // September 27: no charged punch; the kick does slightly more damage than the punch and is
+    // slower, reaches further and pushes harder (it also staggers once the inmate fights back).
+    public readonly struct UnarmedAttack
     {
         public const float ShoveDistance = 1f;
 
         public AttackKind Kind { get; }
+        public string WeaponId { get; }
         public float Damage { get; }
-        public float Reach => 1.1f;
+        public float Reach { get; }
         public AttackTiming Timing { get; }
-
-        // 0 for a quick punch or shove, up to 1 at full charge.
-        public float Charge { get; }
         public float HitStopSeconds { get; }
         public float Knockback { get; }
 
-        private FistAttack(AttackKind kind, float damage, AttackTiming timing, float charge,
+        private UnarmedAttack(AttackKind kind, string weaponId, float damage, float reach, AttackTiming timing,
             float hitStopSeconds, float knockback)
         {
             Kind = kind;
+            WeaponId = weaponId;
             Damage = damage;
+            Reach = reach;
             Timing = timing;
-            Charge = charge;
             HitStopSeconds = hitStopSeconds;
             Knockback = knockback;
         }
 
-        public static FistAttack Punch(float chargeSeconds)
-        {
-            float charge = Math.Clamp((chargeSeconds - 0.18f) / 0.62f, 0f, 1f);
-            return new FistAttack(charge > 0f ? AttackKind.Charged : AttackKind.Quick,
-                10f + 12f * charge, new AttackTiming(0.06f, 0.12f, 0.25f + 0.25f * charge),
-                charge, 0.06f + 0.04f * charge, 0.08f + 0.22f * charge);
-        }
+        public static UnarmedAttack Punch =>
+            new UnarmedAttack(AttackKind.Punch, "fists", 10f, 1.1f, new AttackTiming(0.06f, 0.12f, 0.25f), 0.06f, 0.08f);
 
-        public static FistAttack Shove =>
-            new FistAttack(AttackKind.Shove, 0f, new AttackTiming(0.05f, 0.12f, 0.35f),
-                0f, 0.05f, ShoveDistance);
+        public static UnarmedAttack Kick =>
+            new UnarmedAttack(AttackKind.Kick, "foot", 12f, 1.4f, new AttackTiming(0.3f, 0.14f, 0.45f), 0.09f, 0.6f);
+
+        public static UnarmedAttack Shove =>
+            new UnarmedAttack(AttackKind.Shove, "hands", 0f, 1.1f, new AttackTiming(0.05f, 0.12f, 0.35f), 0.05f,
+                ShoveDistance);
+
+        public static UnarmedAttack For(AttackKind kind)
+        {
+            switch (kind)
+            {
+                case AttackKind.Kick:
+                    return Kick;
+                case AttackKind.Shove:
+                    return Shove;
+                default:
+                    return Punch;
+            }
+        }
     }
 
-    // Owns charge, one buffered press, and the per-swing hit set for one explicit actor.
-    // State transitions expose even active windows crossed entirely by a long frame.
+    // Owns one buffered press and the per-swing hit set for one explicit actor. A press starts
+    // the attack at once; a press made during recovery is kept briefly and fires when recovery
+    // ends. State transitions expose even active windows crossed entirely by a long frame.
     public sealed class FighterActions
     {
         public const float BufferSeconds = 0.15f;
         private readonly FighterStateMachine _state;
         private readonly HashSet<StableId> _hitTargets = new HashSet<StableId>();
         private float _bufferRemaining;
+        private AttackKind _buffered;
         private bool _ownsAction;
 
         public FighterActions(StableId actor, FighterStateMachine state)
@@ -86,10 +99,8 @@ namespace PrisonGame.Combat
         }
 
         public StableId Actor { get; }
-        public FistAttack CurrentAttack { get; private set; }
-        public float ChargeSeconds { get; private set; }
+        public UnarmedAttack CurrentAttack { get; private set; } = UnarmedAttack.Punch;
         public int SwingNumber { get; private set; }
-        public bool IsCharging => _ownsAction && _state.State == FighterState.Charging;
         public bool CanHit => _ownsAction && _state.HitWindowOpen;
         public event Action ActiveWindowOpened;
 
@@ -107,48 +118,39 @@ namespace PrisonGame.Combat
             }
 
             _bufferRemaining = Math.Max(0f, _bufferRemaining - deltaSeconds);
-            if (IsCharging)
-            {
-                ChargeSeconds = Math.Min(0.8f, ChargeSeconds + deltaSeconds);
-            }
             _state.Tick(deltaSeconds);
 
             if (intent.BlockHeld)
             {
                 _bufferRemaining = 0f;
-                if (IsCharging)
-                {
-                    Cancel();
-                }
                 _state.StartBlock();
                 return;
             }
             _state.EndBlock();
 
-            if (intent.ShovePressed && (_state.State == FighterState.Idle || IsCharging))
+            if (intent.ShovePressed && _state.State == FighterState.Idle)
             {
-                Cancel();
-                BeginAttack(FistAttack.Shove, false);
+                _bufferRemaining = 0f;
+                BeginAttack(UnarmedAttack.Shove);
                 return;
             }
-            if (intent.AttackPressed)
+            // A kick wins if both are pressed in the same frame: it is the deliberate, slower move.
+            bool requested = intent.KickPressed || intent.PunchPressed;
+            AttackKind kind = intent.KickPressed ? AttackKind.Kick : AttackKind.Punch;
+            if (requested && _state.State == FighterState.Idle)
             {
-                if (_state.State == FighterState.Idle)
-                {
-                    BeginCharge();
-                }
-                else if (_state.State == FighterState.Recovery)
-                {
-                    _bufferRemaining = BufferSeconds;
-                }
+                BeginAttack(UnarmedAttack.For(kind));
+                return;
+            }
+            if (requested && _state.State == FighterState.Recovery && _ownsAction)
+            {
+                _buffered = kind;
+                _bufferRemaining = BufferSeconds;
             }
             if (_state.State == FighterState.Idle && _bufferRemaining > 0f)
             {
-                BeginCharge();
-            }
-            if (IsCharging && !intent.AttackHeld)
-            {
-                BeginAttack(FistAttack.Punch(ChargeSeconds), true);
+                _bufferRemaining = 0f;
+                BeginAttack(UnarmedAttack.For(_buffered));
             }
         }
 
@@ -160,12 +162,11 @@ namespace PrisonGame.Combat
         public void Cancel()
         {
             _bufferRemaining = 0f;
-            ChargeSeconds = 0f;
             if (_ownsAction)
             {
                 _ownsAction = false;
-                if (_state.State == FighterState.Charging || _state.State == FighterState.WindUp ||
-                    _state.State == FighterState.Active || _state.State == FighterState.Recovery)
+                if (_state.State == FighterState.WindUp || _state.State == FighterState.Active ||
+                    _state.State == FighterState.Recovery)
                 {
                     _state.Recover();
                 }
@@ -173,27 +174,16 @@ namespace PrisonGame.Combat
             _state.EndBlock();
         }
 
-        private void BeginCharge()
+        private void BeginAttack(UnarmedAttack attack)
         {
-            _bufferRemaining = 0f;
-            ChargeSeconds = 0f;
-            _ownsAction = _state.BeginCharge();
-        }
-
-        private void BeginAttack(FistAttack attack, bool fromCharge)
-        {
+            if (!_state.TryStartAttack(attack.Timing))
+            {
+                return;
+            }
             CurrentAttack = attack;
             _hitTargets.Clear();
             _ownsAction = true;
             SwingNumber++;
-            if (fromCharge)
-            {
-                _state.ReleaseCharge(attack.Timing);
-            }
-            else
-            {
-                _state.TryStartAttack(attack.Timing);
-            }
         }
 
         private void OnStateChanged(FighterState from, FighterState to)
@@ -206,7 +196,6 @@ namespace PrisonGame.Combat
                 to == FighterState.Downed || to == FighterState.Dead)
             {
                 _ownsAction = false;
-                ChargeSeconds = 0f;
                 if (to != FighterState.Idle)
                 {
                     _bufferRemaining = 0f;

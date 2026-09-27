@@ -11,7 +11,7 @@ namespace PrisonGame.Combat.Tests
         private static readonly StableId s_player = new StableId("player-1");
 
         private static DamageInfo Hit(float amount) =>
-            new DamageInfo(s_player, "fists", AttackKind.Quick, amount, Vector3.zero, Vector3.forward, 0d);
+            new DamageInfo(s_player, "fists", AttackKind.Punch, amount, Vector3.zero, Vector3.forward, 0d);
 
         [Test]
         public void StartsFullAndAlive()

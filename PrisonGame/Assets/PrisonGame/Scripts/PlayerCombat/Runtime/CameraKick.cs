@@ -77,7 +77,7 @@ namespace PrisonGame.PlayerCombat
             {
                 return;
             }
-            _peakDegrees = hit.Kind == AttackKind.Shove ? 0.4f : Mathf.Lerp(0.6f, 1.5f, Mathf.InverseLerp(10f, 22f, hit.Amount));
+            _peakDegrees = hit.Kind == AttackKind.Kick ? 1.2f : hit.Kind == AttackKind.Shove ? 0.4f : 0.6f;
             _roll = Random.Range(-0.3f, 0.3f) * _peakDegrees;
             _elapsed = 0f;
         }

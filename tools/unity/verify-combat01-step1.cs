@@ -28,10 +28,10 @@ try
     Check(dummy.Health.Current==100f&&dummy.Health.State==PrisonGame.Combat.LifeState.Alive,"dummy starts at 100 health, alive");
 
     var attacker=new PrisonGame.Core.StableId("sandbox-check");
-    PrisonGame.Combat.DamageInfo Hit(float amount)=>new PrisonGame.Combat.DamageInfo(attacker,"fists",PrisonGame.Combat.AttackKind.Quick,amount,dummy.transform.position,Vector3.forward,Time.timeAsDouble);
+    PrisonGame.Combat.DamageInfo Hit(float amount)=>new PrisonGame.Combat.DamageInfo(attacker,"fists",PrisonGame.Combat.AttackKind.Punch,amount,dummy.transform.position,Vector3.forward,Time.timeAsDouble);
     for(int i=0;i<9;i++)dummy.ApplyHit(Hit(10f));
     Check(Mathf.Abs(dummy.Health.Current-10f)<.001f&&dummy.Health.IsAlive,"nine 10-point punches leave him at 10 health, still up");
-    Check(log.Lines[log.Lines.Count-1].Contains("-10 Quick from sandbox-check (10/100)"),"each hit is logged with amount, kind, attacker and remaining health");
+    Check(log.Lines[log.Lines.Count-1].Contains("-10 Punch from sandbox-check (10/100)"),"each hit is logged with amount, kind, attacker and remaining health");
     var result=dummy.ApplyHit(Hit(10f));
     Check(result.WentDown&&dummy.Health.State==PrisonGame.Combat.LifeState.Downed&&dummy.State.State==PrisonGame.Combat.FighterState.Downed,"the tenth punch downs him; he is downed, not dead");
     result=dummy.ApplyHit(Hit(10f));

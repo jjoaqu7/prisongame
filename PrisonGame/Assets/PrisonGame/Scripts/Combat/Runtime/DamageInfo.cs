@@ -3,7 +3,13 @@ using UnityEngine;
 
 namespace PrisonGame.Combat
 {
-    public enum AttackKind { Quick, Charged, Shove }
+    // Unarmed attacks, agreed September 27: LMB punch, V kick (slightly more damage), F shove.
+    public enum AttackKind
+    {
+        Punch,
+        Kick,
+        Shove,
+    }
 
     // One resolved hit, decided by the attacker's hit check. Holds IDs rather than
     // GameObject references so it can be logged, tested and later sent to a co-op host.

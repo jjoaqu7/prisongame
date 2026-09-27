@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using NUnit.Framework;
 using PrisonGame.Combat;
@@ -23,11 +24,16 @@ namespace PrisonGame.PlayerCombat.Tests
         {
             bool background = Application.runInBackground;
             var behavior = InputSystem.settings.editorInputBehaviorInPlayMode;
+            var backgroundBehavior = InputSystem.settings.backgroundBehavior;
+            List<InputDevice> realDevices = null;
             Mouse mouse = null;
             Keyboard keyboard = null;
             try
             {
                 Application.runInBackground = true;
+                // Keep the simulated mouse and keyboard enabled when Unity is not the focused app.
+                InputSystem.settings.backgroundBehavior = InputSettings.BackgroundBehavior.IgnoreFocus;
+                realDevices = InputIsolation.DisableRealPointerAndKeyboard();
                 InputSystem.settings.editorInputBehaviorInPlayMode =
                     InputSettings.EditorInputBehaviorInPlayMode.AllDeviceInputAlwaysGoesToGameView;
                 EditorSceneManager.LoadSceneInPlayMode(
@@ -61,7 +67,8 @@ namespace PrisonGame.PlayerCombat.Tests
                 InputSystem.QueueStateEvent(mouse, new MouseState().WithButton(MouseButton.Left));
                 yield return null;
                 yield return null;
-                Assert.IsTrue(arms.IsPulledBack);
+                // The punch fires on press, so its 0.06 s pull-back may already be over; check when it was shown.
+                Assert.That(arms.PullbackShownAt, Is.GreaterThanOrEqualTo(pressedAt), "The press showed the pull-back.");
                 double latency = (arms.PullbackShownAt - pressedAt) * 1000d;
                 Debug.Log($"[Step2 scene latency] queued press to visible fist pose: {latency:F2} ms");
                 Assert.That(latency, Is.InRange(0d, 99.999d));
@@ -99,11 +106,23 @@ namespace PrisonGame.PlayerCombat.Tests
                 }
                 Application.runInBackground = background;
                 InputSystem.settings.editorInputBehaviorInPlayMode = behavior;
+                InputSystem.settings.backgroundBehavior = backgroundBehavior;
+                InputIsolation.Restore(realDevices);
                 Cursor.lockState = CursorLockMode.None;
             }
-            // Remove the populated scene before the isolated physics tests share this test run.
-            Scene empty = SceneManager.CreateScene("AfterCombatSandboxTest");
+        }
+
+        // Always remove the populated scene, even after a failure, so its floor and player cannot leak
+        // into the isolated physics tests that share this test run.
+        [UnityTearDown]
+        public IEnumerator UnloadSandbox()
+        {
             Scene populated = SceneManager.GetSceneByName("CombatAttacksSandbox");
+            if (!populated.IsValid() || !populated.isLoaded)
+            {
+                yield break;
+            }
+            Scene empty = SceneManager.CreateScene("AfterCombatSandboxTest");
             SceneManager.SetActiveScene(empty);
             yield return SceneManager.UnloadSceneAsync(populated);
         }

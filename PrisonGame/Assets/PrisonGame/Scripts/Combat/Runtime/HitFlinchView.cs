@@ -9,6 +9,8 @@ namespace PrisonGame.Combat
     public sealed class HitFlinchView : MonoBehaviour
     {
         public const float RecoverSeconds = 0.25f;
+        public const float PunchDegrees = 6f;
+        public const float KickDegrees = 12f;
         [SerializeField] private Transform _visual;
         private Fighter _fighter;
         private bool _subscribed;
@@ -56,8 +58,7 @@ namespace PrisonGame.Combat
             Vector3 backward = Vector3.Cross(Vector3.up, away.normalized);
             float side = Random.value < 0.5f ? -0.6f : 0.6f;
             _axis = transform.InverseTransformDirection((backward + away.normalized * side).normalized);
-            // About 5 degrees for a quick punch, 15 at full charge.
-            _peakDegrees = Mathf.Lerp(5f, 15f, Mathf.InverseLerp(10f, 22f, hit.Amount));
+            _peakDegrees = hit.Kind == AttackKind.Kick ? KickDegrees : PunchDegrees;
             _recovered = 0f;
         }
 

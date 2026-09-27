@@ -1,3 +1,4 @@
 Added hit feedback to Assets/PrisonGame/Scenes/Sandbox/CombatAttacksSandbox.unity.
 Dummy: body visual moved to child 'Visual' (collider unchanged), HitFlinchView.
 Player: FighterHitSounds with 5 quick, 5 charged, 4 layer and 4 shove clips; CameraKick on the camera.
+Kick (September 27): placeholder leg 'KickLeg' added under the camera and wired to the arms view.

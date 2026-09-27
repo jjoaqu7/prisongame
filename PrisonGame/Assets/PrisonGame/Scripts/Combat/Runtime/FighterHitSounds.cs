@@ -1,9 +1,10 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace PrisonGame.Combat
 {
     // Placeholder hit sounds for the hits this fighter lands, played at the contact point.
-    // A charged punch layers a body thud under a heavier impact. Presentation only.
+    // A kick layers a body thud under a heavier impact. Presentation only.
     [RequireComponent(typeof(MeleeSweep))]
     public sealed class FighterHitSounds : MonoBehaviour
     {
@@ -11,10 +12,20 @@ namespace PrisonGame.Combat
         public const string EffectsVolumeKey = "PrisonGame.EffectsVolume";
         public const float DefaultEffectsVolume = 0.65f;
 
-        [SerializeField] private AudioClip[] _quick = new AudioClip[0];
-        [SerializeField] private AudioClip[] _charged = new AudioClip[0];
-        [SerializeField] private AudioClip[] _chargedLayer = new AudioClip[0];
-        [SerializeField] private AudioClip[] _shove = new AudioClip[0];
+        [SerializeField]
+        [FormerlySerializedAs("_quick")]
+        private AudioClip[] _punch = new AudioClip[0];
+
+        [SerializeField]
+        [FormerlySerializedAs("_charged")]
+        private AudioClip[] _kick = new AudioClip[0];
+
+        [SerializeField]
+        [FormerlySerializedAs("_chargedLayer")]
+        private AudioClip[] _kickLayer = new AudioClip[0];
+
+        [SerializeField]
+        private AudioClip[] _shove = new AudioClip[0];
         private MeleeSweep _sweep;
         private AudioSource _impact;
         private AudioSource _layer;
@@ -23,11 +34,11 @@ namespace PrisonGame.Combat
         public AudioClip LastImpact { get; private set; }
         public AudioClip LastLayer { get; private set; }
 
-        public void Configure(AudioClip[] quick, AudioClip[] charged, AudioClip[] chargedLayer, AudioClip[] shove)
+        public void Configure(AudioClip[] punch, AudioClip[] kick, AudioClip[] kickLayer, AudioClip[] shove)
         {
-            _quick = quick;
-            _charged = charged;
-            _chargedLayer = chargedLayer;
+            _punch = punch;
+            _kick = kick;
+            _kickLayer = kickLayer;
             _shove = shove;
         }
 
@@ -69,12 +80,12 @@ namespace PrisonGame.Combat
                 case AttackKind.Shove:
                     LastImpact = Play(_impact, _shove, hit.Point, volume * 0.8f);
                     break;
-                case AttackKind.Charged:
-                    LastImpact = Play(_impact, _charged, hit.Point, volume);
-                    LastLayer = Play(_layer, _chargedLayer, hit.Point, volume * 0.6f);
+                case AttackKind.Kick:
+                    LastImpact = Play(_impact, _kick, hit.Point, volume);
+                    LastLayer = Play(_layer, _kickLayer, hit.Point, volume * 0.6f);
                     break;
                 default:
-                    LastImpact = Play(_impact, _quick, hit.Point, volume * 0.85f);
+                    LastImpact = Play(_impact, _punch, hit.Point, volume * 0.85f);
                     break;
             }
         }

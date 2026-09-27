@@ -162,8 +162,8 @@ namespace PrisonGame.Combat
             {
                 return;
             }
-            FistAttack attack = _fighter.Actions.CurrentAttack;
-            var hit = new DamageInfo(_fighter.Id, "fists", attack.Kind, attack.Damage,
+            UnarmedAttack attack = _fighter.Actions.CurrentAttack;
+            var hit = new DamageInfo(_fighter.Id, attack.WeaponId, attack.Kind, attack.Damage,
                 point, direction, Time.timeAsDouble, attack.Knockback, attack.HitStopSeconds);
             if (attack.Kind != AttackKind.Shove)
             {
@@ -187,15 +187,16 @@ namespace PrisonGame.Combat
                 return;
             }
             Gizmos.color = Color.yellow;
-            Vector3 end = _aim.position + _aim.forward * (1.1f - Radius);
+            float reach = _fighter != null && _fighter.Actions != null ? _fighter.Actions.CurrentAttack.Reach : 1.1f;
+            Vector3 end = _aim.position + _aim.forward * (reach - Radius);
             Gizmos.DrawLine(_aim.position, end);
             Gizmos.DrawWireSphere(_aim.position, Radius);
             Gizmos.DrawWireSphere(end, Radius);
             if (_hasPrevious)
             {
                 Gizmos.color = Color.cyan;
-                Gizmos.DrawLine(_previousOrigin, _previousOrigin + _previousDirection * (1.1f - Radius));
-                Gizmos.DrawLine(_previousOrigin + _previousDirection * (1.1f - Radius), end);
+                Gizmos.DrawLine(_previousOrigin, _previousOrigin + _previousDirection * (reach - Radius));
+                Gizmos.DrawLine(_previousOrigin + _previousDirection * (reach - Radius), end);
             }
         }
     }

@@ -13,7 +13,6 @@ namespace PrisonGame.Combat
         Staggered,
         Downed,
         Dead,
-        Charging,
     }
 
     // Attack phases in seconds. Only the active window can hit. Stored as data so the
@@ -64,31 +63,6 @@ namespace PrisonGame.Combat
 
         // Raised for every transition, in order, including phases passed within one tick.
         public event Action<FighterState, FighterState> Changed;
-
-        public bool BeginCharge()
-        {
-            if (State != FighterState.Idle)
-            {
-                return false;
-            }
-            Enter(FighterState.Charging);
-            return true;
-        }
-
-        public bool ReleaseCharge(AttackTiming timing)
-        {
-            if (State != FighterState.Charging)
-            {
-                return false;
-            }
-            if (!timing.IsValid)
-            {
-                throw new ArgumentException("Invalid attack timing.", nameof(timing));
-            }
-            CurrentAttack = timing;
-            Enter(FighterState.WindUp);
-            return true;
-        }
 
         public bool TryStartAttack(AttackTiming timing)
         {

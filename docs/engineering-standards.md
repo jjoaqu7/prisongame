@@ -106,6 +106,8 @@ These make release 2 co-op possible and let tests run without a scene (see the [
   - `[Test]` by default. `[UnityTest]` only when a test must wait frames.
 - Every plain C# rules class gets edit-mode tests in the same task that adds it. Play-mode tests cover physics, scene wiring and frame-driven behavior.
 - An unfocused Editor does not advance Play-mode frames. A check that needs real frames sets `Application.runInBackground = true` for its duration and restores it afterwards.
+- Input tests must not depend on window focus or on someone using the computer. Set `InputSystem.settings.backgroundBehavior` to `IgnoreFocus` (otherwise simulated devices are disabled whenever Unity is not the focused app), and disable the real mouse and keyboard for the test (`InputIsolation` in the play-mode tests), so a real device cannot become `Mouse.current` or `Keyboard.current`. Restore both afterwards.
+- A test that loads a scene unloads it in a `[UnityTearDown]`, so a failure cannot leak the scene into later tests.
 - In the Editor, keyboards reach the game only while the Game view has focus. A check that simulates key presses must route input to the game for its run. To run a prototype runtime check in Editor Play mode, use `PrisonGame.EditorTools.PrototypeChecks.Start("<CheckClass>")`, which does this, then `PrototypeChecks.RestoreInput()` when its results file appears.
 - Run edit-mode and play-mode tests with `tools/check.ps1 -Unity`, or in Unity's Test Runner window. Play-mode tests restart scripting, so the script starts them in the background and polls `test_status`.
 - The prototype's runtime checks stay as the regression suite until replaced. They compile only into the Editor and Development builds and start with a command-line flag or from the Editor:

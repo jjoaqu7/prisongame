@@ -1,0 +1,7 @@
+﻿ENCOUNTER-01 kick replaces charged punch, tools/check.ps1 -Unity, 2026-09-27 (run twice, both passed)
+Layout, naming, no-spaces and ruleset checks: passed
+Unity refresh and recompile: no compiler or analyzer warnings in new code
+Edit-mode tests: 52 passed, 0 failed of 52
+Play-mode tests: 23 passed, 0 failed of 23 (encounter01-kick-playmode-tests.json)
+Step-1 regression in CombatSandbox: 18 passed (verify-combat01-step1.cs)
+Code check passed.

@@ -10,8 +10,8 @@ namespace PrisonGame.Combat.Tests
         private FighterStateMachine _state;
         private FighterActions _actions;
         private static readonly CombatIntent s_idle = new CombatIntent(true);
-        private static readonly CombatIntent s_hold = new CombatIntent(true, attackHeld: true);
-        private static readonly CombatIntent s_press = new CombatIntent(true, attackPressed: true, attackHeld: true);
+        private static readonly CombatIntent s_punch = new CombatIntent(true, punchPressed: true);
+        private static readonly CombatIntent s_kick = new CombatIntent(true, kickPressed: true);
 
         [SetUp]
         public void SetUp()
@@ -20,54 +20,56 @@ namespace PrisonGame.Combat.Tests
             _actions = new FighterActions(new StableId("player"), _state);
         }
 
-        private void QuickPunch()
+        private void Punch()
         {
-            _actions.Tick(0f, s_press);
-            _actions.Tick(0.03f, s_idle);
+            _actions.Tick(0f, s_punch);
         }
 
         [Test]
-        public void PressImmediatelyStartsPullbackButDoesNotHit()
+        public void PunchPressStartsTheWindUpAtOnceButDoesNotHitYet()
         {
-            _actions.Tick(0f, s_press);
-            Assert.AreEqual(FighterState.Charging, _state.State);
-            Assert.IsTrue(_actions.IsCharging);
+            Punch();
+            Assert.AreEqual(FighterState.WindUp, _state.State);
+            Assert.AreEqual(AttackKind.Punch, _actions.CurrentAttack.Kind);
             Assert.IsFalse(_actions.CanHit);
         }
 
         [Test]
-        public void TapReleasesAQuickTenDamagePunch()
+        public void PunchDealsTenDamage()
         {
-            QuickPunch();
-            Assert.AreEqual(FighterState.WindUp, _state.State);
-            Assert.AreEqual(AttackKind.Quick, _actions.CurrentAttack.Kind);
+            Punch();
             Assert.AreEqual(10f, _actions.CurrentAttack.Damage);
+            Assert.AreEqual(1.1f, _actions.CurrentAttack.Reach, 1e-6f);
         }
 
         [Test]
-        public void FullChargeCapsAtTwentyTwoDamageWithLongerRecovery()
+        public void KickDoesSlightlyMoreDamageReachesFurtherAndIsSlower()
         {
-            _actions.Tick(0f, s_press);
-            _actions.Tick(10f, s_hold);
-            Assert.AreEqual(FighterState.Charging, _state.State, "Holding must not auto-fire.");
-            _actions.Tick(0f, s_idle);
-            Assert.AreEqual(AttackKind.Charged, _actions.CurrentAttack.Kind);
-            Assert.AreEqual(22f, _actions.CurrentAttack.Damage);
-            Assert.Greater(_actions.CurrentAttack.Timing.Recovery, FistAttack.Punch(0f).Timing.Recovery);
+            UnarmedAttack punch = UnarmedAttack.Punch;
+            _actions.Tick(0f, s_kick);
+            UnarmedAttack kick = _actions.CurrentAttack;
+            Assert.AreEqual(AttackKind.Kick, kick.Kind);
+            Assert.AreEqual(FighterState.WindUp, _state.State);
+            Assert.AreEqual(12f, kick.Damage);
+            Assert.Greater(kick.Damage, punch.Damage);
+            Assert.Greater(kick.Reach, punch.Reach);
+            Assert.Greater(kick.Timing.WindUp, punch.Timing.WindUp, "The kick can be seen coming.");
+            Assert.Greater(kick.Timing.Recovery, punch.Timing.Recovery, "A missed kick leaves you open longer.");
+            Assert.Greater(kick.Knockback, punch.Knockback);
         }
 
         [Test]
-        public void PartialChargeIncreasesDamage()
+        public void KickWinsWhenBothArePressedInTheSameFrame()
         {
-            _actions.Tick(0f, s_press);
-            _actions.Tick(0.4f, s_idle);
-            Assert.That(_actions.CurrentAttack.Damage, Is.InRange(10.1f, 21.9f));
+            _actions.Tick(0f, new CombatIntent(true, punchPressed: true, kickPressed: true));
+            Assert.AreEqual(AttackKind.Kick, _actions.CurrentAttack.Kind);
+            Assert.AreEqual(1, _actions.SwingNumber);
         }
 
         [Test]
         public void OneSwingCanHitEachTargetOnlyOnce()
         {
-            QuickPunch();
+            Punch();
             var target = new StableId("dummy");
             Assert.IsFalse(_actions.TryRegisterHit(target));
             _actions.Tick(0.07f, s_idle);
@@ -82,12 +84,12 @@ namespace PrisonGame.Combat.Tests
         public void NextSwingCanHitTheSameTargetAgain()
         {
             var target = new StableId("dummy");
-            QuickPunch();
+            Punch();
             _actions.Tick(0.07f, s_idle);
             Assert.IsTrue(_actions.TryRegisterHit(target));
             _actions.Tick(1f, s_idle);
-            QuickPunch();
-            _actions.Tick(0.07f, s_idle);
+            _actions.Tick(0f, s_kick);
+            _actions.Tick(0.31f, s_idle);
             Assert.IsTrue(_actions.TryRegisterHit(target));
         }
 
@@ -100,7 +102,7 @@ namespace PrisonGame.Combat.Tests
                 Assert.IsTrue(_actions.CanHit);
                 windows++;
             };
-            QuickPunch();
+            Punch();
             _actions.Tick(1f, s_idle);
             Assert.AreEqual(1, windows);
             Assert.AreEqual(FighterState.Idle, _state.State);
@@ -108,32 +110,43 @@ namespace PrisonGame.Combat.Tests
         }
 
         [Test]
-        public void LateRecoveryPressBuffersATapEvenIfReleasedBeforeRecoveryEnds()
+        public void LateRecoveryPressIsBufferedIntoTheNextPunch()
         {
-            QuickPunch();
+            Punch();
             _actions.Tick(0.34f, s_idle);
             Assert.AreEqual(FighterState.Recovery, _state.State);
-            _actions.Tick(0f, s_press);
+            _actions.Tick(0f, s_punch);
             _actions.Tick(0.1f, s_idle);
             Assert.AreEqual(2, _actions.SwingNumber);
             Assert.AreEqual(FighterState.WindUp, _state.State);
+            Assert.AreEqual(AttackKind.Punch, _actions.CurrentAttack.Kind);
         }
 
         [Test]
-        public void ExpiredBufferDoesNotAttackLaterWhileHeld()
+        public void KickPressedDuringRecoveryIsBufferedAsAKick()
         {
-            QuickPunch();
+            Punch();
+            _actions.Tick(0.34f, s_idle);
+            _actions.Tick(0f, s_kick);
+            _actions.Tick(0.1f, s_idle);
+            Assert.AreEqual(2, _actions.SwingNumber);
+            Assert.AreEqual(AttackKind.Kick, _actions.CurrentAttack.Kind);
+        }
+
+        [Test]
+        public void ExpiredBufferDoesNotAttackLater()
+        {
+            Punch();
             _actions.Tick(0.19f, s_idle);
-            _actions.Tick(0f, s_press);
-            _actions.Tick(0.3f, s_hold);
+            _actions.Tick(0f, s_punch);
+            _actions.Tick(0.3f, s_idle);
             Assert.AreEqual(1, _actions.SwingNumber);
             Assert.AreEqual(FighterState.Idle, _state.State);
         }
 
         [Test]
-        public void BlockCancelsChargingAndSuppressesAttackAndShove()
+        public void BlockSuppressesPunchKickAndShove()
         {
-            _actions.Tick(0f, s_press);
             _actions.Tick(0.1f, new CombatIntent(true, true, true, true, true));
             Assert.AreEqual(FighterState.Blocking, _state.State);
             Assert.AreEqual(0, _actions.SwingNumber);
@@ -144,7 +157,7 @@ namespace PrisonGame.Combat.Tests
         [Test]
         public void HeldBlockStartsWhenAttackRecoveryFinishes()
         {
-            QuickPunch();
+            Punch();
             _actions.Tick(0.1f, new CombatIntent(true, blockHeld: true));
             Assert.AreEqual(FighterState.Active, _state.State);
             _actions.Tick(0.5f, new CombatIntent(true, blockHeld: true));
@@ -163,24 +176,29 @@ namespace PrisonGame.Combat.Tests
         }
 
         [Test]
-        public void DisabledWorldActionsCancelChargeAndBuffer()
+        public void DisabledWorldActionsCancelTheSwingAndBuffer()
         {
-            _actions.Tick(0f, s_press);
+            int windows = 0;
+            _actions.ActiveWindowOpened += () => windows++;
+            _actions.Tick(0f, s_kick);
             _actions.Tick(0.1f, default);
+            Assert.AreEqual(FighterState.Idle, _state.State);
             _actions.Tick(1f, s_idle);
-            Assert.AreEqual(0, _actions.SwingNumber);
+            Assert.AreEqual(0, windows, "A cancelled kick never reaches its hit window.");
             Assert.AreEqual(FighterState.Idle, _state.State);
         }
 
         [Test]
-        public void StaggerInterruptsChargeAndDoesNotFireOnRecovery()
+        public void StaggerInterruptsAKickWindUp()
         {
-            _actions.Tick(0f, s_press);
+            int windows = 0;
+            _actions.ActiveWindowOpened += () => windows++;
+            _actions.Tick(0f, s_kick);
             _state.Stagger(0.2f);
-            _actions.Tick(0.3f, s_hold);
+            _actions.Tick(0.3f, s_idle);
             _actions.Tick(0f, s_idle);
             Assert.AreEqual(FighterState.Idle, _state.State);
-            Assert.AreEqual(0, _actions.SwingNumber);
+            Assert.AreEqual(0, windows);
         }
 
         [Test]
@@ -190,7 +208,7 @@ namespace PrisonGame.Combat.Tests
             _actions.Tick(1f, new CombatIntent(true, true, true, false, true));
             Assert.AreEqual(FighterState.Downed, _state.State);
             _state.Die();
-            _actions.Tick(1f, s_press);
+            _actions.Tick(1f, s_punch);
             Assert.AreEqual(FighterState.Dead, _state.State);
             Assert.AreEqual(0, _actions.SwingNumber);
         }

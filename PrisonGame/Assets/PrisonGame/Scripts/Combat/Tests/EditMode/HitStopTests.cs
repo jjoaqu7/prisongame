@@ -41,26 +41,23 @@ namespace PrisonGame.Combat.Tests
         }
 
         [Test]
-        public void ChargedPunchesFreezeLongerAndPushFurtherThanQuickOnes()
+        public void KicksFreezeLongerAndPushFurtherThanPunches()
         {
-            FistAttack quick = FistAttack.Punch(0.05f);
-            FistAttack full = FistAttack.Punch(0.8f);
-            Assert.AreEqual(AttackKind.Quick, quick.Kind);
-            Assert.AreEqual(0.06f, quick.HitStopSeconds, 1e-6f);
-            Assert.AreEqual(0.08f, quick.Knockback, 1e-6f);
-            Assert.AreEqual(AttackKind.Charged, full.Kind);
-            Assert.AreEqual(1f, full.Charge, 1e-6f);
-            Assert.AreEqual(0.1f, full.HitStopSeconds, 1e-6f);
-            Assert.AreEqual(0.3f, full.Knockback, 1e-6f);
+            UnarmedAttack punch = UnarmedAttack.Punch;
+            UnarmedAttack kick = UnarmedAttack.Kick;
+            Assert.AreEqual(0.06f, punch.HitStopSeconds, 1e-6f);
+            Assert.AreEqual(0.08f, punch.Knockback, 1e-6f);
+            Assert.AreEqual(0.09f, kick.HitStopSeconds, 1e-6f);
+            Assert.AreEqual(0.6f, kick.Knockback, 1e-6f);
         }
 
         [Test]
         public void ShoveMovesAboutAMetreWithoutDamage()
         {
-            FistAttack shove = FistAttack.Shove;
+            UnarmedAttack shove = UnarmedAttack.Shove;
             Assert.AreEqual(0f, shove.Damage);
-            Assert.AreEqual(FistAttack.ShoveDistance, shove.Knockback);
-            Assert.That(shove.HitStopSeconds, Is.GreaterThan(0f).And.LessThan(FistAttack.Punch(0f).HitStopSeconds));
+            Assert.AreEqual(UnarmedAttack.ShoveDistance, shove.Knockback);
+            Assert.That(shove.HitStopSeconds, Is.GreaterThan(0f).And.LessThan(UnarmedAttack.Punch.HitStopSeconds));
         }
     }
 }

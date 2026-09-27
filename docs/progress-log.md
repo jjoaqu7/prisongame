@@ -600,3 +600,30 @@ Verified baseline: `PrisonGame/` uses Editor 6000.3.24f1 and URP. Room01_Blockou
   - [Flinch capture](evidence/encounter01-step3-flinch.png) after a full-charge punch landed through the rules (22 damage, 0.30 m knockback).
 - **Not verified:** how the feedback feels, and the sound mix. That needs the user's review; hitstop, kick and knockback values are starting points. No swing whoosh sound (the pack has none). Windows builds unchanged.
 - **Handoff:** user review in `CombatAttacksSandbox` (see Awaiting your review), then step 4, the inmate fights back (**High**).
+
+## ENCOUNTER-01 kick replaces the charged punch - September 27
+
+- **Decision:** the user: "remove the charged punch and add kick instead. kick does slightly more dmg than punch". They then chose V as the key and the slower, longer-reaching kick. Recorded in [Gameplay](gameplay.md#neighboring-cell-fight-rules---agreed-september-25) (Attacking, Kick and Critical-hits rows, starting values) and the development plan (steps 2 and 4).
+- **Rules:**
+  - `AttackKind` is now Punch, Kick, Shove, and `FistAttack` became `UnarmedAttack`.
+  - Punch: 10 damage, 1.1 m reach, 0.06/0.12/0.25 s phases, 0.06 s hitstop, 0.08 m knockback.
+  - Kick: 12 damage, 1.4 m reach, 0.30/0.14/0.45 s, 0.09 s hitstop, 0.6 m knockback; its stagger comes in step 4.
+  - LMB now fires on press. The charging state, `BeginCharge` and `ReleaseCharge` are gone. The buffered press remembers whether it was a punch or a kick. `CombatIntent` has PunchPressed and KickPressed instead of AttackPressed and AttackHeld.
+- **Presentation:**
+  - The placeholder leg, added to the sandbox by the additive `AddKickLeg`, rises during the kick's wind-up and drives forward on contact, with the fists raised to guard.
+  - Flinch is 6 degrees for a punch and 12 for a kick; camera kick is 0.6, 1.2 and 0.4 degrees for punch, kick and shove.
+  - Kick sounds are the heavy punch plus a body thud. The sound fields were renamed with `[FormerlySerializedAs]`, so the scene kept its clips.
+  - HUD text reads "LMB: punch  V: kick  RMB: hold block  F: shove".
+- **Test fixes found on the way:**
+  1. The scene test and the latency test asserted the fist was *still* pulled back two frames after the press, which a 0.06 s wind-up no longer guarantees. They now check the recorded time the pull-back was shown.
+  2. The scene test unloaded its scene after its `finally` block, so one failure leaked the sandbox's floor into every later test (18 cascading failures). Unloading moved to a `[UnityTearDown]`.
+  3. After the user clicked away from Unity, the input system's default background behaviour disabled the simulated devices. The input tests now set `IgnoreFocus`.
+  4. With input flowing in the background, the user's real mouse became `Mouse.current`. The tests now disable the real mouse and keyboard while they run (`InputIsolation`) and restore them afterwards.
+
+  Items 3 and 4 were environmental, not caused by the kick change. They are now written into the standard's tests section.
+- **Verification:**
+  - [Code check](evidence/encounter01-kick-code-check.txt), passed twice in a row: 52/52 edit-mode tests and [23/23 play-mode tests](evidence/encounter01-kick-playmode-tests.json).
+  - New tests cover kick damage, reach, speed and knockback, kick priority, kick buffering, a kick reaching past a punch, V kicking through the real input adapter, and menu cancellation of a kick.
+  - The 18 step-1 checks pass in `CombatSandbox`.
+  - [Kick capture](evidence/encounter01-step3-kick.png): 12 damage and 0.6 m knockback, landed through the rules.
+- **Not verified:** how the kick feels; that is part of the user's review. Windows builds unchanged.

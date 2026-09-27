@@ -100,7 +100,7 @@ namespace PrisonGame.PlayerCombat.Tests
         }
 
         [UnityTest]
-        public IEnumerator ChargedPunchKnocksTheTargetFurtherThanAQuickOne()
+        public IEnumerator KickKnocksTheTargetFurtherThanAPunch()
         {
             var receiver = _target.gameObject.AddComponent<SandboxHitReceiver>();
             Punch();
@@ -111,10 +111,10 @@ namespace PrisonGame.PlayerCombat.Tests
             _actor.Actions.Tick(1f, new CombatIntent(true));
             _target.transform.position = new Vector3(0f, 0f, 1.2f);
             Physics.SyncTransforms();
-            Punch(0.8f);
+            Kick();
             yield return null;
-            Assert.AreEqual(68f, _target.Health.Current, 0.01f, "The second punch was a full charge.");
-            Assert.AreEqual(1.5f, _target.transform.position.z, 0.005f);
+            Assert.AreEqual(78f, _target.Health.Current, 0.01f, "Punch 10, then kick 12.");
+            Assert.AreEqual(1.8f, _target.transform.position.z, 0.005f);
         }
 
         [UnityTest]
@@ -125,7 +125,7 @@ namespace PrisonGame.PlayerCombat.Tests
             wall.transform.position = new Vector3(0f, 0f, 1.6f);
             wall.AddComponent<BoxCollider>().size = new Vector3(2f, 3f, 0.1f);
             Physics.SyncTransforms();
-            Punch(0.8f);
+            Kick();
             yield return null;
             Assert.That(_target.transform.position.z, Is.InRange(1.2f, 1.31f));
             Assert.That(receiver.LastDisplacement, Is.LessThan(0.11f));
@@ -138,13 +138,13 @@ namespace PrisonGame.PlayerCombat.Tests
             visual.SetParent(_target.transform, false);
             var flinch = _target.gameObject.AddComponent<HitFlinchView>();
             flinch.Configure(visual);
-            Punch(0.8f);
+            Kick();
             // Hold the pose long enough to observe it whatever the frame rate.
             _target.HitStop.Begin(0.5f);
             _target.enabled = true;
             yield return null;
-            Assert.AreEqual(15f, flinch.CurrentDegrees, 0.01f, "Full charge: peak tilt, held during hitstop.");
-            Assert.AreEqual(15f, Quaternion.Angle(Quaternion.identity, visual.localRotation), 0.05f);
+            Assert.AreEqual(HitFlinchView.KickDegrees, flinch.CurrentDegrees, 0.01f, "Kick: peak tilt, held during hitstop.");
+            Assert.AreEqual(HitFlinchView.KickDegrees, Quaternion.Angle(Quaternion.identity, visual.localRotation), 0.05f);
             Assert.AreEqual(0f, Quaternion.Angle(Quaternion.identity, _target.transform.rotation), 0.001f,
                 "The fighter's collider stays upright.");
             yield return s_longWait;
@@ -162,10 +162,10 @@ namespace PrisonGame.PlayerCombat.Tests
             var kick = view.gameObject.AddComponent<CameraKick>();
             kick.Configure(_sweep);
             yield return null;
-            Punch(0.8f);
+            Kick();
             yield return null;
-            Assert.AreEqual(78f, _target.Health.Current, 0.01f, "The charged punch must land.");
-            Assert.AreEqual(1.5f, kick.PeakDegrees, 0.001f, "A full charge kicks the view 1.5 degrees.");
+            Assert.AreEqual(88f, _target.Health.Current, 0.01f, "The kick must land.");
+            Assert.AreEqual(1.2f, kick.PeakDegrees, 0.001f, "A landed kick moves the view 1.2 degrees.");
             Assert.AreEqual(0f, Quaternion.Angle(Quaternion.identity, view.transform.localRotation), 0.001f,
                 "Outside rendering the aim transform is untouched.");
 
@@ -175,20 +175,20 @@ namespace PrisonGame.PlayerCombat.Tests
         }
 
         [UnityTest]
-        public IEnumerator HitSoundsPickHeavierLayeredSoundsForChargedPunches()
+        public IEnumerator HitSoundsPickHeavierLayeredSoundsForKicks()
         {
             var sounds = _actor.gameObject.AddComponent<FighterHitSounds>();
-            sounds.Configure(Clips("quick"), Clips("charged"), Clips("layer"), Clips("shove"));
+            sounds.Configure(Clips("punch"), Clips("kick"), Clips("layer"), Clips("shove"));
             yield return null;
             Punch();
             yield return null;
-            Assert.AreEqual("quick", sounds.LastImpact.name);
+            Assert.AreEqual("punch", sounds.LastImpact.name);
             Assert.IsNull(sounds.LastLayer);
 
             _actor.Actions.Tick(1f, new CombatIntent(true));
-            Punch(0.8f);
+            Kick();
             yield return null;
-            Assert.AreEqual("charged", sounds.LastImpact.name);
+            Assert.AreEqual("kick", sounds.LastImpact.name);
             Assert.AreEqual("layer", sounds.LastLayer.name);
 
             _actor.Actions.Tick(1f, new CombatIntent(true));
@@ -203,14 +203,15 @@ namespace PrisonGame.PlayerCombat.Tests
             return new[] { AudioClip.Create(name, 441, 1, 44100, false) };
         }
 
-        private void Punch(float charge = 0.03f, float advance = 0.07f)
+        private void Punch(float advance = 0.07f)
         {
-            _actor.Actions.Tick(0f, new CombatIntent(true, true, true));
-            _actor.Actions.Tick(charge, new CombatIntent(true, attackHeld: charge > 0.05f));
-            if (charge > 0.05f)
-            {
-                _actor.Actions.Tick(0f, new CombatIntent(true));
-            }
+            _actor.Actions.Tick(0f, new CombatIntent(true, punchPressed: true));
+            _actor.Actions.Tick(advance, new CombatIntent(true));
+        }
+
+        private void Kick(float advance = 0.31f)
+        {
+            _actor.Actions.Tick(0f, new CombatIntent(true, kickPressed: true));
             _actor.Actions.Tick(advance, new CombatIntent(true));
         }
 

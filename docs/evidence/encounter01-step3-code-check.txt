@@ -1,0 +1,6 @@
+ENCOUNTER-01 step 3, tools/check.ps1 -Unity, 2026-09-27
+Layout, naming, no-spaces and ruleset checks: passed
+Unity refresh and recompile: no compiler or analyzer warnings in new code
+Edit-mode tests: 51 passed, 0 failed of 51 (5 new: HitStopTests)
+Play-mode tests: 22 passed, 0 failed of 22 (8 new: HitFeedbackTests); results in encounter01-step3-playmode-tests.json
+Code check passed.

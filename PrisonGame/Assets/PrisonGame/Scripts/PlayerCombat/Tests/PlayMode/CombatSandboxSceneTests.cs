@@ -82,7 +82,7 @@ namespace PrisonGame.PlayerCombat.Tests
                 InputSystem.QueueStateEvent(keyboard, new KeyboardState(Key.F));
                 yield return s_settle;
                 Assert.Greater(dummy.transform.position.z, beforeShove);
-                Assert.AreEqual(actor.Id, dummy.GetComponent<SandboxShoveReceiver>().LastAttacker);
+                Assert.AreEqual(actor.Id, dummy.GetComponent<SandboxHitReceiver>().LastAttacker);
                 Assert.AreEqual(90f, dummy.Health.Current);
                 Assert.Less(dummy.GetComponent<Collider>().bounds.max.z, 2.51f,
                     "Shove must not put the dummy through the cell wall.");

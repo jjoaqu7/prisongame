@@ -24,30 +24,44 @@ namespace PrisonGame.Combat
         }
     }
 
-    // Provisional fist tuning, separated from device input and presentation.
+    // Provisional fist tuning, separated from device input and presentation. Hitstop and
+    // knockback grow with charge so a full charge reads heavier than a jab (step-3 values).
     public readonly struct FistAttack
     {
+        public const float ShoveDistance = 1f;
+
         public AttackKind Kind { get; }
         public float Damage { get; }
         public float Reach => 1.1f;
         public AttackTiming Timing { get; }
 
-        private FistAttack(AttackKind kind, float damage, AttackTiming timing)
+        // 0 for a quick punch or shove, up to 1 at full charge.
+        public float Charge { get; }
+        public float HitStopSeconds { get; }
+        public float Knockback { get; }
+
+        private FistAttack(AttackKind kind, float damage, AttackTiming timing, float charge,
+            float hitStopSeconds, float knockback)
         {
             Kind = kind;
             Damage = damage;
             Timing = timing;
+            Charge = charge;
+            HitStopSeconds = hitStopSeconds;
+            Knockback = knockback;
         }
 
         public static FistAttack Punch(float chargeSeconds)
         {
             float charge = Math.Clamp((chargeSeconds - 0.18f) / 0.62f, 0f, 1f);
             return new FistAttack(charge > 0f ? AttackKind.Charged : AttackKind.Quick,
-                10f + 12f * charge, new AttackTiming(0.06f, 0.12f, 0.25f + 0.25f * charge));
+                10f + 12f * charge, new AttackTiming(0.06f, 0.12f, 0.25f + 0.25f * charge),
+                charge, 0.06f + 0.04f * charge, 0.08f + 0.22f * charge);
         }
 
         public static FistAttack Shove =>
-            new FistAttack(AttackKind.Shove, 0f, new AttackTiming(0.05f, 0.12f, 0.35f));
+            new FistAttack(AttackKind.Shove, 0f, new AttackTiming(0.05f, 0.12f, 0.35f),
+                0f, 0.05f, ShoveDistance);
     }
 
     // Owns charge, one buffered press, and the per-swing hit set for one explicit actor.

@@ -10,7 +10,7 @@ Agreed September 25-26, 2026 (STD-01; project names, builds, versions and Git ad
 | Naming and braces in new code (`Assets/PrisonGame`) | `.editorconfig` naming rules and `IDE0011`, checked by `dotnet format style` | Same. Braces are fixed automatically; names are fixed by hand |
 | Every commit | Git pre-commit hook `.githooks/pre-commit` runs `tools/check.ps1 -Staged` and blocks the commit on failure | Enable once per clone: `git config core.hooksPath .githooks` |
 | Unity best practices in new code | Microsoft.Unity.Analyzers, raised to warnings by a ruleset beside each new assembly | `tools/check.ps1` checks the rulesets; `-Unity` fails on any compiler or analyzer warning in new code |
-| Compiles and edit-mode tests pass | Required before a task is marked done | `tools/check.ps1 -Unity` (needs the Unity Editor open on the project) |
+| Compiles, edit-mode and play-mode tests pass | Required before a task is marked done | `tools/check.ps1 -Unity` (needs the Unity Editor open on the project) |
 | No spaces in asset names | Checked in every `tools/check.ps1` run | Fix: `PrisonGame.EditorTools.AssetNaming.RemoveSpaces` in Unity |
 | Existing prototype behavior | Runtime checks in Development builds and the Editor | See [Tests](#tests) |
 
@@ -107,7 +107,7 @@ These make release 2 co-op possible and let tests run without a scene (see the [
 - Every plain C# rules class gets edit-mode tests in the same task that adds it. Play-mode tests cover physics, scene wiring and frame-driven behavior.
 - An unfocused Editor does not advance Play-mode frames. A check that needs real frames sets `Application.runInBackground = true` for its duration and restores it afterwards.
 - In the Editor, keyboards reach the game only while the Game view has focus. A check that simulates key presses must route input to the game for its run. To run a prototype runtime check in Editor Play mode, use `PrisonGame.EditorTools.PrototypeChecks.Start("<CheckClass>")`, which does this, then `PrototypeChecks.RestoreInput()` when its results file appears.
-- Run edit-mode tests with `tools/check.ps1 -Unity`, or in Unity's Test Runner window.
+- Run edit-mode and play-mode tests with `tools/check.ps1 -Unity`, or in Unity's Test Runner window. Play-mode tests restart scripting, so the script starts them in the background and polls `test_status`.
 - The prototype's runtime checks stay as the regression suite until replaced. They compile only into the Editor and Development builds and start with a command-line flag or from the Editor:
   - `LaundryStandaloneCheck`: `-laundry-check` in the WindowsLaundry build. It writes `LaundryCheck/results.txt` beside the build, or under `PrisonGame/` in the Editor.
   - `tools/test-windows-build.ps1` and `tools/test-windows-sample.ps1` for the other builds.
@@ -119,7 +119,7 @@ These make release 2 co-op possible and let tests run without a scene (see the [
 - New scene builders and Editor checks are static methods in the Editor-only `PrisonGame.EditorTools` assembly. They are callable from the Unity CLI, a menu item or `-executeMethod`, and follow this standard like any other code.
 - A builder or check must:
   - refuse to run while the Editor is playing or compiling, or has unsaved scenes
-  - never overwrite an existing scene or prefab
+  - never replace an existing scene or prefab; a builder that adds to an existing scene only adds, and refuses to run a second time
   - read everything it needs before closing or destroying anything, and save only after every step has succeeded
   - restore the scene that was open
   - write its results to `docs/evidence/`
@@ -132,7 +132,7 @@ These make release 2 co-op possible and let tests run without a scene (see the [
 
 ## Before marking a task done
 
-1. `tools/check.ps1 -Unity` passes: layout, naming, rulesets, compile without warnings in new code, and edit-mode tests.
+1. `tools/check.ps1 -Unity` passes: layout, naming, rulesets, compile without warnings in new code, and edit-mode and play-mode tests.
 2. New rules code has edit-mode tests; changed behavior has updated checks.
 3. Any affected existing runtime checks were rerun, with results in `docs/evidence/`.
 4. The tracker and progress log record what was verified and what was not.

@@ -2,7 +2,7 @@
 #   (default)  layout of all project C# code; naming and braces in new code (Assets/PrisonGame)
 #   -Staged    the same checks on staged C# files only; the Git pre-commit hook uses this
 #   -Unity     also refresh and recompile in the open Unity Editor, fail on compiler or analyzer warnings
-#              in new code, and run the edit-mode tests through the Unity CLI
+#              in new code, and run the edit-mode and play-mode tests through the Unity CLI
 # Fix layout and braces with tools/format.ps1. Naming is fixed by hand (see the standard).
 param([switch]$Staged, [switch]$Unity)
 
@@ -91,6 +91,38 @@ if ($Unity) {
         else {
             Write-Host "Edit-mode tests: $($summary.Passed) passed, $($summary.Failed) failed, $($summary.Skipped) skipped of $($summary.Total)."
             if ($summary.Failed -gt 0 -or $summary.Total -eq 0) { $failures += 'Unity: edit-mode tests failed or none ran.' }
+        }
+
+        # Play-mode tests restart scripting, which drops a waiting request, so they run in the background
+        # and test_status is polled. It has no run ID: wait until the new run is seen in progress (or its
+        # result differs from the previous one) before accepting "completed".
+        Write-Host 'Running play-mode tests...'
+        function Get-TestStatus {
+            $raw = & $cli command test_status --project-path $ProjectRoot --no-banner --json 2>$null | Out-String
+            try {
+                $inner = ($raw | ConvertFrom-Json).data.result
+                if ($inner -is [string]) { return $inner }
+                return ($inner | ConvertTo-Json -Depth 8)
+            }
+            catch { return $null }
+        }
+        $previous = Get-TestStatus
+        & $cli command run_tests --project-path $ProjectRoot --no-banner --json --mode playmode --async_tests true 2>$null | Out-Null
+        $play = $null
+        $sawRunning = $false
+        for ($i = 0; $i -lt 150 -and $null -eq $play; $i++) {
+            Start-Sleep -Seconds 2
+            $text = Get-TestStatus
+            if ($null -eq $text) { continue }
+            $current = $text | ConvertFrom-Json
+            if ($current.status -ne 'completed') { $sawRunning = $true; continue }
+            if ($sawRunning -or ($i -gt 30 -and $text -ne $previous)) { $play = $current }
+        }
+        if ($null -eq $play) { $failures += 'Unity: play-mode tests did not report a fresh result within 5 minutes.' }
+        else {
+            Write-Host "Play-mode tests: $($play.summary.passed) passed, $($play.summary.failed) failed, $($play.summary.skipped) skipped of $($play.summary.total)."
+            $play.results | Where-Object { $_.Status -ne 'Passed' } | ForEach-Object { Write-Host "  $($_.Status): $($_.FullName) $($_.Message)" }
+            if ($play.summary.failed -gt 0 -or $play.summary.total -eq 0) { $failures += 'Unity: play-mode tests failed or none ran.' }
         }
     }
 }

@@ -50,7 +50,7 @@ namespace PrisonGame.EditorTools
                 serialized.ApplyModifiedPropertiesWithoutUndo();
                 player.AddComponent<LocalCombatInput>();
                 player.AddComponent<MeleeSweep>().Aim = view.transform;
-                dummy.gameObject.AddComponent<SandboxShoveReceiver>();
+                dummy.gameObject.AddComponent<SandboxHitReceiver>();
 
                 // Reuse a source material as a placeholder. No generated binary art or external assets.
                 Material material = dummy.GetComponent<Renderer>().sharedMaterial;
@@ -71,6 +71,102 @@ namespace PrisonGame.EditorTools
             {
                 EditorSceneManager.RestoreSceneManagerSetup(previous);
             }
+        }
+
+        public const string CombatAudioFolder = "Assets/PrisonGame/Audio/Combat/";
+
+        // ENCOUNTER-01 step 3: adds hit feedback to the existing attack sandbox. Additive only:
+        // refuses to run twice, and saves only after every step has succeeded.
+        [MenuItem("PrisonGame/Add Hit Feedback To Combat Attacks Sandbox")]
+        public static void AddHitFeedback()
+        {
+            if (EditorApplication.isPlayingOrWillChangePlaymode || EditorApplication.isCompiling)
+            {
+                throw new InvalidOperationException("Stop Play mode and compilation before building.");
+            }
+            for (int i = 0; i < SceneManager.sceneCount; i++)
+            {
+                if (SceneManager.GetSceneAt(i).isDirty)
+                {
+                    throw new InvalidOperationException("Save or discard scene changes first.");
+                }
+            }
+            AudioClip[] quick = LoadClips("ImpactPunch_Medium_00", 5);
+            AudioClip[] charged = LoadClips("ImpactPunch_Heavy_00", 5);
+            AudioClip[] chargedLayer = LoadClips("ImpactSoft_Heavy_00", 4);
+            AudioClip[] shove = LoadClips("ImpactSoft_Medium_00", 4);
+            SceneSetup[] previous = EditorSceneManager.GetSceneManagerSetup();
+            try
+            {
+                Scene scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
+                GameObject player = GameObject.Find("Player");
+                Fighter actor = player == null ? null : player.GetComponent<Fighter>();
+                MeleeSweep sweep = player == null ? null : player.GetComponent<MeleeSweep>();
+                Camera view = player == null ? null : player.GetComponentInChildren<Camera>();
+                Fighter dummy = null;
+                foreach (Fighter fighter in UnityEngine.Object.FindObjectsByType<Fighter>(FindObjectsSortMode.None))
+                {
+                    if (fighter != actor)
+                    {
+                        dummy = fighter;
+                    }
+                }
+                if (actor == null || sweep == null || view == null || dummy == null)
+                {
+                    throw new InvalidOperationException("The attack sandbox needs its player fighter, sweep, camera and dummy.");
+                }
+                if (dummy.GetComponent<HitFlinchView>() != null)
+                {
+                    throw new InvalidOperationException("Hit feedback is already in the sandbox; refusing to add it twice.");
+                }
+
+                // Move the dummy's look onto a child, so the flinch tilts only what is seen and the
+                // collider that hit checks use stays upright.
+                var visual = new GameObject("Visual");
+                visual.transform.SetParent(dummy.transform, false);
+                visual.AddComponent<MeshFilter>().sharedMesh = dummy.GetComponent<MeshFilter>().sharedMesh;
+                MeshRenderer bodyRenderer = dummy.GetComponent<MeshRenderer>();
+                visual.AddComponent<MeshRenderer>().sharedMaterials = bodyRenderer.sharedMaterials;
+                bodyRenderer.enabled = false;
+                Transform marker = dummy.transform.Find("Facing marker");
+                if (marker != null)
+                {
+                    marker.SetParent(visual.transform, false);
+                }
+                dummy.gameObject.AddComponent<HitFlinchView>().Configure(visual.transform);
+
+                player.AddComponent<FighterHitSounds>().Configure(quick, charged, chargedLayer, shove);
+                view.gameObject.AddComponent<CameraKick>().Configure(sweep);
+                if (!EditorSceneManager.SaveScene(scene))
+                {
+                    throw new IOException("Could not save the attack sandbox.");
+                }
+                Directory.CreateDirectory("../docs/evidence");
+                File.WriteAllText("../docs/evidence/encounter01-step3-scene-build.txt",
+                    "Added hit feedback to " + ScenePath + ".\n" +
+                    "Dummy: body visual moved to child 'Visual' (collider unchanged), HitFlinchView.\n" +
+                    "Player: FighterHitSounds with " + quick.Length + " quick, " + charged.Length + " charged, " +
+                    chargedLayer.Length + " layer and " + shove.Length + " shove clips; CameraKick on the camera.\n");
+            }
+            finally
+            {
+                EditorSceneManager.RestoreSceneManagerSetup(previous);
+            }
+        }
+
+        private static AudioClip[] LoadClips(string prefix, int count)
+        {
+            var clips = new AudioClip[count];
+            for (int i = 0; i < count; i++)
+            {
+                string path = CombatAudioFolder + prefix + i + ".ogg";
+                clips[i] = AssetDatabase.LoadAssetAtPath<AudioClip>(path);
+                if (clips[i] == null)
+                {
+                    throw new FileNotFoundException("Missing combat sound " + path);
+                }
+            }
+            return clips;
         }
 
         private static Transform MakeFist(string name, Transform parent, Material material, float x)

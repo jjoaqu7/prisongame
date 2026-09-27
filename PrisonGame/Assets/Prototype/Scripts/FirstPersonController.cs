@@ -195,7 +195,8 @@ namespace PrisonGame.Prototype
             float width = Mathf.Min(440, viewWidth - 20);
             var saves = GetComponent<SampleSaveGame>();
             var audio = GetComponent<SampleAudio>();
-            float panelHeight = (Application.isEditor ? 270 : 382) + (saves != null ? 155 : 0) + (audio != null ? 110 : 0);
+            bool cameraKick = GetComponentInChildren<PrisonGame.PlayerCombat.CameraKick>() != null;
+            float panelHeight = (Application.isEditor ? 270 : 382) + (saves != null ? 155 : 0) + (audio != null ? 110 : 0) + (cameraKick ? 32 : 0);
             Rect panel = new Rect((viewWidth - width) / 2f, Mathf.Max(10, (viewHeight - panelHeight) / 2f), width, panelHeight);
             GUI.Box(panel, "Prison prototype - settings");
             GUILayout.BeginArea(new Rect(panel.x + 20, panel.y + 30, panel.width - 40, panel.height - 40));
@@ -222,6 +223,8 @@ namespace PrisonGame.Prototype
             }
             if (audio != null)
                 audio.DrawMenu(labelStyle);
+            if (cameraKick)
+                PrisonGame.PlayerCombat.CameraKick.DrawMenu();
             if (saves != null)
                 saves.DrawMenu(labelStyle, buttonStyle);
             GUILayout.Space(12);

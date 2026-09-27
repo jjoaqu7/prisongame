@@ -164,18 +164,19 @@ namespace PrisonGame.Combat
             }
             FistAttack attack = _fighter.Actions.CurrentAttack;
             var hit = new DamageInfo(_fighter.Id, "fists", attack.Kind, attack.Damage,
-                point, direction, Time.timeAsDouble);
-            if (attack.Kind == AttackKind.Shove)
-            {
-                if (target.TryGetComponent(out SandboxShoveReceiver receiver))
-                {
-                    receiver.Apply(hit);
-                }
-            }
-            else
+                point, direction, Time.timeAsDouble, attack.Knockback, attack.HitStopSeconds);
+            if (attack.Kind != AttackKind.Shove)
             {
                 target.ApplyHit(hit);
             }
+            // Only opted-in targets move; everyone else keeps the no-reaction default.
+            if (target.TryGetComponent(out SandboxHitReceiver receiver))
+            {
+                receiver.Apply(hit);
+            }
+            // Hitstop freezes exactly the two fighters involved (see HitStop).
+            _fighter.HitStop.Begin(hit.HitStopSeconds);
+            target.HitStop.Begin(hit.HitStopSeconds);
             HitResolved?.Invoke(target, hit);
         }
 

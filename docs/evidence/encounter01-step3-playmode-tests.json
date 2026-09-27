@@ -1,0 +1,167 @@
+﻿{
+  "status": "completed",
+  "duration": 6.67,
+  "summary": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "inconclusive": 0
+  },
+  "results": [
+    {
+      "FullName": "PrisonGame.PlayerCombat.Tests.CombatSandboxSceneTests.BuiltSandboxSupportsInputAndKeepsPrototypeMovementAndInteraction",
+      "Status": "Passed",
+      "Duration": 2.8713515,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "PrisonGame.PlayerCombat.Tests.HitFeedbackTests.CameraKickNeverMovesTheAimAndCanBeTurnedOff",
+      "Status": "Passed",
+      "Duration": 0.0178929,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "PrisonGame.PlayerCombat.Tests.HitFeedbackTests.ChargedPunchKnocksTheTargetFurtherThanAQuickOne",
+      "Status": "Passed",
+      "Duration": 0.0082742,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "PrisonGame.PlayerCombat.Tests.HitFeedbackTests.FlinchTiltsOnlyTheVisualAndRecovers",
+      "Status": "Passed",
+      "Duration": 1.5091965,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "PrisonGame.PlayerCombat.Tests.HitFeedbackTests.HitSoundsPickHeavierLayeredSoundsForChargedPunches",
+      "Status": "Passed",
+      "Duration": 0.0113717,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "PrisonGame.PlayerCombat.Tests.HitFeedbackTests.HitStopHoldsAFightersTimelineThenReleasesIt",
+      "Status": "Passed",
+      "Duration": 1.508361,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "PrisonGame.PlayerCombat.Tests.HitFeedbackTests.KnockbackStopsBeforeAWall",
+      "Status": "Passed",
+      "Duration": 0.0069112,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "PrisonGame.PlayerCombat.Tests.HitFeedbackTests.LandedHitFreezesBothFightersForTheAttacksHitStop",
+      "Status": "Passed",
+      "Duration": 0.0057601,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "PrisonGame.PlayerCombat.Tests.HitFeedbackTests.MissedSwingCausesNoHitStop",
+      "Status": "Passed",
+      "Duration": 0.0055481,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "PrisonGame.PlayerCombat.Tests.PlayerCombatTests.AChargedPunchDealsMoreDamage",
+      "Status": "Passed",
+      "Duration": 0.0115555,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "PrisonGame.PlayerCombat.Tests.PlayerCombatTests.BeyondReachMissesAndASecondSwingCanHit",
+      "Status": "Passed",
+      "Duration": 0.0116649,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "PrisonGame.PlayerCombat.Tests.PlayerCombatTests.EDoesNotAttackRmbBlocksAndFShoves",
+      "Status": "Passed",
+      "Duration": 0.0217374,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "PrisonGame.PlayerCombat.Tests.PlayerCombatTests.LongFrameCannotSkipTheHitWindow",
+      "Status": "Passed",
+      "Duration": 0.0116455,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "PrisonGame.PlayerCombat.Tests.PlayerCombatTests.MenuGateCancelsChargeAndRequiresAFreshPressAfterResume",
+      "Status": "Passed",
+      "Duration": 0.0208955,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "PrisonGame.PlayerCombat.Tests.PlayerCombatTests.MousePressMovesPlaceholderFistWithinOneHundredMilliseconds",
+      "Status": "Passed",
+      "Duration": 0.3677685,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "PrisonGame.PlayerCombat.Tests.PlayerCombatTests.MultipleCollidersAndRepeatedSamplesOnlyDamageOnce",
+      "Status": "Passed",
+      "Duration": 0.0104832,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "PrisonGame.PlayerCombat.Tests.PlayerCombatTests.OtherCharactersHaveNoShoveReaction",
+      "Status": "Passed",
+      "Duration": 0.0108574,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "PrisonGame.PlayerCombat.Tests.PlayerCombatTests.ShoveMovesTheDummyOneMetreWhenThereIsSpace",
+      "Status": "Passed",
+      "Duration": 0.0118709,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "PrisonGame.PlayerCombat.Tests.PlayerCombatTests.ShoveReportsActorAndStopsBeforeAWallWithoutDamage",
+      "Status": "Passed",
+      "Duration": 0.0107768,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "PrisonGame.PlayerCombat.Tests.PlayerCombatTests.TurningSweepsAcrossATargetBetweenFrames",
+      "Status": "Passed",
+      "Duration": 0.0113082,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "PrisonGame.PlayerCombat.Tests.PlayerCombatTests.WallBlocksTheTarget",
+      "Status": "Passed",
+      "Duration": 0.0108208,
+      "Message": null,
+      "StackTrace": null
+    },
+    {
+      "FullName": "PrisonGame.PlayerCombat.Tests.PlayerCombatTests.WallOverlappingTheSweepOriginAlsoBlocksTheTarget",
+      "Status": "Passed",
+      "Duration": 0.0118604,
+      "Message": null,
+      "StackTrace": null
+    }
+  ]
+}

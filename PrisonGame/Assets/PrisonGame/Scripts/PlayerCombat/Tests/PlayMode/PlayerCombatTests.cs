@@ -184,7 +184,7 @@ namespace PrisonGame.PlayerCombat.Tests
         [UnityTest]
         public IEnumerator ShoveReportsActorAndStopsBeforeAWallWithoutDamage()
         {
-            var receiver = _target.gameObject.AddComponent<SandboxShoveReceiver>();
+            var receiver = _target.gameObject.AddComponent<SandboxHitReceiver>();
             GameObject wall = MakeObject("ShoveWall");
             wall.transform.position = new Vector3(0f, 0f, 1.95f);
             wall.AddComponent<BoxCollider>().size = new Vector3(2f, 3f, 0.1f);
@@ -200,7 +200,7 @@ namespace PrisonGame.PlayerCombat.Tests
         [UnityTest]
         public IEnumerator ShoveMovesTheDummyOneMetreWhenThereIsSpace()
         {
-            _target.gameObject.AddComponent<SandboxShoveReceiver>();
+            _target.gameObject.AddComponent<SandboxHitReceiver>();
             _actor.Actions.Tick(0f, new CombatIntent(true, shovePressed: true));
             _actor.Actions.Tick(0.06f, new CombatIntent(true));
             yield return null;

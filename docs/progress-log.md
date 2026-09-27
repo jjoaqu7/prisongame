@@ -579,3 +579,24 @@ Verified baseline: `PrisonGame/` uses Editor 6000.3.24f1 and URP. Room01_Blockou
 - **Responsiveness:** the actual sandbox measured 3.66 ms from a queued mouse event to its visible fist pose; isolated runs measured 1.15 ms and 0.95 ms. These are Editor input-to-pose measurements, not monitor latency or a performance baseline. [Method and readings](evidence/encounter01-step2-latency.txt). Screenshots were inspected for visible arms, the dummy and control/phase text. Gameplay feel is not approved on the user's behalf.
 - **Verification fixes:** Unity analyzers caught allocating physics queries and uncached waits; these were corrected before final checks. STD-02's 106 laundry and 18 Room01 checks were rerun earlier this session; the subsequent changes affect only combat scenes and new assemblies. Windows builds were not rebuilt.
 - **Handoff:** step 2 is technically complete. In Unity, open `Assets/PrisonGame/Scenes/Sandbox/CombatAttacksSandbox.unity`, enter Play, click **Resume walking**, walk up to the dummy, and use LMB/RMB/F. Exit and re-enter Play to reset him after going down. The dummy does not fight back yet. Next is step 3 (hitstop, camera kick/off setting, placeholder sound, flinch and knockback), then the user's feel review; **Medium** reasoning. Remain on `encounter-01`; user merges after testing.
+
+## ENCOUNTER-01 step 3 hit feedback - September 27
+
+- **Context:** Codex had resumed after Claude's session limit, checkpointed STD-02 (`3322500`) and completed step 2 (`d647b13`). Claude continued with step 3 from the tracker's next action.
+- **Rules (Combat assembly):**
+  - `HitStop` is a per-fighter freeze with time passed in; overlapping hits keep the longest freeze, never the sum. `Fighter` gives its timeline only the time left after the freeze, but still reads intent, so presses are not lost. It never uses `Time.timeScale`.
+  - `FistAttack` now carries charge, hitstop (0.06 s quick to 0.10 s full charge; 0.05 s shove) and knockback (0.08 m to 0.30 m; shove 1 m). `DamageInfo` gained `Knockback` and `HitStopSeconds` as optional trailing values.
+  - `MeleeSweep` freezes exactly the attacker and the target when a hit lands. It passes knockback to the renamed `SandboxHitReceiver` (formerly `SandboxShoveReceiver`, same script ID), which now moves the dummy for punches as well as shoves and stops short of walls.
+  - Other characters still have no reaction.
+- **Presentation:**
+  - `HitFlinchView` leans a visual child away and to a random side, holds during hitstop and springs back over 0.25 s. A purely backward lean was nearly invisible in first person (seen in the first capture), which is why the side component was added.
+  - `CameraKick` applies a 0.4 to 1.5 degree kick only while the camera renders, so aiming never sees it. It is on by default; the off switch in the Escape settings is a two-line hook in the prototype's `FirstPersonController`.
+  - `FighterHitSounds` plays 18 unmodified CC0 Kenney clips at the hit point, with charged punches layering a body thud. It uses the existing effects-volume setting.
+  - `CombatSandboxBuilder.AddHitFeedback` added these to `CombatAttacksSandbox` without creating another scene: additive, refuses a second run ([build record](evidence/encounter01-step3-scene-build.txt)).
+- **Tooling:** `tools/check.ps1 -Unity` now also runs play-mode tests (in the background, polling `test_status` until a fresh run completes). The standard and AGENTS.md say so.
+- **Verification:**
+  - [Code check](evidence/encounter01-step3-code-check.txt): 51/51 edit-mode tests (5 new `HitStopTests`) and [22/22 play-mode tests](evidence/encounter01-step3-playmode-tests.json). The 8 new `HitFeedbackTests` cover both fighters freezing on a landed hit and not on a miss, a frozen timeline resuming, charged knockback exceeding quick, knockback stopping at a wall, the flinch tilting only the visual and recovering, the camera kick never moving the aim and turning off, and charged punches picking heavier layered sounds.
+  - The 14 step-2 play-mode tests still pass.
+  - [Flinch capture](evidence/encounter01-step3-flinch.png) after a full-charge punch landed through the rules (22 damage, 0.30 m knockback).
+- **Not verified:** how the feedback feels, and the sound mix. That needs the user's review; hitstop, kick and knockback values are starting points. No swing whoosh sound (the pack has none). Windows builds unchanged.
+- **Handoff:** user review in `CombatAttacksSandbox` (see Awaiting your review), then step 4, the inmate fights back (**High**).

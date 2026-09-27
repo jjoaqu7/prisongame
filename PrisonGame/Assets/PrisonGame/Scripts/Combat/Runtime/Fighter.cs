@@ -24,6 +24,7 @@ namespace PrisonGame.Combat
         public Health Health { get; private set; }
         public FighterStateMachine State { get; private set; }
         public FighterActions Actions { get; private set; }
+        public HitStop HitStop { get; } = new HitStop();
         private CombatIntent _intent;
 
         private void Reset()
@@ -48,7 +49,9 @@ namespace PrisonGame.Combat
 
         private void Update()
         {
-            Actions.Tick(Time.deltaTime, _intent);
+            // During hitstop the timeline receives no time, but intent is still read, so a press
+            // made during the freeze is not lost.
+            Actions.Tick(HitStop.Consume(Time.deltaTime), _intent);
             _intent = default;
         }
 

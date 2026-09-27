@@ -33,3 +33,13 @@ Status: in use for development only; excluded from every build platform, so it n
 
 File: `PrisonGame/Assets/PrisonGame/Scripts/Core/Runtime/Analyzers/Microsoft.Unity.Analyzers.dll`, the unmodified `analyzers/dotnet/cs` DLL from the NuGet package (SHA-256 begins `da18985c3216a485`), retrieved 2026-09-26. It is built against Roslyn 3.11; Unity 6.3 compiles with Roslyn 4.3.
 
+## ENCOUNTER-01: placeholder hit sounds
+
+Status: placeholder for the step-3 feel review; replaceable once the hit feel is approved. Unmodified files taken from the Kenney pack already recorded under AUDIO-01, renamed to the naming standard.
+
+| Source | Creator | License / evidence | Used for |
+| --- | --- | --- | --- |
+| [Impact Sounds 1.0](https://kenney.nl/assets/impact-sounds) | Kenney | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/); `audio-source/impact.zip`, `audio-source/impact-LICENSE.txt` | Quick punches (`impactPunch_medium_000-004`), charged punches (`impactPunch_heavy_000-004`), charged body-thud layer (`impactSoft_heavy_000-003`), shove (`impactSoft_medium_000-003`) |
+
+Files: `PrisonGame/Assets/PrisonGame/Audio/Combat/ImpactPunch_Medium_000.ogg` and the other 17 clips, byte-identical to the pack members, stored through Git LFS.
+

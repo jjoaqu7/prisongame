@@ -17,8 +17,14 @@ namespace PrisonGame.Combat
         public readonly Vector3 Direction;
         public readonly double Time;
 
+        // Metres the target is pushed along Direction; applied by the target's movement adapter.
+        public readonly float Knockback;
+
+        // Freeze applied to the attacker's and the target's combat timelines when the hit lands.
+        public readonly float HitStopSeconds;
+
         public DamageInfo(StableId attacker, string weaponId, AttackKind kind, float amount,
-            Vector3 point, Vector3 direction, double time)
+            Vector3 point, Vector3 direction, double time, float knockback = 0f, float hitStopSeconds = 0f)
         {
             Attacker = attacker;
             WeaponId = weaponId;
@@ -27,6 +33,8 @@ namespace PrisonGame.Combat
             Point = point;
             Direction = direction;
             Time = time;
+            Knockback = knockback;
+            HitStopSeconds = hitStopSeconds;
         }
     }
 
